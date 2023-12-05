@@ -65,8 +65,8 @@ const page = () => {
     return (
       <>
         {sentCode ? (
-          <section className="  bg-gray-900">
-            <div className="flex direction-r flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <section className="pt-20  bg-gray-900 text-end">
+            <div className=" flex direction-r flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
               <div className="w-full  rounded-lg shadow  border md:mt-0 sm:max-w-md xl:p-0  bg-gray-800  border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                   <h1 className="text-xl font-bold leading-tight tracking-tightmd:text-2xl  text-white">
@@ -98,7 +98,7 @@ const page = () => {
             </div>
           </section>
         ) : (
-          <section className="bg-gray-900">
+          <section className=" pt-20 bg-gray-900 text-end">
             <div className="flex direction-r flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
               <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -127,7 +127,7 @@ const page = () => {
                     <button
                       type="submit"
                       onClick={handleSentCode}
-                      className="w-full text-white  hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover-bg-primary-700 focus-ring-primary-800"
+                      className="w-full text-white  hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover-bg-primary-700 focus-ring-primary-800"
                     >
                       ارسل رقم التحقيق
                     </button>
