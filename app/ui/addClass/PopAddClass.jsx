@@ -3,28 +3,30 @@ import CloseIcon from '@mui/icons-material/Close';
 import InputAddClass from './InputAddClass';
 import {useState } from "react"
 import axios from "../../config/axiosconfigClient"
-const PopAddClass = ({onCansle}) => {
+const PopAddClass = ({onCansle , onGet}) => {
   const [name, setName] = useState("");
   const [paymentPrice, setPaymentPrice] = useState("");
   const [paymentDelay, setPaymentDelay] = useState("");
   const [grade, setGrade] = useState("");
   const handleGradeChange = (event) => {
     setGrade(event.target.value);};
-  const handelSubmit = async () => {
-    try {
-      console.log("Attempting to update data...");
-      await axios.post(`/api/Teacher/class`, {
-        name: name,
-        basePaymentPrice: paymentPrice,
-        basePaymentDelay: paymentDelay,
-        grade: grade,
-      });
-      onCansle()
-      console.log("Data updated successfully!");
-    } catch (error) {
-      console.error("Error updating data:", error);
-    }
-  };
+    const handelSubmit = async () => {
+      try {
+        console.log("Attempting to update data...");
+        await axios.post(`/api/Teacher/class`, {
+          name: name,
+          basePaymentPrice: paymentPrice,
+          basePaymentDelay: paymentDelay,
+          grade: grade,
+        });
+        onCansle();
+        onGet();
+        console.log("Data updated successfully!");
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    };
+    
   return (
     <div className=" absolute w-[90%] md:w-1/2 p-4 rounded-lg top-[60%] md:top-1/2 left-1/2 center bg-side4-color z-40">
     <div className="absolute top-0 left-2 cursor-pointer">
