@@ -21,9 +21,11 @@ const page = () => {
     
       getdata(); 
     }, [showAddClass]);
+
+    
   return (
     <div className="mt-3 pt-20 ">
-        {showAddClass && <PopAddClass onGet={() => getdata()} onCansle={() => setShowAddClass(!showAddClass)}/>}
+        {showAddClass && ( <div className="overlay"> <PopAddClass onGet={() => getdata()} onCansle={() => setShowAddClass(!showAddClass)}/> </div>)}
         <div className="text-end">
         <button onClick={() => setShowAddClass(!showAddClass)} type="button" className=" focus:outline-none rounded-lg text-white bg-green-600 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium   text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
             اضافة صف

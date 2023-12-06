@@ -28,7 +28,8 @@ const PopAddClass = ({onCansle , onGet}) => {
     };
     
   return (
-    <div className=" absolute w-[90%] md:w-1/2 p-4 rounded-lg top-[60%] md:top-1/2 left-1/2 center bg-side4-color z-40">
+    <div className=" fixed  w-[90%] md:w-1/2 p-4 rounded-lg top-[55%] md:top-1/2 left-1/2 center bg-side4-color z-40">
+  
     <div className="absolute top-0 left-2 cursor-pointer">
         <CloseIcon sx={{ fontSize: 50 }} onClick={onCansle} color="primary"/>
        </div>
@@ -54,6 +55,7 @@ const PopAddClass = ({onCansle , onGet}) => {
        <button onClick={handelSubmit} type="button" className="focus:outline-none w-full mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
         اضافة
         </button>
+
     </div>
   )
 }

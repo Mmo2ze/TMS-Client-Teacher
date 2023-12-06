@@ -19,10 +19,13 @@ module.exports = {
       colors : {
         "web-color":"#18181b",
         "main-color" : "#111928",
+        "nav-color" : "#111928c7",
         "side-color" : "#374151",
         "side2-color":"#27272a",
         "side3-color" :"#1f2937",
         "side4-color" :"#1a212c",
+        "side5-color" :"#1a978b",
+        "side6-color" :"#146262",
         "color-text" : "#00ffe5",
         "blue-color": "#1976d2" ,
         "button-color":"#1A56DB",

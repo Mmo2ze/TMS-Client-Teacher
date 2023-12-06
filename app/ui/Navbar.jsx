@@ -24,7 +24,7 @@ const Navbar = () => {
   
   
     return (
-      <nav className="bg-white border-gray-200 dark:bg-gray-900 text-end text-lg text-bold fixed w-full top-0 z-50">
+      <nav className="bg-white border-gray-200  dark:bg-nav-color text-end text-lg text-bold fixed w-full top-0 z-50">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a
             href="https://flowbite.com/"
