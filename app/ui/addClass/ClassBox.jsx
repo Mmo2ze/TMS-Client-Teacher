@@ -7,8 +7,11 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditIcon from '@mui/icons-material/Edit';
 import styles from "./classBox.css"
 import PopUpdateClass from "./PopUpdateClass"
+import DeleteIcon from '@mui/icons-material/Delete';
+import PopDeleteClass from "./PopDeleteClass"
 const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  updateData }) => {
   const [showUpdate , setShowUpdate] = useState(false)
+  const [sureDelete , setSureDelete] = useState(false)
 
   // const handleUpdate = () => {
   //   setShowUpdate(!showUpdate);
@@ -16,8 +19,16 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
 
 const col = showUpdate
 
+
   return (
     <div className={`2sm:h-64 2sm:text-xl 2sm:rounded-lg img_liner md:flex md:flex-col md:gap-8 md:p-6 md:rounded-lg md:text-2xl text-bold mb-4 relative`}>
+      {sureDelete && (<div className="overlay"><PopDeleteClass id={id} restartData={updateData}  onCansle={() => {
+            setSureDelete(!sureDelete);
+       
+          }} /> </div> )}
+
+
+
 {showUpdate && (<div className="overlay">
         <PopUpdateClass
           onCansle={() => {
@@ -34,8 +45,10 @@ const col = showUpdate
       )}
         <div className='md:flex md:justify-between'>
         <h1 className='text-color-text md:absolute md:bottom-10 md:left-[47%] 2sm:absolute 2sm:bottom-5 2sm:left-6'> <span>{basePaymentDelay}</span> <EventAvailableIcon/></h1> 
-
-        <h1 onClick={() => setShowUpdate(!showUpdate)} className='text-color-text cursor-pointer 2sm:absolute top-[20%] left-6'> <EditIcon /></h1>
+        <div className="flex gap-6"> 
+        <h1 onClick={() => setSureDelete(!sureDelete)} className='text-red-600 cursor-pointer 2sm:absolute top-[20%] left-4'> <DeleteIcon /></h1>
+        <h1 onClick={() => setShowUpdate(!showUpdate)} className='text-color-text cursor-pointer 2sm:absolute top-[20%] left-16'> <EditIcon /></h1>
+        </div>
 
         <h1 className="2sm:absolute top-2  left-[40%] 2sm:text-xl"> {grade === 'FirstSecondary' && 'أولى ثانوي'}
               {grade === 'SecondSecondary' && 'ثاني ثانوي'}
