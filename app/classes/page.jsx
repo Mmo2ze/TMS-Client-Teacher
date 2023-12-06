@@ -22,7 +22,17 @@ const page = () => {
       getdata(); 
     }, [showAddClass]);
 
-    
+    const updateData = async () => {
+      try {
+        const response = await axios.get("/api/Teacher/class");
+        setData(response.data);
+        setIsLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+
   return (
     <div className="mt-3 pt-20 ">
         {showAddClass && ( <div className="overlay"> <PopAddClass onGet={() => getdata()} onCansle={() => setShowAddClass(!showAddClass)}/> </div>)}
@@ -34,7 +44,7 @@ const page = () => {
         <div className="relative overflow-x-auto p-4  ">
         {isLoading && <Spinners/>}
         {!isLoading && data.map((da) => (
-    <ClassBox name={da.name} id={da.id} basePaymentPrice={da.basePaymentPrice} basePaymentDelay={da.basePaymentDelay} grade={da.grade}/>))}
+    <ClassBox   updateData={updateData} name={da.name} id={da.id} basePaymentPrice={da.basePaymentPrice} basePaymentDelay={da.basePaymentDelay} grade={da.grade}/>))}
       </div>
     </div>
   )}

@@ -7,8 +7,12 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditIcon from '@mui/icons-material/Edit';
 import styles from "./classBox.css"
 import PopUpdateClass from "./PopUpdateClass"
-const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id}) => {
+const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  updateData }) => {
   const [showUpdate , setShowUpdate] = useState(false)
+
+  // const handleUpdate = () => {
+  //   setShowUpdate(!showUpdate);
+  // };
 
 const col = showUpdate
 
@@ -18,6 +22,7 @@ const col = showUpdate
         <PopUpdateClass
           onCansle={() => {
             setShowUpdate(!showUpdate);
+            updateData();
           }}
           initialId={id}
           initialName={name}

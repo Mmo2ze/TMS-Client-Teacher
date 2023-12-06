@@ -21,15 +21,26 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
         basePaymentDelay: paymentDelay,
         grade: selectedGrade,
       });
-      onCansle()
+      onCansle();
       console.log("Data updated successfully!");
+      const updatedData = data.map(item => {
+        if (item.id === initialId) {
+          return {
+            ...item,
+            name: name,
+            basePaymentPrice: paymentPrice,
+            basePaymentDelay: paymentDelay,
+            grade: selectedGrade,
+          };
+        }
+        return item;
+      });
+      setData(updatedData);
     } catch (error) {
       console.error("Error updating data:", error);
     }
   };
 
-
-  console.log(`the id in update is ${initialId}`)
   return (
     <div className="fixed z-50 p-4 bg-side4-color md:mt-7 rounded-lg w-[96%]  md:w-1/2 mt-2 top-[55%] md:top-1/2 left-1/2 center text-end">
         {/* <div className=" absolute w-[90%] md:w-1/2 p-4 rounded-lg top-[80%] md:top-1/2 left-1/2 center bg-side4-color z-40"> */}
@@ -54,9 +65,9 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
           <option value="ThirdSecondary">ثالث ثانوي </option>
         </select>
       </div>
-       <InputAddClass value={name} onChange={setName} lable="ادخل الاسم"/>
-       <InputAddClass value={paymentPrice} onChange={setPaymentPrice} lable="ادخل السعر"/>
-       <InputAddClass value={paymentDelay} onChange={setPaymentDelay} lable="ادخل مدة التاخير"/>
+       <InputAddClass type="text" value={name} onChange={setName} lable="ادخل الاسم"/>
+       <InputAddClass type="number" value={paymentPrice} onChange={setPaymentPrice} lable="ادخل السعر"/>
+       <InputAddClass type="number" value={paymentDelay} onChange={setPaymentDelay} lable="ادخل مدة التاخير"/>
        <button onClick={handelUpdate} type="button" className="focus:outline-none w-full mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-button-color2 ">
        تحديث
         </button>
