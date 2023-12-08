@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import InputAddClass from './InputAddClass';
 import {useState } from "react"
 import axios from "../../config/axiosconfigClient"
+import ButtonAdd from '../ButtonAdd';
 const PopAddClass = ({onCansle , onGet}) => {
   const [name, setName] = useState("");
   const [paymentPrice, setPaymentPrice] = useState("");
@@ -52,10 +53,13 @@ const PopAddClass = ({onCansle , onGet}) => {
        <InputAddClass type="text" value={name} onChange={setName} lable="ادخل الاسم"/>
        <InputAddClass type="number" value={paymentPrice} onChange={setPaymentPrice} lable="ادخل السعر"/>
        <InputAddClass type="number" value={paymentDelay} onChange={setPaymentDelay} lable="ادخل مدة التاخير"/>
-       <button onClick={handelSubmit} type="button" className="focus:outline-none w-full mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-        اضافة
-        </button>
+<div className="w-full mt-4 "> 
+<div className="mx-auto my-4 tetx-center w-[19%]"> 
 
+        <ButtonAdd onClick={handelSubmit} text="اضافة"/>
+</div>
+
+</div>
     </div>
   )
 }

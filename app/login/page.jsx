@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "../config/axiosconfigClient";
 import { useAuth } from "../../AppState";
 import { useRouter } from "next/navigation";
+import Spinners from "../ui/Spinners";
 const isEgyptianNumber = (number) => {
   const pattern = /^01\d{9}$/;
   return pattern.test(number);
@@ -59,7 +60,7 @@ const page = () => {
     }
   };
   if (HaveRole([null])) {
-    return <>loddddding</>;
+    return <Spinners/>;
   }
   if (HaveRole(["UnAuthorized", "HaveAdminCode"])) {
     return (

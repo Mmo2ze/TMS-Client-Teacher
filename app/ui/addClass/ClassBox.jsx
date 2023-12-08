@@ -5,10 +5,10 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PersonIcon from '@mui/icons-material/Person';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditIcon from '@mui/icons-material/Edit';
-import styles from "./classBox.css"
 import PopUpdateClass from "./PopUpdateClass"
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopDeleteClass from "./PopDeleteClass"
+import Link from 'next/link'
 const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  updateData }) => {
   const [showUpdate , setShowUpdate] = useState(false)
   const [sureDelete , setSureDelete] = useState(false)
@@ -17,8 +17,7 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
   //   setShowUpdate(!showUpdate);
   // };
 
-const col = showUpdate
-
+// const col = showUpdate
 
   return (
     <div className={`2sm:h-64 2sm:text-xl 2sm:rounded-lg img_liner md:flex md:flex-col md:gap-8 md:p-6 md:rounded-lg md:text-2xl text-bold mb-4 relative`}>
@@ -66,7 +65,9 @@ const col = showUpdate
         <div className='md:flex md:flex-col md:items-end'>
         <h1 className="md:mb-6 2sm:absolute top-[40%] left-6"> <span className="text-color-text">6</span> &nbsp; <AccessTimeIcon/></h1>
         <div className="2sm:absolute top-[55%] left-2" > 
+        <Link  href={`/classes/section/${id}`}>
         <Button text="عرض" />
+         </Link>
         </div>        
         </div>
         </div>

@@ -39,8 +39,16 @@ color: white;
 .img_liner{
   background-image: linear-gradient(392deg, rgb(0,0,0),rgb(17,25,40));
 
+}
+.img-rolse{
+  background: rgb(19,19,19);
+  background: linear-gradient(90deg, rgba(19,19,19,1) 9%, rgba(32,35,37,1) 41%, rgba(45,51,54,1) 74%);
 
 
-
-
+}
+.MuiInputBase-input{
+  background-color: #374151 !important; 
+  color:white important;
+  border-radius:6px;
+  text-align: end;
 }
