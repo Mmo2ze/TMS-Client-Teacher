@@ -37,7 +37,7 @@ const instance = axios.create({
   headers: {
     accept: "*/*",
     "Content-Type": "application/json",
-    Authorization: jwt!=""?"Bearer " + jwt:"",
+    Authorization: (jwt!=""&&jwt!=null)?"Bearer " + jwt:"",
   },
 });
 
