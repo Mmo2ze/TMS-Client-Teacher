@@ -32,7 +32,28 @@ const handelSubmit = async () => {
  
     setTheId(response.data.data.id)
   } catch (error) {
-    console.error("Error updating data:", error.message);
+    if(error.response.status === 404){
+      alert("الرقم غير موجود")
+    }
+    else if(error.response.status === 400){
+      var message1 = error.response.data.messages[0];
+      if(message1 ){
+        switch (message1.statusCode) {
+          case 302:{
+            alert("الرقم خطا");
+            break;
+          }
+          case 301:{
+            alert("no whatsapp");
+            break;
+          }
+          default:{
+            alert ("something went wrong")
+            break;
+          }
+        }
+      }
+    }
   }
 };
 
