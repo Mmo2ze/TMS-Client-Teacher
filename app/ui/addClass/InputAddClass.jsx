@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InputAddClass = ({lable , value , onChange , type}) => {
+const InputAddClass = ({lable , value , onChange  , type}) => {
     const handleChange = () => {
         onChange(event.target.value);
       };

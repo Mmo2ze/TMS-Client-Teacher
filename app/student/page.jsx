@@ -1,5 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import StudentBox from "../ui/student/StudentBox"
+import Link from "next/link"
 const page = () => {
     return (
         <div className="pt-20"> 
@@ -17,7 +18,9 @@ const page = () => {
         </div>
       </div>
       <div className="cursor-pointer"> 
+      <Link href="/student/add"> 
         <AddIcon sx={{ fontSize: 60 }}/>
+      </Link>
       </div>
       </div>
       <div> 
