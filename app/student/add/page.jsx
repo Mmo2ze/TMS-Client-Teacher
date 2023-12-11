@@ -9,15 +9,43 @@ const page = () => {
     const [whatsappEnabled, setWhatsappEnabled] = useState(false);
     const [data, setData] = useState("");
     const [theId, setTheId] = useState("");
+    const [theName, setTheName] = useState("");
     // const [isOneVisible, setOneVisible] = useState(true);
     const [isTwoVisible, setTwoVisible] = useState(false);
     const [selectedGrade, setSelectedGrade] = useState("");
-
-
-
+    const [shwoNameStudent , setShowNameStudent] = useState(false)
+    const [nameStudent , setNameStudent] = useState("")
+    const [idStudent , setIdStudent] = useState("")
+  const nameParts  = theName.split(" ")
+  const firstName = nameParts[0];
     const handleWhatsappChange = (value) => {
       setWhatsappEnabled(value === "hosting-big");
     };
+
+
+    const handelRegist = async () => {
+      try {
+        console.log("Attempting to update data...");
+        const requestData = {
+          employee: {
+            name: nameStudent,
+            phone: number,
+          },
+          whatsappRequied: whatsappEnabled,
+        };
+    
+      const  response =  await axios.post(`/api/Teacher/student/regist`, requestData);
+        console.log("Data updated successfully!");
+        setTwoVisible(!isTwoVisible)
+        setIdStudent(response.data.id)
+        // response.data.id
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    };
+    
+
+
 const handelSubmit = async () => {
   try {
     console.log("Attempting to update data...");
@@ -31,9 +59,10 @@ const handelSubmit = async () => {
     setTwoVisible(response.data.isvalid);
  
     setTheId(response.data.data.id)
+    setTheName(response.data.data.name)
   } catch (error) {
     if(error.response.status === 404){
-      alert("الرقم غير موجود")
+      setShowNameStudent(!shwoNameStudent)
     }
     else if(error.response.status === 400){
       var message1 = error.response.data.messages[0];
@@ -57,12 +86,13 @@ const handelSubmit = async () => {
   }
 };
 
-
 const handelAdd = async () => {
   try {
     console.log("Attempting to update data...");
+    const studentIdToSend = theId ? parseInt(theId, 10) : parseInt(idStudent, 10);
+
     const response = await axios.post(`/api/Teacher/student`, {
-      studentId: parseInt(theId, 10),
+      studentId: studentIdToSend,
       classId: parseInt(selectedGrade, 10) 
     });
 
@@ -94,6 +124,10 @@ const handelAdd = async () => {
 
         <div className="one"> 
         <InputAddClass type="number" lable="ادخل رقم الطالب" value={number} onChange={setNumber}/>
+        {shwoNameStudent && 
+        <InputAddClass type="text" lable="ادخل اسم الطالب" value={nameStudent} onChange={setNameStudent}/>
+         }
+
         <div>
         <h3 className="mb-5 text-center pt-4 text-lg font-medium text-gray-900 dark:text-white">
           خدمة رسائل الواتس اب
@@ -144,14 +178,26 @@ const handelAdd = async () => {
         </ul>
       </div>
 
+      
+        {!shwoNameStudent && 
         <button  type="button" onClick={handelSubmit} className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600   font-medium  text-lg px-5 py-2.5  dark:bg-button-color2">
         ارسال
         </button>
+     
+         }
+
+        {shwoNameStudent && 
+        <button  type="button" onClick={handelRegist} className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600   font-medium  text-lg px-5 py-2.5  dark:bg-button-color2">
+        تسجيل
+        </button>
+         }
         </div>
 
-        <div className={isTwoVisible ? "tow" : "hidden"}> 
-        <h1 className="text-xl my-3 text-end text-color-text">رقم الطالب هو : {theId} </h1>
-        <label for="countries" class="text-end block my-4 text-xl font-medium text-gray-900 dark:text-white">الرجاء اختيار الصف الذي تريد انضمام الطالب اليه</label>
+{isTwoVisible && ( 
+  <div > 
+        <h1 className="text-xl my-3 text-end ">  الطالب هو : <span className="text-color-text text-xl">{theName || nameStudent}</span> </h1>
+        <h1 className="text-xl my-3 text-end ">رقم الطالب هو : <span className="text-color-text text-xl">{theId || idStudent}</span> </h1>
+        <label for="countries" class="text-end block my-4 text-xl font-medium text-gray-900 dark:text-white">الرجاء اختيار الصف الذي تريد انضمام الطالب <span className="px-2 text-color-text text-xl">{firstName} </span>  اليه</label>
         <select
          value={selectedGrade}
          onChange={(e) => setSelectedGrade(e.target.value)}
@@ -172,9 +218,8 @@ const handelAdd = async () => {
         اضافة
         </button>
         </div>
-
-
-
+)}
+        
 
     </div>
   )
@@ -182,3 +227,5 @@ const handelAdd = async () => {
 
 export default page
 
+// 01023044584
+// no whatsapp
