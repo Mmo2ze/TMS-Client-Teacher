@@ -33,3 +33,82 @@ color: white;
   border-radius:6px;
   text-align: end;
 }
+
+#reader {
+  width: 90%;
+  /* height: 300px; */
+  margin:0 auto;
+  border: none !important;
+}
+@media (max-width: 767px) {
+  #reader canvas.html5-qrcode-scanner__qr-box {
+    /* width: 250px !important;
+    height: 250px !important; */
+    width: 80%;
+    height: 80%;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  #reader canvas.html5-qrcode-scanner__qr-box {
+    /* width: 350px !important;
+    height: 350px !important; */
+    width: 60%;
+    height: 60%;
+  }
+}
+
+@media (min-width: 1024px) {
+  #reader canvas.html5-qrcode-scanner__qr-box {
+    width: 40%;
+    height: 40%;
+  }
+}
+#reader__scan_region img{
+width: 120px;
+margin: 0 auto 25px;
+}
+#reader__dashboard_section_csr span{
+color: white;
+
+}
+#reader video{
+height: 450px;
+}
+
+#html5-qrcode-select-camera{
+color: black;
+background-color: #007bff;
+display: block;
+margin: 20px auto 0;
+}
+#html5-qrcode-button-camera-start,
+#html5-qrcode-button-camera-stop,
+#html5-qrcode-button-camera-permission,
+#html5-qrcode-button-file-selection{
+background-color: #007bff;
+color: white;
+border: none;
+border-radius: 5px;
+padding: 10px;
+margin-top: 10px;
+cursor: pointer;
+margin: 20px 0;
+}
+#html5-qrcode-anchor-scan-type-change{
+color: white !important;
+text-decoration: none !important;
+display: none !important  ;
+
+}
+.main-content {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative;
+  overflow-y: scroll;
+  height: calc(100vh - 75px);
+  margin-top: 75px;
+}

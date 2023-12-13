@@ -1,7 +1,10 @@
+
 import AddIcon from '@mui/icons-material/Add';
 import StudentBox from "../ui/student/StudentBox"
 import Link from "next/link"
+
 const page = () => {
+
     return (
         <div className="pt-20"> 
             

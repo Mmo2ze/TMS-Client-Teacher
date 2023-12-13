@@ -78,11 +78,11 @@ const page = () => {
         if (message1) {
           switch (message1.statusCode) {
             case 302: {
-              endLodingToast(toastID, 'invalid phone', "error");
+              endLodingToast(toastID, 'الرقم الذي ادخلته حطأ', "error");
               break;
             }
             case 301: {
-              endLodingToast(toastID, "no whatsapp", "error");
+              endLodingToast(toastID, "الرقم الذي ادخلته ليس عليه واتس اب", "error");
               break;
             }
             default: {
