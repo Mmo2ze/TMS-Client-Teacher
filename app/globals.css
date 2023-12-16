@@ -23,6 +23,10 @@ color: white;
 .img_liner{
   background-image: linear-gradient(392deg, rgb(0,0,0),rgb(17,25,40));
 }
+.img_liner_2{
+  background: rgb(23,33,51);
+  background: linear-gradient(52deg, rgba(23,33,51,1) 0%, rgba(17,25,40,1) 30%, rgba(0,0,0,1) 95%);
+}
 .img-rolse{
   background: rgb(19,19,19);
   background: linear-gradient(90deg, rgba(19,19,19,1) 9%, rgba(32,35,37,1) 41%, rgba(45,51,54,1) 74%);
@@ -32,6 +36,19 @@ color: white;
   color:white important;
   border-radius:6px;
   text-align: end;
+}
+
+
+.page {
+  background-color: #111928;
+  height: calc(100vh - 76px);
+  position: relative;
+  width: 100%;
+}
+
+.main-conten {
+  background-color: red;
+
 }
 
 #reader {
@@ -101,14 +118,4 @@ color: white !important;
 text-decoration: none !important;
 display: none !important  ;
 
-}
-.main-content {
-  display: flex;
-  padding: 10px;
-  flex-direction: column;
-  flex-grow: 1;
-  position: relative;
-  overflow-y: scroll;
-  height: calc(100vh - 75px);
-  margin-top: 75px;
 }

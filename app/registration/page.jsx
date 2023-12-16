@@ -1,18 +1,19 @@
 "use client"
-import React, { useRef } from 'react'
+import React, {useState , useRef } from 'react'
 import Scanner from '../ui/scanner/Scanner'
-
+import { endLodingToast, lodingToast, sendToast } from "../func/toast";
+import axios from "../config/axiosconfigClient"
 const page = () => {
+  const [student, setStudent] = useState({});
+
   const scaner = useRef(null);
 
 
   function success(result) {
     scaner.current.pause();
-    console.log(`the result scanner is ${result}`)
-    request(`api/Student/${result}`)
+    axios.get(`api/Student/${result}`)
       .then((response) => {
         setStudent(response.data);
-        setShowpop(true);
       })
       .catch((error) => {
         setTimeout(() => {
@@ -32,11 +33,15 @@ const page = () => {
   }
 
 
+
+
   return (
-    <div>    
-           <div className="main-content">
-              <Scanner success={success} scanner={scaner} />
-            </div>
+    <div className='pt-20 page'>    
+      <>
+          <div className="main-conten">
+          <Scanner success={success} scanner={scaner} />
+          </div>
+        </>
     </div>
   )
 }

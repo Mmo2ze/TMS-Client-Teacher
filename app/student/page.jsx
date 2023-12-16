@@ -1,10 +1,30 @@
-
+"use client"
+import { useState, useEffect } from "react";
+import axios from "../config/axiosconfigClient";
+import Spinners from '@/app/ui/Spinners';
 import AddIcon from '@mui/icons-material/Add';
 import StudentBox from "../ui/student/StudentBox"
 import Link from "next/link"
 
 const page = () => {
-
+  const [data, setData] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  
+  console.log(`the student is ${data}`)
+  useEffect(() => {
+  const getdata = async () => {
+    try {
+      const response = await axios.get("/api/Teacher/student");
+      setData(response.data);
+      setIsLoading(false);
+  
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  
+  getdata();
+  }, []);
     return (
         <div className="pt-20"> 
             
@@ -27,12 +47,13 @@ const page = () => {
       </div>
       </div>
       <div> 
-        <StudentBox/>
-        <StudentBox/>
-        <StudentBox/>
-        <StudentBox/>
-        <StudentBox/>
-        <StudentBox/>
+      {isLoading && <Spinners/>}
+            {!isLoading && data.map((da) => (
+              <Link href={`/student/${da.student.id}`}> 
+        <StudentBox name={da.student.name} id={da.student.id}/>
+              </Link>
+         ))}
+
       </div>
 
 

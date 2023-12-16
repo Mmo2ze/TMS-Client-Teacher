@@ -19,7 +19,6 @@ const page = () => {
           console.log(e);
         }
       };
-    
       getdata(); 
     }, [showAddClass]);
 

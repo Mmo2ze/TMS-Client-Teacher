@@ -75,3 +75,6 @@ console.log(`data is ${data}`)
     router.push("/login");
   }
 }
+
+
+// bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJUZWFjaGVyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIwMTAwNDcxNDkzOCIsImlkIjoiMjciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTW1vMnplIiwiZXhwIjoxNzA0NTY0MjM0fQ.pUPHoQQl3FqOYTe1Tkk324_g80F87X-dSyi0QcZrwAY

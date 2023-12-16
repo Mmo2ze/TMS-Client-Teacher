@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
@@ -45,7 +44,7 @@ function Scanner({ success, scanner }) {
     return () => {
       scanner.current.clear();
     };
-  }, []); // إزالة الاعتمادات من الـ useEffect
+  }, []); 
 
 
   return (

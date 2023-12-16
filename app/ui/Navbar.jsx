@@ -30,13 +30,9 @@ const Navbar = () => {
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-8"
-              alt="Flowbite Logo"
-            />
+
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Flowbite
+            zigzag
             </span>
           </a>
           <button
@@ -104,7 +100,37 @@ const Navbar = () => {
           className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
           onClick={handleLinkClick}
         >
-          تسجيل الحضور
+          سكنر
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/scoring"
+          className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+          onClick={handleLinkClick}
+        >
+          {/* Scoring */}
+      تسجيل درجات  
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/attendance"
+          className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+          onClick={handleLinkClick}
+        >
+          {/*  attendance */}
+         تسجيل الحضور 
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/cards"
+          className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+          onClick={handleLinkClick}
+        >
+          {/*  attendance */}
+        كروت
         </Link>
       </li>
 
