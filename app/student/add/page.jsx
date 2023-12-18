@@ -27,7 +27,24 @@ const page = () => {
   const nameParts = theName.split(" ");
   const firstName = nameParts[0];
   const [gender, setGender] = useState("");
+  const [wantToAddParentNumber, setWantToAddParentNumber] = useState(false);
+  const [perentPhone ,setPerentPhone] = useState([])
+  const [valuePerentNumber , setValuePerentNumber] = useState("")
 
+
+    const getParent = async () => {
+      try {
+        const response = await axios.get(`/api/Teacher/parent/check/${valuePerentNumber}`);
+        setPerentPhone(response.data.isvalid);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+
+
+console.log(`perentPhone is valuePerentNumber ${perentPhone}`)
+  
   const handleWhatsappChange = (value) => {
     setWhatsappEnabled(value === "hosting-big");
   };
@@ -54,7 +71,7 @@ const page = () => {
       setTwoVisible(!isTwoVisible);
       setIdStudent(response.data.id);
   
-      // إنهاء توست الانتظار وعرض توست بناءً على نتيجة العملية
+
       endLodingToast(toastID, " تم التسجيل بنجاح الرجاءالرجاء اختيار صف", 'success');
       // response.data.id
     } catch (error) {
@@ -80,8 +97,9 @@ const page = () => {
       setTheId(response.data.data.id);
       setTheName(response.data.data.name);
   
-      // إنهاء توست الانتظار وعرض توست بناءً على نتيجة العملية
-      endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!', response.data.isvalid ? 'success' : 'error');
+
+      // endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!', response.data.isvalid ? 'success' : 'error');
+      endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!');
   
     } catch (error) {
       if (error.response.status === 404) {
@@ -284,6 +302,35 @@ const page = () => {
               {theId || idStudent}
             </span>{" "}
           </h1>
+          <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">هل تريد اضافة رقم ولي امر</h1>
+         <div className="flex justify-center -items-center gap-6">  
+          <div className="flex flex-col-reverse justify-center gap-4 items-center ">
+          <input id="default-radio-1" type="radio" onChange={() => {setWantToAddParentNumber(true);}}  defaultValue name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label htmlFor="default-radio-1" className="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300"> نعم</label>
+        </div>
+        <div className="flex flex-col-reverse justify-center gap-4 items-center">
+          <input defaultChecked id="default-radio-2" type="radio" onChange={() => {setWantToAddParentNumber(false);}} defaultValue name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label htmlFor="default-radio-2" className="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">لا </label>
+        </div> 
+        </div>
+        {wantToAddParentNumber && (
+          <div className="duration-1000 transition-transform"> 
+  <InputAddClass
+  value={valuePerentNumber}
+  onChange={setValuePerentNumber}
+    type="number"
+    lable="ادخل رقم ولي الأمر"
+    />
+     <button
+     onClick={getParent}
+            type="button"
+            className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600   font-medium  text-lg px-5 py-2.5  dark:bg-button-color2"
+          >
+            اضافة رقم ولي الامر
+          </button>
+    </div>
+)}
+
           <label
             for="countries"
             class="text-end block my-4 text-xl font-medium text-gray-900 dark:text-white"
