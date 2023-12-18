@@ -26,31 +26,41 @@ const page = () => {
   const [idStudent, setIdStudent] = useState("");
   const nameParts = theName.split(" ");
   const firstName = nameParts[0];
+  const [gender, setGender] = useState("");
+
   const handleWhatsappChange = (value) => {
     setWhatsappEnabled(value === "hosting-big");
   };
 
   const handelRegist = async () => {
+    var toastID = lodingToast();
+
     try {
       console.log("Attempting to update data...");
       const requestData = {
         employee: {
           name: nameStudent,
           phone: number,
+          gender: gender
         },
         whatsappRequied: whatsappEnabled,
       };
-
+  
       const response = await axios.post(
-        `/api/Teacher/student/regist`,
+        `/api/Teacher/student/register`,
         requestData
       );
       console.log("Data updated successfully!");
       setTwoVisible(!isTwoVisible);
       setIdStudent(response.data.id);
+  
+      // إنهاء توست الانتظار وعرض توست بناءً على نتيجة العملية
+      endLodingToast(toastID, " تم التسجيل بنجاح الرجاءالرجاء اختيار صف", 'success');
       // response.data.id
     } catch (error) {
       console.error("Error updating data:", error);
+      endLodingToast(toastID, "هذا الرقم ليس عليه واتس اب", 'error');
+
     }
   };
 
@@ -62,17 +72,21 @@ const page = () => {
         phone: number,
         hasWhatsapp: whatsappEnabled,
       });
-
+  
       console.log(`Data updated successfully! : ${response.data.isvalid}`);
       // setOneVisible(!response.data.isvalid);
       setTwoVisible(response.data.isvalid);
-      
-
+  
       setTheId(response.data.data.id);
       setTheName(response.data.data.name);
+  
+      // إنهاء توست الانتظار وعرض توست بناءً على نتيجة العملية
+      endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!', response.data.isvalid ? 'success' : 'error');
+  
     } catch (error) {
       if (error.response.status === 404) {
         setShowNameStudent(!shwoNameStudent);
+        endLodingToast(toastID, " ادخل بيانات الطالب ", "success");
       } else if (error.response.status === 400) {
         var message1 = error.response.data.messages[0];
         if (message1) {
@@ -86,7 +100,7 @@ const page = () => {
               break;
             }
             default: {
-              alert("something went wrong");
+              endLodingToast(toastID, "هنالك مشكلة الرجاء المحاولة مرة اخرى", "error");
               break;
             }
           }
@@ -137,17 +151,9 @@ const page = () => {
           value={number}
           onChange={setNumber}
         />
-        {shwoNameStudent && (
-          <InputAddClass
-            type="text"
-            lable="ادخل اسم الطالب"
-            value={nameStudent}
-            onChange={setNameStudent}
-          />
-        )}
-
+ 
         <div>
-          <h3 className="mb-5 text-center pt-4 text-lg font-medium text-gray-900 dark:text-white">
+          <h3 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">
             خدمة رسائل الواتس اب
           </h3>
           <ul className="grid w-full gap-6 md:grid-cols-2">
@@ -159,6 +165,7 @@ const page = () => {
                 value="hosting-big"
                 className="hidden peer"
                 onChange={() => handleWhatsappChange("hosting-big")}
+                defaultChecked  
               />
               <label
                 htmlFor="hosting-big"
@@ -195,6 +202,52 @@ const page = () => {
           </ul>
         </div>
 
+        {shwoNameStudent && ( 
+          <> 
+          <InputAddClass
+            type="text"
+            lable="ادخل اسم الطالب"
+            value={nameStudent}
+            onChange={setNameStudent}
+            />
+            <div className="flex justify-center items-center gap-5 my-4 "> 
+            <div className="flex flex-col gap-4 items-center justify-center"> 
+            <label htmlFor="male" className="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">
+  ذكر
+</label>
+<input
+  type="radio"
+  id="male"
+  name="gender"
+  value="male"
+  checked={gender === "male"}
+  onChange={() => setGender("male")}
+  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+/>
+</div>
+<div className="flex flex-col gap-4 items-center justify-center"> 
+
+<label htmlFor="female" className="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">
+  أنثى
+</label>
+<input
+  type="radio"
+  id="female"
+  name="gender"
+  value="female"
+  onChange={() => setGender("female")}
+  checked={gender === "female"}
+  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+
+/>
+</div>
+</div>
+
+            </>
+        )}
+
+
+
         {!shwoNameStudent && (
           <button
             type="button"
@@ -220,7 +273,7 @@ const page = () => {
         <div>
           <h1 className="text-xl my-3 text-end ">
             {" "}
-            الطالب هو :{" "}
+            الطالب  :{" "}
             <span className="text-color-text text-xl">
               {theName || nameStudent}
             </span>{" "}

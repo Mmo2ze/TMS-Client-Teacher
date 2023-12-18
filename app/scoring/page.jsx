@@ -33,13 +33,13 @@ const Page = () => {
   }, [searchWord]);
 
   return (
-    <div className="pt-20 px-4 text-end">
+    <div className="pt-20 px-2 text-end">
 
 
 {showPop && ( <div className="overlay">     <PopOllStudent placeholder="تسجيل درجات" onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} />  </div>)}
 
 
-      <h1 className="mb-5 text-3xl font-bold text-side12-color">تسجيل درجات طالب</h1>
+      <h1 className="mb-5 px-2 text-3xl font-bold text-side12-color">تسجيل درجات طالب</h1>
       <input
         type="search"
         id="searchInput"

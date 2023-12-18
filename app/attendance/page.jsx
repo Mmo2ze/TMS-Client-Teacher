@@ -28,12 +28,12 @@ const Page = () => {
       };
   
       fetchData();
-    }, 3000); 
+    }, 2000); 
       return () => clearTimeout(delaySearch);
   }, [searchWord]);
 
   return (
-    <div className="pt-20 px-4 text-end">
+    <div className="pt-20 px-2 text-end">
 
 
 {showPop && ( <div className="overlay">     <PopOllStudent placeholder="تسجيل الحضور" onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} />  </div>)}

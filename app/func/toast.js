@@ -15,7 +15,7 @@ export function sendToast(msg, status) {
   }
 
   export  function lodingToast() {
-    const id = toast.loading("Please wait...", {
+    const id = toast.loading("الرجاء الانتظار", {
       position: "top-right",
       autoClose: 7000,
       hideProgressBar: false,
