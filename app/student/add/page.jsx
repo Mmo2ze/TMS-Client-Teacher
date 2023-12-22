@@ -33,6 +33,9 @@ const page = () => {
   const [valuePerentNumber , setValuePerentNumber] = useState("")
   const [nameParent , setNameParent] = useState("")
   const [whatsappEnabledParent, setWhatsappEnabledParent] = useState(false);
+  const [showDetailParent , setShowDetailParent] = useState(false)
+  const [DetailParent , setDetailParent] = useState("")
+  const [showAddParentButton, setShowAddParentButton] = useState(true);
 
  const handleWhatsappChange = (value) => {
     setWhatsappEnabled(value === "hosting-big");
@@ -47,6 +50,13 @@ const page = () => {
       try {
         const response = await axios.get(`/api/Teacher/parent/check/${valuePerentNumber}`);
         setPerentPhone(response.data.isvalid);
+        if (response.data.isvalid) {
+          endLodingToast(toastID, "تم اضافة ولي الامر بنجاح", "success");
+          setShowDetailParent(true)
+          setDetailParent(response.data.data.name)
+          setShowAddParentButton(false);
+
+        }
       } catch (error) {
         if (error.response.status === 404) {
           setShowNameParent(!shwoNameParent);
@@ -355,7 +365,7 @@ const page = () => {
               {theId || idStudent}
             </span>{" "}
           </h1>
-          <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">هل تريد اضافة رقم ولي امر</h1>
+          <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">هل تريد اضافة رقم ولي امر</h1>
          <div className="flex justify-center -items-center gap-6">  
           <div className="flex flex-col-reverse justify-center gap-4 items-center ">
           <input id="default-radio-1" type="radio" onChange={() => {setWantToAddParentNumber(true);}}  defaultValue name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -374,6 +384,10 @@ const page = () => {
     type="number"
     lable="ادخل رقم ولي الأمر"
     />
+    {showDetailParent && (
+
+  <h3 className="text-end my-6 text-xl"><span className="text-color-text text-xl">{DetailParent}</span> : الاسم  </h3>
+)}
     {shwoNameParent && (
       <div>
 
@@ -409,11 +423,11 @@ const page = () => {
 
 
 
-{!shwoNameParent && (
+{!shwoNameParent && showAddParentButton && (
      <button
      onClick={getParent}
             type="button"
-            className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600   font-medium  text-lg px-5 py-2.5  dark:bg-button-color2"
+            className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600  2sm:w-full font-medium  text-lg px-5 py-2.5  dark:bg-button-color2"
           >
             اضافة رقم ولي الامر
           </button>
@@ -462,8 +476,7 @@ export default page;
 
 // 01023044584
 // no whatsapp
-// 01004714938
-// 01004714857
+
 // 01004714854
 // {
 //   "children": [],

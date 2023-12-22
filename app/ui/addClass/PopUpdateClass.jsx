@@ -44,7 +44,7 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
   return (
     <div className="fixed z-50 p-4 bg-side4-color md:mt-7 rounded-lg w-[96%]  md:w-1/2 mt-2 top-[55%] md:top-1/2 left-1/2 center text-end">
         {/* <div className=" absolute w-[90%] md:w-1/2 p-4 rounded-lg top-[80%] md:top-1/2 left-1/2 center bg-side4-color z-40"> */}
-        <h1 className=" absolute top-[-40px] md:top-[-50px] left-[20%] text-button-color2-hover text-3xl"> تحديث معلومات الصف</h1>
+        <h1 className=" absolute top-[-60px] md:top-[-50px] left-[15%] md:left-[24%] text-button-color2-hover text-3xl "> تحديث معلومات الصف</h1>
     <div className="absolute top-0 left-2 cursor-pointer">
         <CloseIcon sx={{ fontSize: 50 }}  onClick={onCansle}  color="primary"/>
        </div>
