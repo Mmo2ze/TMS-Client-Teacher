@@ -22,6 +22,7 @@ const page = () => {
   const [isTwoVisible, setTwoVisible] = useState(false);
   const [selectedGrade, setSelectedGrade] = useState("");
   const [shwoNameStudent, setShowNameStudent] = useState(false);
+  const [shwoNameParent, setShowNameParent] = useState(false);
   const [nameStudent, setNameStudent] = useState("");
   const [idStudent, setIdStudent] = useState("");
   const nameParts = theName.split(" ");
@@ -30,25 +31,77 @@ const page = () => {
   const [wantToAddParentNumber, setWantToAddParentNumber] = useState(false);
   const [perentPhone ,setPerentPhone] = useState([])
   const [valuePerentNumber , setValuePerentNumber] = useState("")
+  const [nameParent , setNameParent] = useState("")
+  const [whatsappEnabledParent, setWhatsappEnabledParent] = useState(false);
 
+ const handleWhatsappChange = (value) => {
+    setWhatsappEnabled(value === "hosting-big");
+  };
+  const handleWhatsappChangeParent = (value) => {
+    setWhatsappEnabledParent(value);
+  };
 
     const getParent = async () => {
+    var toastID = lodingToast();
+
       try {
         const response = await axios.get(`/api/Teacher/parent/check/${valuePerentNumber}`);
         setPerentPhone(response.data.isvalid);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        if (error.response.status === 404) {
+          setShowNameParent(!shwoNameParent);
+          endLodingToast(toastID, " ادخل اسم ولي الامر", "success");
+        } else if (error.response.status === 400) {
+          var message1 = error.response.data.messages[0];
+          if (message1) {
+            switch (message1.statusCode) {
+              case 302: {
+                endLodingToast(toastID, 'الرقم الذي ادخلته حطأ', "error");
+                break;
+              }
+              case 301: {
+                endLodingToast(toastID, "الرقم الذي ادخلته ليس عليه واتس اب", "error");
+                break;
+              }
+              default: {
+                endLodingToast(toastID, "هنالك مشكلة الرجاء المحاولة مرة اخرى", "error");
+                break;
+              }
+            }
+          }
+        }
       }
     };
 
-
-
-console.log(`perentPhone is valuePerentNumber ${perentPhone}`)
+    const handelRegistParent = async () => {
+      var toastID = lodingToast();
   
-  const handleWhatsappChange = (value) => {
-    setWhatsappEnabled(value === "hosting-big");
-  };
-
+      try {
+        console.log("Attempting to update data...");
+        const requestData = {
+          employee: {
+            name: nameParent,
+            phone: valuePerentNumber,
+            gender: 0
+          },
+          whatsappRequied: whatsappEnabledParent,
+        };
+    
+        const response = await axios.post(
+          `/api/Teacher/parent/register`,
+          requestData
+        );
+        console.log("Data updated successfully!");
+ 
+        endLodingToast(toastID, " تم التسجيل  بيانات ولي الامر", 'success');
+        // response.data.id
+      } catch (error) {
+        console.error("Error updating data:", error);
+        endLodingToast(toastID, "هذا الرقم ليس عليه واتس اب", 'error');
+  
+      }
+    };
+ 
   const handelRegist = async () => {
     var toastID = lodingToast();
 
@@ -98,8 +151,8 @@ console.log(`perentPhone is valuePerentNumber ${perentPhone}`)
       setTheName(response.data.data.name);
   
 
-      // endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!', response.data.isvalid ? 'success' : 'error');
-      endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!');
+      endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!', response.data.isvalid ? 'success' : 'error');
+      // endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!');
   
     } catch (error) {
       if (error.response.status === 404) {
@@ -314,13 +367,49 @@ console.log(`perentPhone is valuePerentNumber ${perentPhone}`)
         </div> 
         </div>
         {wantToAddParentNumber && (
-          <div className="duration-1000 transition-transform"> 
+          <div className="duration-1000 transition-transform  "> 
   <InputAddClass
   value={valuePerentNumber}
   onChange={setValuePerentNumber}
     type="number"
     lable="ادخل رقم ولي الأمر"
     />
+    {shwoNameParent && (
+      <div>
+
+        <InputAddClass
+        value={nameParent}
+        onChange={setNameParent}
+        type="text"
+        lable="ادخل اسم ولي الأمر"
+        />
+
+        <h3 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">
+              الواتس اب
+          </h3>
+        <div>
+        <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+          <input onChange={() => handleWhatsappChangeParent(true)}  id="bordered-radio-1" type="radio" defaultValue name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label htmlFor="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">نعم اريد </label>
+        </div>
+        <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+          <input onChange={() => handleWhatsappChangeParent(false)} defaultChecked id="bordered-radio-2" type="radio" defaultValue name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">لا </label>
+        </div>
+      </div>
+<button
+     onClick={handelRegistParent}
+            type="button"
+            className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600   font-medium  text-lg px-5 py-2.5  dark:bg-button-color2"
+          >
+            تسجيل رقم ولي الامر
+          </button>
+        </div>
+    )}
+
+
+
+{!shwoNameParent && (
      <button
      onClick={getParent}
             type="button"
@@ -328,6 +417,7 @@ console.log(`perentPhone is valuePerentNumber ${perentPhone}`)
           >
             اضافة رقم ولي الامر
           </button>
+              )}
     </div>
 )}
 
@@ -372,3 +462,13 @@ export default page;
 
 // 01023044584
 // no whatsapp
+// 01004714938
+// 01004714857
+// 01004714854
+// {
+//   "children": [],
+//   "gender": "Male",
+//   "id": 3,
+//   "name": "alith",
+//   "phone": "01004714244"
+// }
