@@ -1,8 +1,11 @@
 "use client";
+import { useRouter } from 'next/navigation'
+
 import InputAddClass from "@/app/ui/addClass/InputAddClass";
 import { useState, useEffect } from "react";
 import axios from "../../config/axiosconfigClient";
 import Button from "@/app/ui/Button";
+import ReplayIcon from '@mui/icons-material/Replay';
 const {
   endLodingToast,
   lodingToast,
@@ -13,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
+  const router = useRouter()
   const [number, setNumber] = useState("");
   const [whatsappEnabled, setWhatsappEnabled] = useState(false);
   const [data, setData] = useState("");
@@ -35,8 +39,7 @@ const page = () => {
   const [whatsappEnabledParent, setWhatsappEnabledParent] = useState(false);
   const [showDetailParent , setShowDetailParent] = useState(false)
   const [DetailParent , setDetailParent] = useState("")
-  const [DetailParentId , setDetailParentId] = useState("")
-  const [DetailParentIdRegist , setDetailParentIdRegist] = useState("")
+  const [DetailParentId , setDetailParentId] = useState(0)
   const [showAddParentButton, setShowAddParentButton] = useState(true);
 
  const handleWhatsappChange = (value) => {
@@ -207,7 +210,7 @@ const page = () => {
         classId: parseInt(selectedGrade, 10),
         parentId : DetailParentId
       });
-      endLodingToast(toastID, " ادخل بيانات الطالب ", "success");
+      endLodingToast(toastID, "تم تسجيل الطالب بنجاح", "success");
       console.log(`Data updated successfully! : ${response.data.isvalid}`);
     } catch (error) {
       console.error("Error updating data:", error.message);
@@ -232,6 +235,12 @@ const page = () => {
       <ToastContainer />
 
       <div className="one">
+        <div className="absolute 2sm:top-[9%] top-[10%] left-4 cursor-pointer"> 
+        <button onClick={() => router.push('/student/add')}> 
+        <ReplayIcon   sx={{ fontSize: 45 }}/>
+        </button>
+
+        </div>
         <InputAddClass
           type="number"
           lable="ادخل رقم الطالب"
