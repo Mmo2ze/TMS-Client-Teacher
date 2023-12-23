@@ -35,6 +35,8 @@ const page = () => {
   const [whatsappEnabledParent, setWhatsappEnabledParent] = useState(false);
   const [showDetailParent , setShowDetailParent] = useState(false)
   const [DetailParent , setDetailParent] = useState("")
+  const [DetailParentId , setDetailParentId] = useState("")
+  const [DetailParentIdRegist , setDetailParentIdRegist] = useState("")
   const [showAddParentButton, setShowAddParentButton] = useState(true);
 
  const handleWhatsappChange = (value) => {
@@ -54,6 +56,7 @@ const page = () => {
           endLodingToast(toastID, "تم اضافة ولي الامر بنجاح", "success");
           setShowDetailParent(true)
           setDetailParent(response.data.data.name)
+          setDetailParentId(response.data.data.id)
           setShowAddParentButton(false);
 
         }
@@ -101,7 +104,7 @@ const page = () => {
           `/api/Teacher/parent/register`,
           requestData
         );
-        console.log("Data updated successfully!");
+        setDetailParentId(response.data.data.id)
  
         endLodingToast(toastID, " تم التسجيل  بيانات ولي الامر", 'success');
         // response.data.id
@@ -191,6 +194,8 @@ const page = () => {
   };
 
   const handelAdd = async () => {
+    var toastID = lodingToast();
+
     try {
       console.log("Attempting to update data...");
       const studentIdToSend = theId
@@ -200,8 +205,9 @@ const page = () => {
       const response = await axios.post(`/api/Teacher/student`, {
         studentId: studentIdToSend,
         classId: parseInt(selectedGrade, 10),
+        parentId : DetailParentId
       });
-
+      endLodingToast(toastID, " ادخل بيانات الطالب ", "success");
       console.log(`Data updated successfully! : ${response.data.isvalid}`);
     } catch (error) {
       console.error("Error updating data:", error.message);
@@ -386,7 +392,7 @@ const page = () => {
     />
     {showDetailParent && (
 
-  <h3 className="text-end my-6 text-xl"><span className="text-color-text text-xl">{DetailParent}</span> : الاسم  </h3>
+  <h3 className="text-end my-6 text-xl">  الاسم : <span className="text-color-text text-xl">{DetailParent}</span> </h3>
 )}
     {shwoNameParent && (
       <div>
