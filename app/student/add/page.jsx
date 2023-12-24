@@ -41,6 +41,7 @@ const page = () => {
   const [DetailParent , setDetailParent] = useState("")
   const [DetailParentId , setDetailParentId] = useState(0)
   const [showAddParentButton, setShowAddParentButton] = useState(true);
+  const [checkPerantWhats, setCheckPerantWhats] = useState(false);
 
  const handleWhatsappChange = (value) => {
     setWhatsappEnabled(value === "hosting-big");
@@ -53,7 +54,7 @@ const page = () => {
     var toastID = lodingToast();
 
       try {
-        const response = await axios.get(`/api/Teacher/parent/check/${valuePerentNumber}`);
+        const response = await axios.get(`/api/Teacher/parent/check/${valuePerentNumber}?hasWhatsapp=${checkPerantWhats}`);
         setPerentPhone(response.data.isvalid);
         if (response.data.isvalid) {
           endLodingToast(toastID, "تم اضافة ولي الامر بنجاح", "success");
@@ -76,7 +77,7 @@ const page = () => {
                 break;
               }
               case 301: {
-                endLodingToast(toastID, "الرقم الذي ادخلته ليس عليه واتس اب", "error");
+                endLodingToast(toastID, "الرقم الذي ادخلته ليس عليه واتس ", "error");
                 break;
               }
               default: {
@@ -399,6 +400,17 @@ const page = () => {
     type="number"
     lable="ادخل رقم ولي الأمر"
     />
+      <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">هل  اضافة   امر</h1>
+      <div className="flex">
+        <div className="flex items-center mb-4">
+          <input id="default-radio-1" type="radio" onChange={() => {setCheckPerantWhats(true)}} defaultValue name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label htmlFor="default-radio-1" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"> نعم</label>
+        </div>
+        <div className="flex items-center">
+          <input defaultChecked id="default-radio-2" type="radio" onChange={() => {setCheckPerantWhats(false)}} defaultValue name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label htmlFor="default-radio-2" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">لا </label>
+        </div>
+      </div>
     {showDetailParent && (
 
   <h3 className="text-end my-6 text-xl">  الاسم : <span className="text-color-text text-xl">{DetailParent}</span> </h3>
@@ -499,4 +511,4 @@ export default page;
 //   "id": 3,
 //   "name": "alith",
 //   "phone": "01004714244"
-// }
+//   
