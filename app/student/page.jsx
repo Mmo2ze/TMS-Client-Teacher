@@ -10,7 +10,6 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchWord, setSearchWord] = useState('');
-
   useEffect(() => {
     const delaySearch = setTimeout(() => {
       const fetchData = async () => {
@@ -25,10 +24,13 @@ const Page = () => {
       };
 
       fetchData();
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(delaySearch);
   }, [searchWord]);
+
+
+
 
   return (
     <div className="pt-20">

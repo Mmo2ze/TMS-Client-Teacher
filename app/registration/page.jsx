@@ -1,11 +1,5 @@
 
 const page = () => {
- 
-
- 
-  
-
-
 
 
   return (
