@@ -42,6 +42,7 @@ const page = () => {
   const [DetailParentId , setDetailParentId] = useState(0)
   const [showAddParentButton, setShowAddParentButton] = useState(true);
   const [checkPerantWhats, setCheckPerantWhats] = useState(false);
+  const [step, setStep] = useState(1);
 
  const handleWhatsappChange = (value) => {
     setWhatsappEnabled(value === "hosting-big");
@@ -108,13 +109,13 @@ const page = () => {
           `/api/Teacher/parent/register`,
           requestData
         );
-        setDetailParentId(response.data.data.id)
+        setDetailParentId(response.data.id)
  
         endLodingToast(toastID, " تم التسجيل  بيانات ولي الامر", 'success');
 
       } catch (error) {
         console.error("Error updating data:", error);
-        endLodingToast(toastID, "هذا الرقم   واتس اب", 'error');
+        endLodingToast(toastID, "هذا الرقم ليس عليه  واتس اب", 'error');
   
       }
     };
@@ -240,12 +241,12 @@ const page = () => {
       <ToastContainer />
 
       <div className="one">
-        <div className="absolute 2sm:top-[9%] top-[10%] left-4 cursor-pointer"> 
+     {/*    <div className="absolute 2sm:top-[9%] top-[10%] left-4 cursor-pointer"> 
         <button onClick={() => router.push('/student/add')}> 
         <ReplayIcon   sx={{ fontSize: 45 }}/>
         </button>
 
-        </div>
+  </div> */}
         <InputAddClass
           type="number"
           lable="ادخل رقم الطالب"
