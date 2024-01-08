@@ -22,6 +22,7 @@ export default function Home() {
       try {
         const response = await axios.get("/api/Teacher/assistant");
         setData(response.data);
+        console.log(`tha data in rolse is ${data.roles}`)
         setIsLoading(false);
       } catch (e) {
         console.log(e);
@@ -38,6 +39,8 @@ console.log(`data is ${data}`)
       const response = await axios.get("/api/Teacher/assistant");
       setData(response.data);
       setIsLoading(false);
+      console.log(`tha data in rolse is  2 ${data.roles}`)
+
     } catch (e) {
       console.log(e);
     }
@@ -68,7 +71,6 @@ console.log(`data is ${data}`)
         </div>
 
 
-
       </main> 
     );
   } else {
@@ -78,3 +80,7 @@ console.log(`data is ${data}`)
 
 
 // bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJUZWFjaGVyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIwMTAwNDcxNDkzOCIsImlkIjoiMjciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTW1vMnplIiwiZXhwIjoxNzA0NTY0MjM0fQ.pUPHoQQl3FqOYTe1Tkk324_g80F87X-dSyi0QcZrwAY
+// 01002792637
+// 01023757596
+// 01009677306
+// 01095634680

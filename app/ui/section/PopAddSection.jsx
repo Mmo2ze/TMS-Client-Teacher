@@ -8,17 +8,21 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
 import axios from "../../config/axiosconfigClient";
 import ButtonAdd from "../ButtonAdd";
+import "react-toastify/dist/ReactToastify.css";
+const {
+  endLodingToast,
+  lodingToast,
+  sendToast,
+} = require("../../func/toast");
+import { ToastContainer, toast } from "react-toastify";
+
 const PopAddSection = ({ id, onCansle, restartData }) => {
   const [day, setDay] = useState("");
   const [start, setStart] = useState("");
   const [duration, setDuration] = useState("");
-  const [endTime, setEndTime] = useState("00:00"); // متغير لتخزين الوقت النهائي
-  console.log(`day is ${day}`);
-  console.log(`start is ${start}`);
-  console.log(`duration is ${duration}`);
-  console.log(`endTime is ${endTime}`);
+  const [endTime, setEndTime] = useState("00:00"); 
 
-  // useEffect لحساب الوقت النهائي عندما يتغير وقت البداية أو المدة
+
   useEffect(() => {
     if (start) {
       const durationInMinutes = duration
@@ -32,10 +36,8 @@ const PopAddSection = ({ id, onCansle, restartData }) => {
       const hours = Math.floor(endInMinutes / 60);
       const minutes = endInMinutes % 60;
 
-      // إضافة الثواني إلى التنسيق
       const seconds = 0;
 
-      // قم بتعيين الوقت النهائي في الحالة مع تنسيق يشمل الثواني
       setEndTime(
         `${hours.toString().padStart(2, "0")}:${minutes
           .toString()
@@ -45,14 +47,20 @@ const PopAddSection = ({ id, onCansle, restartData }) => {
   }, [start, duration]);
 
   const handelUpdate = async () => {
+    var toastID = lodingToast();
+
     try {
       console.log("Attempting to update data...");
-      // تنسيق starttime و endTime ليشمل الثواني دائمًا
       const formattedStartTime = start ? `${start}:00` : "";
       const formattedEndTime = endTime
-        ? `${endTime.split(":").slice(0, 2).join(":")}:00`
-        : ""; // تنسيق endTime بدون الثواني
-
+      ? `${endTime.split(":").slice(0, 2).join(":")}:00`
+      : ""; 
+      
+      if (!id || !day || !formattedStartTime || !formattedEndTime) {
+        console.error("يرجى تعبئة جميع الحقول");
+        endLodingToast(toastID, "يرجى تعبئة جميع الحقول", "error");
+        return;
+      }
       await axios.post(`/api/Teacher/section`, {
         classId: id,
         day: day,
@@ -60,10 +68,28 @@ const PopAddSection = ({ id, onCansle, restartData }) => {
         endTime: formattedEndTime,
         id: 0,
       });
+      endLodingToast(toastID, " تم اضافة الحصة  بنجاح", "success");
       onCansle();
       restartData();
     } catch (error) {
-      console.error("Error updating data:", error);
+      var message1;
+
+      if (error.response && error.response.data && error.response.data.messages) {
+        message1 = error.response.data.messages[0];
+      }
+      if (message1) {
+        switch (message1.statusCode) {
+          case 303: {
+            endLodingToast(toastID, "تم حجز هذا الوقت من قبل", "error");
+            break;
+          }
+          default: {
+            endLodingToast(toastID, " ?", "error");
+            break;
+          }
+        }
+      } 
+
     }
   };
 

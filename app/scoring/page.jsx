@@ -5,6 +5,8 @@ import PopOllStudent from "../ui/PopOllStudent";
 import axios from "../config/axiosconfigClient";
 import Spinners from '../ui/Spinners';
 import Link from "next/link"
+import { ToastContainer, toast } from "react-toastify";
+
 const Page = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,8 +38,11 @@ const Page = () => {
     <div className="pt-20 px-2 text-end">
 
 
-{showPop && ( <div className="overlay">     <PopOllStudent placeholder="تسجيل درجات" onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} />  </div>)}
+{showPop && ( <div className="overlay">   
+  <PopOllStudent placeholder="تسجيل درجات" onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} /> 
+   </div>)}
 
+   <ToastContainer />
 
       <h1 className="mb-5 px-2 text-3xl font-bold text-side12-color">تسجيل درجات طالب</h1>
       <input

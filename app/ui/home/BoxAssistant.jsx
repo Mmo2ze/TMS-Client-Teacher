@@ -16,6 +16,7 @@ const BoxAssistant = ({name , phone , roles , id  , restartData}) => {
   const roleValue = roles && roles.length > 0 ? roles[0].value : '';
   const [showDelete , setShowDelete] = useState(false)
   const [showEdit , setShowEdit] = useState(false)
+  console.log("the roles are", JSON.stringify(roles));
   return (
 
   <div className="relative">
@@ -83,11 +84,11 @@ const BoxAssistant = ({name , phone , roles , id  , restartData}) => {
           </div>
 
             <div className="flex flex-wrap	 w-full	justify-around gap-2"> 
+    {roles.map((rol) =>(
+      <ButtonRoles text={rol.value} key={rol.id} />
 
-            <ButtonRoles text={roleValue} />
-            <ButtonRoles text={roleValue} />
-            <ButtonRoles text={roleValue} />
-            <ButtonRoles text={roleValue} />
+    ))}
+
 
             </div>
         </CardContent>

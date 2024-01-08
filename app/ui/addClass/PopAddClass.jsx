@@ -4,6 +4,15 @@ import InputAddClass from './InputAddClass';
 import {useState } from "react"
 import axios from "../../config/axiosconfigClient"
 import ButtonAdd from '../ButtonAdd';
+const {
+  endLodingToast,
+  lodingToast,
+  sendToast,
+} = require("../../func/toast");
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 const PopAddClass = ({onCansle , onGet}) => {
   const [name, setName] = useState("");
   const [paymentPrice, setPaymentPrice] = useState("");
@@ -12,7 +21,15 @@ const PopAddClass = ({onCansle , onGet}) => {
   const handleGradeChange = (event) => {
     setGrade(event.target.value);};
     const handelSubmit = async () => {
+      var toastID = lodingToast();
+
       try {
+        if (!name || !paymentPrice || !paymentDelay || !grade) {
+          console.error("يرجى تعبئة جميع الحقول");
+          endLodingToast(toastID, "يرجى تعبئة جميع الحقول", "error");
+
+          return;
+        }
         console.log("Attempting to update data...");
         await axios.post(`/api/Teacher/class`, {
           name: name,
@@ -20,17 +37,34 @@ const PopAddClass = ({onCansle , onGet}) => {
           basePaymentDelay: paymentDelay,
           grade: grade,
         });
+        endLodingToast(toastID, " تم اضافة الحصة  بنجاح", "success");
         onCansle();
         onGet();
+
         console.log("Data updated successfully!");
       } catch (error) {
-        console.error("Error updating data:", error);
+        var message1;
+
+        if (error.response && error.response.data && error.response.data.messages) {
+          message1 = error.response.data.messages[0];
+        }
+        if (message1) {
+          switch (message1.statusCode) {
+            case 302: {
+              endLodingToast(toastID, "!", "error");
+              break;
+            }
+            case 201: {
+              endLodingToast(toastID, "يرجى تغيير الاسم الاسم مستخدم بالفعل", "error");
+              break;
+            }
+          }
+        } 
       }
     };
     
   return (
     <div className=" fixed  w-[90%] md:w-1/2 p-4 rounded-lg top-[55%] md:top-1/2 left-1/2 center bg-side4-color z-40">
-  
     <div className="absolute top-0 left-2 cursor-pointer">
         <CloseIcon sx={{ fontSize: 50 }} onClick={onCansle} color="primary"/>
        </div>

@@ -3,7 +3,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useState } from "react"
 import InputAddClass from './InputAddClass';
 import axios from "../../config/axiosconfigClient"
-
+const {
+  endLodingToast,
+  lodingToast,
+  sendToast,
+} = require("../../func/toast");
 const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPaymentDelay, initialGrade , initialId , }) => {
   const [name, setName] = useState(initialName);
   const [paymentPrice, setPaymentPrice] = useState(initialPaymentPrice);
@@ -13,6 +17,8 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
 
 
   const handelUpdate = async () => {
+    var toastID = lodingToast();
+
     try {
       console.log("Attempting to update data...");
       await axios.put(`/api/Teacher/class/${initialId}`, {
@@ -21,6 +27,8 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
         basePaymentDelay: paymentDelay,
         grade: selectedGrade,
       });
+      endLodingToast(toastID, "تم التعديل بنجاح", "success");
+
       onCansle();
       console.log("Data updated successfully!");
       const updatedData = data.map(item => {
@@ -37,7 +45,23 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
       });
       setData(updatedData);
     } catch (error) {
-      console.error("Error updating data:", error);
+      var message1;
+
+      if (error.response && error.response.data && error.response.data.messages) {
+        message1 = error.response.data.messages[0];
+      }
+      if (message1) {
+        switch (message1.statusCode) {
+          case 302: {
+            endLodingToast(toastID, "301", "error");
+            break;
+          }
+          case 201: {
+            endLodingToast(toastID, "يرجى تغيير الاسم الاسم مستخدم بالفعل", "error");
+            break;
+          }
+        }
+      } 
     }
   };
 
@@ -66,6 +90,10 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
         </select>
       </div>
        <InputAddClass type="text" value={name} onChange={setName} lable="ادخل الاسم"/>
+       <div className="text-end">
+        <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">TEST NAME </label>
+        <input value={name} type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
+      </div>
        <InputAddClass type="number" value={paymentPrice} onChange={setPaymentPrice} lable="ادخل السعر"/>
        <InputAddClass type="number" value={paymentDelay} onChange={setPaymentDelay} lable="ادخل مدة التاخير"/>
        <button onClick={handelUpdate} type="button" className="focus:outline-none w-full mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-button-color2 ">

@@ -52,19 +52,19 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
         <h1 className="2sm:absolute top-2  left-[40%] 2sm:text-xl"> {grade === 'FirstSecondary' && 'أولى ثانوي'}
               {grade === 'SecondSecondary' && 'ثاني ثانوي'}
               {grade === 'ThirdSecondary' && 'ثالث ثانوي'}</h1>
-        <h1 className='text-color-text 2sm:absolute bottom-5 right-6'><span>{basePaymentPrice}</span> <AttachMoneyIcon/> </h1>
+        <h1 className='text-color-text 2sm:absolute bottom-5 right-6 flex'><p className="text-lg mt-1">جنيه</p>&nbsp;<span>{basePaymentPrice}</span> </h1>
         </div>
         <div className='md:flex md:justify-between'>
         <div className='md:flex md:flex-col '>
-        <h1 className="md:mb-6 2sm:absolute top-[40%] right-7 "> <span className="text-color-text">8</span> &nbsp; <PersonIcon/> </h1>
-        <div className="2sm:absolute top-[55%] right-2" > 
+        <h1 className="md:mb-6 2sm:absolute top-[40%] left-7 "> <span className="text-color-text">8</span> &nbsp; <PersonIcon/> </h1>
+        <div className="2sm:absolute top-[55%] left-2" > 
         <Button text="عرض" />
         </div> 
         </div>
         <h1 className='text-color-text 2sm:text-lg 2sm:absolute top-[20%] right-7'>{name}</h1>
         <div className='md:flex md:flex-col md:items-end'>
-        <h1 className="md:mb-6 2sm:absolute top-[40%] left-6"> <span className="text-color-text">6</span> &nbsp; <AccessTimeIcon/></h1>
-        <div className="2sm:absolute top-[55%] left-2" > 
+        <h1 className="md:mb-6 2sm:absolute top-[40%] right-6"> <span className="text-color-text">6</span> &nbsp; <AccessTimeIcon/></h1>
+        <div className="2sm:absolute top-[55%] right-2" > 
         <Link  href={`/classes/section/${id}`}>
         <Button text="عرض" />
          </Link>

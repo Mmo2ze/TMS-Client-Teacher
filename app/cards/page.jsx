@@ -21,6 +21,7 @@ const page = () => {
   const [data, setData] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [selectedClasses, setSelectedClasses] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
 
 
@@ -119,9 +120,9 @@ if (selectedStudent && !selectedStudents.some((student) => student && student.st
       pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), "F");
       for (let row = 0; row < rowsPerPage; row++) {
         for (let col = 0; col < imagesPerRow; col++) {
-          const studentIndex = page * rowsPerPage * imagesPerRow + row * imagesPerRow + col;  
-          if (studentIndex < studentsClass.length) {
-            const student = studentsClass[studentIndex];
+          const studentIndex = page * rowsPerPage * imagesPerRow + row * imagesPerRow + col;
+        if (studentIndex < studentsClass.length) {
+          const student = studentsClass[studentIndex];
             const xPos = padding.right + col * (imageWidth + spaceBetweenImages);
             const yPos = padding.top + row * (imageHeight + spaceBetweenImages);
             const nameXPos = xPos + nameOffsetX;
@@ -154,10 +155,11 @@ if (selectedStudent && !selectedStudents.some((student) => student && student.st
   };
 
 
-const handelstudent = (e) =>{
-  console.log(`the student is ${e}`)
-}
-
+  const handelstudent = (selectedStudent) => {
+    if (!selectedStudents.some((student) => student && student.student && student.student.id === selectedStudent.id)) {
+      setSelectedStudents((prevSelectedStudents) => [...prevSelectedStudents, selectedStudent]);
+    }
+  };
 
   return (
     <div className="pt-20 px-4 text-end ">
@@ -213,7 +215,8 @@ className={`z-10 ${
           </div>
       </li>
       {data.map((student) => (
-        <li onClick={() => handelstudent(student.student && student.student.name)}>
+        // <li onClick={() => handelstudent(student.student && student.student.name)}>
+        <li key={student.student.id} onClick={() => handelstudent(student)}>
         <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
           <input  id="checkbox-item-4" type="checkbox" defaultValue className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
           <label htmlFor="checkbox-item-4" className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{student.student && student.student.name}</label>
@@ -302,3 +305,4 @@ isDropdownOpen ? "block" : "hidden"
 }
 
 export default page
+// const rolseAssistant = ["اضافة طالب","اضاقة صف","اضافة مساعد","مشاهدة المدفوعات"]

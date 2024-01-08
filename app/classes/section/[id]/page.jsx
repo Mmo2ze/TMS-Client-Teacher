@@ -6,6 +6,7 @@ import Spinners from '@/app/ui/Spinners';
 import AddIcon from '@mui/icons-material/Add';
 import PopAddSection from "@/app/ui/section/PopAddSection";
 import axios from "../../../config/axiosconfigClient"
+import { ToastContainer, toast } from "react-toastify";
 
 
 const page = (props) => {
@@ -44,6 +45,7 @@ const page = (props) => {
       
     return (
         <div className="pt-20">
+          <ToastContainer/>
             {showAddSection && ( <div className="overlay"> <PopAddSection  restartData={() => getdata()} onCansle={() => setShowAddSection(!showAddSection)} id={props.params.id}/></div>)}
         <div className="p-4"> 
         <div className="flex  align-center justify-between text-color-text">
@@ -53,7 +55,7 @@ const page = (props) => {
         {isLoading && <Spinners/>}
         <div> 
 {!isLoading && data.map((da) => (
-  <BoxSection day={da.day} key={da.id} starttime={da.startTime} endtime={da.endTime} id={da.id} restartData={restartData}/>
+  <BoxSection day={da.day} key={da.id} starttime={da.startTime} endtime={da.endTime} id={da.id} restartData={() => restartData}/>
   ))}
   </div> 
 
