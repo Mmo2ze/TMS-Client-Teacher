@@ -111,10 +111,10 @@ const page = () => {
         setDetailParentId(response.data.data.id)
  
         endLodingToast(toastID, " تم التسجيل  بيانات ولي الامر", 'success');
-        // response.data.id
+
       } catch (error) {
         console.error("Error updating data:", error);
-        endLodingToast(toastID, "هذا الرقم ليس عليه واتس اب", 'error');
+        endLodingToast(toastID, "هذا الرقم   واتس اب", 'error');
   
       }
     };
@@ -123,6 +123,10 @@ const page = () => {
     var toastID = lodingToast();
 
     try {
+      if (!nameStudent || !number  || !gender) {
+        endLodingToast(toastID, "يرجى تعبئة جميع الحقول", "error");
+        return;
+      }
       console.log("Attempting to update data...");
       const requestData = {
         employee: {
@@ -132,7 +136,7 @@ const page = () => {
         },
         whatsappRequied: whatsappEnabled,
       };
-  
+    
       const response = await axios.post(
         `/api/Teacher/student/register`,
         requestData
@@ -262,7 +266,7 @@ const page = () => {
                 value="hosting-big"
                 className="hidden peer"
                 onChange={() => handleWhatsappChange("hosting-big")}
-                defaultChecked  
+                  
               />
               <label
                 htmlFor="hosting-big"
@@ -284,6 +288,7 @@ const page = () => {
                 className="hidden peer"
                 required
                 onChange={() => handleWhatsappChange("hosting-small")}
+                defaultChecked
               />
               <label
                 htmlFor="hosting-small"
@@ -400,7 +405,7 @@ const page = () => {
     type="number"
     lable="ادخل رقم ولي الأمر"
     />
-      <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">هل  اضافة   امر</h1>
+      <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">هل تريد خدمة الواتس اب على هذا الرقم</h1>
       <div className="flex">
         <div className="flex items-center mb-4">
           <input id="default-radio-1" type="radio" onChange={() => {setCheckPerantWhats(true)}} defaultValue name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -425,7 +430,7 @@ const page = () => {
         lable="ادخل اسم ولي الأمر"
         />
 
-        <h3 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">
+        {/* <h3 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">
               الواتس اب
           </h3>
         <div>
@@ -437,7 +442,7 @@ const page = () => {
           <input onChange={() => handleWhatsappChangeParent(false)} defaultChecked id="bordered-radio-2" type="radio" defaultValue name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
           <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">لا </label>
         </div>
-      </div>
+      </div> */}
 <button
      onClick={handelRegistParent}
             type="button"
