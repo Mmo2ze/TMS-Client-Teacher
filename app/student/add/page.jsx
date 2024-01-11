@@ -43,6 +43,7 @@ const page = () => {
   const [showAddParentButton, setShowAddParentButton] = useState(true);
   const [checkPerantWhats, setCheckPerantWhats] = useState(false);
   const [step, setStep] = useState(1);
+  const [setpOneOne , setSetpOneOne] = useState(false)
 
   console.log(`the step is ${step}`);
   const handleWhatsappChange = (value) => {
@@ -120,6 +121,7 @@ const page = () => {
         requestData
       );
       setDetailParentId(response.data.id);
+      setStep(4);
 
       endLodingToast(toastID, " تم التسجيل  بيانات ولي الامر", "success");
     } catch (error) {
@@ -151,13 +153,14 @@ const page = () => {
         requestData
       );
       console.log("Data updated successfully!");
-      setTwoVisible(!isTwoVisible);
+      // setTwoVisible(!isTwoVisible);
+      setSetpOneOne(true)
       setStep(3);
       setIdStudent(response.data.id);
 
       endLodingToast(
         toastID,
-        " تم التسجيل بنجاح الرجاءالرجاء اختيار صف",
+        " تم التسجيل بنجاح  dd صف",
         "success"
       );
       // response.data.id
@@ -179,10 +182,9 @@ const page = () => {
       console.log(`Data updated successfully! : ${response.data.isvalid}`);
       // setOneVisible(!response.data.isvalid);
       setTwoVisible(response.data.isvalid);
-
+      setStep(2);
       setTheId(response.data.data.id);
       setTheName(response.data.data.name);
-
       endLodingToast(
         toastID,
         response.data.isvalid ? "تم بنجاح!" : "فشل!",
@@ -191,7 +193,8 @@ const page = () => {
       // endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!');
     } catch (error) {
       if (error.response.status === 404) {
-        setShowNameStudent(!shwoNameStudent);
+        // setShowNameStudent(!shwoNameStudent);
+    
         endLodingToast(toastID, " ادخل بيانات الطالب ", "success");
         setStep(2);
       } else if (error.response.status === 400) {
@@ -263,7 +266,9 @@ const page = () => {
       setStep(step - 1);
     }
   };
-
+  const handleGo = () => {
+      setStep(step + 1);
+  };
   return (
     <div className="pt-20 px-4 img_liner pb-3 m-1 rounded-lg">
       <ToastContainer />
@@ -347,6 +352,7 @@ const page = () => {
 
         {step === 2 && (
           <div>
+    {!isTwoVisible && (
             <>
               <InputAddClass
                 type="text"
@@ -390,27 +396,20 @@ const page = () => {
                   />
                 </div>
               </div>
-            </>
-            <button onClick={handleGoBack}>العودة</button>
-          </div>
-        )}
-
-        {shwoNameStudent && (
-          <button
+                <button
             type="button"
             onClick={handelRegist}
             className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600   font-medium  text-lg px-5 py-2.5  dark:bg-button-color2"
           >
             تسجيل
           </button>
-        )}
-      </div>
-
-      {isTwoVisible && (
-        <div>
-          <h1 className="text-xl my-3 text-end ">
+            </>
+            )}
+         {isTwoVisible && (
+              <div> 
+  <h1 className="text-xl my-3 text-end ">
             {" "}
-            الطالب :{" "}
+            الطالب Aa:{" "}
             <span className="text-color-text text-xl">
               {theName || nameStudent}
             </span>{" "}
@@ -421,7 +420,29 @@ const page = () => {
               {theId || idStudent}
             </span>{" "}
           </h1>
-          <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">
+             <div className="flex justify-between">
+            <button className="bg-red-600 p-4 rounded-lg" onClick={handleGoBack}>العودة</button>
+            <button className="bg-blue-600 p-4 rounded-lg" onClick={handleGo}>المتابعة </button>
+             </div>
+          </div>
+             )}
+          </div>
+        )}
+          
+
+        {/* {shwoNameStudent && (
+          <button
+            type="button"
+            onClick={handelRegist}
+            className=" flex items-center justify-center rounded-lg w-1/2 mt-4 mx-auto focus:outline-none text-white bg-green-600   font-medium  text-lg px-5 py-2.5  dark:bg-button-color2"
+          >
+            تسجيل
+          </button>
+        )} */}
+      </div>
+{step === 3 && (
+  <> 
+        <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">
             هل تريد اضافة رقم ولي امر
           </h1>
           <div className="flex justify-center -items-center gap-6">
@@ -444,6 +465,7 @@ const page = () => {
                 نعم
               </label>
             </div>
+      
             <div className="flex flex-col-reverse justify-center gap-4 items-center">
               <input
                 defaultChecked
@@ -464,6 +486,12 @@ const page = () => {
               </label>
             </div>
           </div>
+          {!wantToAddParentNumber && (
+          <div className="flex justify-between">
+            <button className="bg-red-600 p-4 rounded-lg" onClick={handleGoBack}>العودة</button>
+            <button className="bg-blue-600 p-4 rounded-lg" onClick={handleGo}>تخطي </button>
+             </div>
+          )}
           {wantToAddParentNumber && (
             <div className="duration-1000 transition-transform  ">
               <InputAddClass
@@ -532,20 +560,6 @@ const page = () => {
                     type="text"
                     lable="ادخل اسم ولي الأمر"
                   />
-
-                  {/* <h3 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">
-              الواتس اب
-          </h3>
-        <div>
-        <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-          <input onChange={() => handleWhatsappChangeParent(true)}  id="bordered-radio-1" type="radio" defaultValue name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-          <label htmlFor="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">نعم اريد </label>
-        </div>
-        <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-          <input onChange={() => handleWhatsappChangeParent(false)} defaultChecked id="bordered-radio-2" type="radio" defaultValue name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-          <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">لا </label>
-        </div>
-      </div> */}
                   <button
                     onClick={handelRegistParent}
                     type="button"
@@ -555,8 +569,8 @@ const page = () => {
                   </button>
                 </div>
               )}
-
-              {!shwoNameParent && showAddParentButton && (
+     
+                      {!shwoNameParent && showAddParentButton && (
                 <button
                   onClick={getParent}
                   type="button"
@@ -565,8 +579,16 @@ const page = () => {
                   اضافة رقم ولي الامر
                 </button>
               )}
+ 
             </div>
           )}
+  </>
+)}
+      {step === 4 && (
+        <div>      
+    
+
+      
 
           <label
             for="countries"
@@ -601,6 +623,8 @@ const page = () => {
           </button>
         </div>
       )}
+
+
     </div>
   );
 };
@@ -618,3 +642,4 @@ export default page;
 //   "name": "alith",
 //   "phone": "01004714244"
 //
+// 01123097041
