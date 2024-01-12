@@ -1,10 +1,11 @@
-import {useState} from 'react'
+import {useState , useEffect} from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import InputAddClass from '../addClass/InputAddClass';
 import ButtonAdd from '../ButtonAdd';
 import axios from "../../config/axiosconfigClient"
 
-const PopUpdateAssistant = ({names , phones , id  , rol, onCansle , restartData}) => {
+const PopUpdateAssistant = ({names , phones , id  , rol, onCansle , restartData  , rolesValues}) => {
+  console.log("the rolesValues are box are",(rolesValues));
   const [name , setName] = useState(names) 
   const [phone , setPhone] = useState(phones) 
   const [rolse , setRolse] = useState(rol) 
@@ -21,14 +22,18 @@ const PopUpdateAssistant = ({names , phones , id  , rol, onCansle , restartData}
     const handelSubmit = async () => {
       try {
         console.log("Attempting to update data...");
+        const selectedRoles = rolseAssistant
+          .filter((rol) => rol.isSelected)
+          .map((selectedRol) => selectedRol.name);
+    
         await axios.put(`/api/Teacher/assistant/${id}`, {
           name: name,
-          phone:phone,
-          assistantRoles : [rolse]
+          phone: phone,
+          assistantRoles: selectedRoles,
         });
-        
+    
         onCansle();
-        restartData()
+        restartData();
         console.log("Data updated successfully!");
       } catch (error) {
         console.error("Error updating data:", error);
@@ -43,6 +48,14 @@ const PopUpdateAssistant = ({names , phones , id  , rol, onCansle , restartData}
       );
       setRolseAssistant(updatedRolse);
     };
+
+    useEffect(() => {
+      const updatedRolse = rolseAssistant.map((rol) => ({
+        ...rol,
+        isSelected: rolesValues.includes(rol.name)
+      }));
+      setRolseAssistant(updatedRolse);
+    }, [rolesValues]);
 
   return (
           <div className=" fixed  w-[90%] md:w-1/2 p-4 rounded-lg top-[55%] md:top-1/2 left-1/2 center bg-side4-color z-40">
@@ -126,7 +139,9 @@ className={`z-10 ${
       <InputAddClass type="number" value={phone}  onChange={setPhone} lable="رقم المساعد"/>
 
       <div className="mx-auto my-4 tetx-center w-[19%]"> 
+
   <ButtonAdd onClick={handelSubmit}  text="اضافة"/>
+
     </div>
  </div>
   )

@@ -39,16 +39,12 @@ color: white;
 }
 
 
+
 .page {
   background-color: #111928;
   height: calc(100vh - 76px);
   position: relative;
   width: 100%;
-}
-
-.main-conten {
-  background-color: red;
-
 }
 
 #reader {

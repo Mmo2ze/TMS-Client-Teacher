@@ -79,8 +79,8 @@ const Page = () => {
         {isLoading && <Spinners />}
         {!isLoading &&
           data.map((da) => (
-            <Link key={da.student.id} href={`/student/${da.student.id}`}>
-              <StudentBox name={da.student.name} id={da.student.id} />
+            <Link key={da.student.id} href={`/student/${da.privateId}`}>
+              <StudentBox name={da.student.name} id={da.privateId} />
             </Link>
           ))}
       </div>

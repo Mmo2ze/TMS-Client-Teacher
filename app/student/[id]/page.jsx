@@ -26,13 +26,13 @@ const page = (props) => {
         const response = await axios.get(`/api/Teacher/student/${props.params.id}`);
         setData(response.data.data);
         setIsLoading(false);
-        console.log(response.data.data.student.id)
-        setStudentName(response.data.data.student.name)
-        setStudentClass(response.data.data.className)
-        setStudentGrade(response.data.data.grade)
-        setStudentPhone(response.data.data.student.phone)
-        setStudentGender(response.data.data.student.gender)
-        setStudentId(response.data.data.student.id)
+        // console.log(`sadasdas${response.data.data.privateId}`)
+        setStudentName(response.data.student.name)
+        setStudentClass(response.data.className)
+        setStudentGrade(response.data.grade)
+        setStudentPhone(response.data.student.phone)
+        setStudentGender(response.data.student.gender)
+        setStudentId(response.data.privateId);
       } catch (e) {
         console.log(e);
       }
@@ -40,6 +40,7 @@ const page = (props) => {
   
     getdata(); 
   }, []);
+  console.log(`sadasdas${studentId}`)
 
   return (
     <div className="pt-20 px-3">
@@ -53,7 +54,7 @@ const page = (props) => {
           />
           <div>
             <h1 className="text-xl mb-2 text-side12-color md:text-3xl">
-              {studentName}
+              {studentName} 
             </h1>
             <p className="text-end text-side13-color md:text-xl">
               {studentClass}

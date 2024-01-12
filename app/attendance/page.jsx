@@ -1,10 +1,12 @@
 "use client"
 import { useState, useEffect } from 'react';
 import StudentBox from "../ui/student/StudentBox";
-import PopOllStudent from "../ui/PopOllStudent";
+import PopAttendance from "../ui/PopAttendance";
 import axios from "../config/axiosconfigClient";
 import Spinners from '../ui/Spinners';
 import Link from "next/link"
+import { ToastContainer, toast } from "react-toastify";
+
 const Page = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +15,7 @@ const Page = () => {
   const [studentName, setStudentName] = useState("");
   const [studentId , setStudentId] = useState("");
   const [currentStudent, setCurrentStudent] = useState({});
-
+ 
   useEffect(() => {
     const delaySearch = setTimeout(() => {
       const fetchData = async () => {
@@ -34,9 +36,10 @@ const Page = () => {
 
   return (
     <div className="pt-20 px-2 text-end">
+   <ToastContainer />
 
 
-{showPop && ( <div className="overlay">     <PopOllStudent placeholder="تسجيل الحضور" onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} />  </div>)}
+{showPop && ( <div className="overlay">     <PopAttendance placeholder="مدة التأخير" onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} />  </div>)}
 
 
       <h1 className="mb-5 text-3xl font-bold text-side12-color">تسجيل حضور طالب</h1>
@@ -59,6 +62,7 @@ const Page = () => {
     id: student.student.id
   });
 }}>
+  <h2>{student.student.name}</h2>
   <StudentBox name={student.student.name} id={student.student.id} key={student.student.id} />
 </div>
   );

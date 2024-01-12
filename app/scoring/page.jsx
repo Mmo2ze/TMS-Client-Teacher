@@ -16,6 +16,8 @@ const Page = () => {
   const [studentId , setStudentId] = useState("");
   const [currentStudent, setCurrentStudent] = useState({});
 
+
+
   useEffect(() => {
     const delaySearch = setTimeout(() => {
       const fetchData = async () => {
@@ -30,7 +32,7 @@ const Page = () => {
       };
   
       fetchData();
-    }, 2000); 
+    }, 500); 
       return () => clearTimeout(delaySearch);
   }, [searchWord]);
 
@@ -39,7 +41,7 @@ const Page = () => {
 
 
 {showPop && ( <div className="overlay">   
-  <PopOllStudent placeholder="تسجيل درجات" onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} /> 
+  <PopOllStudent placeholder="تسجيل درجات"   onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} /> 
    </div>)}
 
    <ToastContainer />
@@ -54,6 +56,7 @@ const Page = () => {
         placeholder="ادخل الرقم"
         required
       />
+ 
       {isLoading ? <Spinners /> : (data.map((student) => {
 
         return (
@@ -61,10 +64,10 @@ const Page = () => {
   setShowPop(!showPop);
   setCurrentStudent({
     name: student.student.name,
-    id: student.student.id
+    id: student.privateId
   });
 }}>
-  <StudentBox name={student.student.name} id={student.student.id} key={student.student.id} />
+  <StudentBox name={student.student.name} id={student.privateId} key={student.student.privateId} />
 </div>
   );
 })

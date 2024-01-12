@@ -12,11 +12,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PopDeleteAssistant from "./PopDeleteAssistant"
 import PopUpdateAssistant from "./PopUpdateAssistant"
-const BoxAssistant = ({name , phone , roles , id  , restartData}) => {
+const BoxAssistant = ({name , phone , roles , id  , restartData , rolesValues}) => {
   const roleValue = roles && roles.length > 0 ? roles[0].value : '';
   const [showDelete , setShowDelete] = useState(false)
   const [showEdit , setShowEdit] = useState(false)
-  console.log("the roles are", JSON.stringify(roles));
+  console.log("the roles are",(roles));
+  console.log("the rolesValues are",(rolesValues));
   return (
 
   <div className="relative">
@@ -27,7 +28,7 @@ const BoxAssistant = ({name , phone , roles , id  , restartData}) => {
     )}
       {showEdit && (
       <div className="overlay">
-        <PopUpdateAssistant  id={id} restartData={restartData} rol={roleValue} names={name} phones={phone} onCansle={() => {setShowEdit(!showEdit)}}/>
+        <PopUpdateAssistant rolesValues={rolesValues}  id={id} restartData={restartData} rol={roleValue} names={name} phones={phone} onCansle={() => {setShowEdit(!showEdit)}}/>
       </div>
     )}
 

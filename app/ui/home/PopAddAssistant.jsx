@@ -4,7 +4,14 @@ import axios from "../../config/axiosconfigClient"
 import CloseIcon from '@mui/icons-material/Close';
 import ButtonAdd from "../ButtonAdd";
 import InputAddClass from "../addClass/InputAddClass";
+const {
+  endLodingToast,
+  lodingToast,
+  sendToast,
+} = require("../../func/toast");
+import { ToastContainer, toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 const PopAddAssistant = ({onCansle , restartData}) => {
   const [name , setName] = useState("")
   const [phone , setPhone] = useState("")
@@ -26,7 +33,14 @@ const PopAddAssistant = ({onCansle , restartData}) => {
   };
   
     const handelSubmit = async () => {
+      var toastID = lodingToast();
+
       try {
+        if (!name || !phone || !rolseAssistant) {
+          console.error("يرجى تعبئة جميع الحقول");
+          endLodingToast(toastID, "يرجى تعبئة جميع الحقول", "error");
+          return;
+        }
         console.log("Attempting to update data...");
         await axios.post(`/api/Teacher/assistant`, {
           name: name,
@@ -36,9 +50,25 @@ const PopAddAssistant = ({onCansle , restartData}) => {
         });
         onCansle();
         restartData()
-        console.log("Data updated successfully!");
+        endLodingToast(toastID, " تم اضافة مساعد  بنجاح", "success");
       } catch (error) {
-        console.error("Error updating data:", error);
+        var message1;
+
+        if (error.response && error.response.data && error.response.data.messages) {
+          message1 = error.response.data.messages[0];
+        }
+        if (message1) {
+          switch (message1.statusCode) {
+            case 409: {
+              endLodingToast(toastID, "هذا الرقم مستخدم من قبل", "error");
+              break;
+            }
+            default: {
+              endLodingToast(toastID, "يرجى اعادة المحاولة حدث خطأ ما", "error");
+              break;
+            }
+          }
+        } 
       }
     };
     const handleDropdownOpenStudent = () => {
@@ -56,18 +86,7 @@ const PopAddAssistant = ({onCansle , restartData}) => {
       <button > <CloseIcon sx={{ fontSize: 50 }} onClick={onCansle} color="primary"/></button>
       <h1 className="text-3xl absolute top-6 right-4 text-color-text">اضافة مساعد</h1>
      <div className="mt-4 text-end w-full"> 
-     {/* <select
-          id="countries"
-          onChange={handleSubmitAssis} 
-          className="text-end bg-red-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>
-            اختيار الصفة
-          </option>
-          <option value="AddUser" >  AddUser</option>
-          <option value="AddClass">AddClass </option>
-          <option value="AddPayment">AddPayment  </option>
-          <option value="ViewPayment ">ViewPayment   </option>
-        </select> */}
+
    <div className="text-end"> 
       <button
               id="dropdownBgHoverButton"

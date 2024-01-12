@@ -9,27 +9,24 @@ const {
   
   import "react-toastify/dist/ReactToastify.css";
 import InputAddClass from "./addClass/InputAddClass";
-import {useEffect} from "react"
-const PopOllStudent = ({studentName , studentId , onCansle, placeholder }) => {
-    const [quizValue ,setQuizValue] = useState("")
-    const [data, setData] = useState([]);
 
-    const [score, setScore] = useState("");    
+const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaultScore}) => {
+    const [delay ,setDelay] = useState(0)
+    const [score ,setScore] = useState(defaultScore)
     const handelSubmit = async () => {
         var toastID = lodingToast();
         try {
           console.log("Attempting to update data...");
-          await axios.post(`/api/Teacher/quiz`, {
+          await axios.post(`/api/Teacher/student/attendance`, {
             studentId: studentId,
-            degree: parseInt(quizValue, 10), 
-            maxDegree: data.maxDegree,
+            lateMints:delay , 
         });
         endLodingToast(toastID, "تم اضافة  الدرجة", "success");
           onCansle();
           console.log("Data updated successfully!");
         } catch (error) {
             if (error.response.status === 404) {
-                endLodingToast(toastID, " ادخل  ", "error");
+                endLodingToast(toastID, " id  ", "error");
               } else if (error.response.status === 400) {
                 var message1 = error.response.data.messages[0];
                 if (message1) {
@@ -48,37 +45,19 @@ const PopOllStudent = ({studentName , studentId , onCansle, placeholder }) => {
                     }
                   }
                 }
-            }
+              }
         }
       };
       
-console.log(`tha score  is ${data.maxDegree}`)
-    useEffect(() => {
-      const getdata = async () => {
-        try {
-          const response = await axios.get("/api/Teacher/quiz-maxvalue");
-          setData(response.data);
-          setScore(response.data.maxDegree);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-  
-      getdata();
-    }, []);
-  
-
-
     return (
         <> 
     <div className=" fixed  w-[90%]  md:w-1/2 p-4 rounded-lg top-[55%] md:top-1/2 left-1/2 center bg-side4-color z-40">
 
         <h1 className="mb-5 text-3xl text-bold text-side12-color text-center"> {studentName} </h1> 
+        <h1 className="mb-5 text-3xl text-bold text-side12-color text-center"> {studentId} </h1> 
+        <h1 className="mb-2 text-2xl text-bold text-center">ادخل مدة التأخير</h1> 
         <div className="flex gap-3 items-center justify-center">
-        <input onChange={(e)=> setQuizValue(e.target.value)} type="number"  className=" mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 placeholder:text-end" placeholder={placeholder} required />
-        <h1 className="text-4xl mt-4 ">/</h1>
-        {/* <input  type="number"  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 placeholder:text-end" value={`${defaultScore}`} required /> */}
-        <InputAddClass  value={score}  type="number" onChange={setScore}/>
+        <input onChange={(e)=> setDelay(e.target.value)} type="number"  className=" mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 placeholder:text-end" placeholder={placeholder} required />
         </div>
         <div className="flex justify-between items-center mt-6"> 
 
@@ -96,4 +75,4 @@ console.log(`tha score  is ${data.maxDegree}`)
         </>
     )
 }
-export default PopOllStudent
+export default PopAttendance

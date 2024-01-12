@@ -74,7 +74,6 @@ const page = () => {
                 </div>
 
                 )}
-
     </div>
   )
 }
