@@ -37,7 +37,9 @@ color: white;
   border-radius:6px;
   text-align: end;
 }
-
+.direction_rtl{
+  direction: rtl;
+}
 
 
 .page {

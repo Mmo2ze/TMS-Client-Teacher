@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
 function Scanner({ success, scanner }) {

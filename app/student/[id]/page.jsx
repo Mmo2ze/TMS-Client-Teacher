@@ -27,12 +27,12 @@ const page = (props) => {
         setData(response.data.data);
         setIsLoading(false);
         // console.log(`sadasdas${response.data.data.privateId}`)
-        setStudentName(response.data.student.name)
-        setStudentClass(response.data.className)
-        setStudentGrade(response.data.grade)
-        setStudentPhone(response.data.student.phone)
+        setStudentName(response.data.student.student.name)
+        setStudentClass(response.data.student.className)
+        setStudentGrade(response.data.student.grade)
+        setStudentPhone(response.data.student.student.phone)
         setStudentGender(response.data.student.gender)
-        setStudentId(response.data.privateId);
+        setStudentId(response.data.student.privateId);
       } catch (e) {
         console.log(e);
       }
@@ -95,6 +95,7 @@ const page = (props) => {
         </div>
 
         <div className="flex justify-center">
+          <div className='flex flex-col gap-6'> 
         <Link href={`/student/${props.params.id}/payment`}>
 
           <button
@@ -104,15 +105,24 @@ const page = (props) => {
             المصاريف 
           </button>
           </Link>
+          <Link href={`/student/${props.params.id}/quiz`}>
 
+<button
+  type="button"
+  className="text-white  flex bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium w-fit  rounded-lg text-base px-5 py-2.5  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 m-auto"
+>
+  الامتحانات 
+</button>
+</Link>
+  </div>
         </div>
       </div>
 
       <div className="img_liner_2 mt-4 p-2 rounded-lg"> 
 
       <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
-      <InputStudent lable="الاسم" placeholder={studentName}/>
       <InputStudent lable="ID" placeholder={studentId}/>
+      <InputStudent lable="الاسم" placeholder={studentName}/>
       
 
       </div>
@@ -129,8 +139,8 @@ const page = (props) => {
       </div>
 
       <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
-      <InputStudent lable="السعر" placeholder="200$"/>
       <InputStudent lable="مدة التأخير" placeholder="7"/>
+      <InputStudent lable="السعر" placeholder="200$"/>
 
       </div>
 

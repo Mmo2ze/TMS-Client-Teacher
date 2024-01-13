@@ -34,12 +34,12 @@ const PopOllStudent = ({studentName , studentId , onCansle, placeholder }) => {
                 var message1 = error.response.data.messages[0];
                 if (message1) {
                   switch (message1.statusCode) {
-                    case 302: {
-                      endLodingToast(toastID, 'الرقم   حطأ', "error");
+                    case 301: {
+                      endLodingToast(toastID, 'تم اضافة درجة لهذا الطالب', "error");
                       break;
                     }
-                    case 301: {
-                      endLodingToast(toastID, "لقد ادخلت رقم خطأ", "error");
+                    case 302: {
+                      endLodingToast(toastID, "الدرجة المدخلة خاطئة", "error");
                       break;
                     }
                     default: {

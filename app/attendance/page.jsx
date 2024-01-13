@@ -59,11 +59,10 @@ const Page = () => {
   setShowPop(!showPop);
   setCurrentStudent({
     name: student.student.name,
-    id: student.student.id
+    id:student.privateId
   });
 }}>
-  <h2>{student.student.name}</h2>
-  <StudentBox name={student.student.name} id={student.student.id} key={student.student.id} />
+  <StudentBox name={student.student.name} id={student.privateId} key={student.student.id} />
 </div>
   );
 })

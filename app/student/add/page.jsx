@@ -76,6 +76,10 @@ const page = () => {
         var message1 = error.response.data.messages[0];
         if (message1) {
           switch (message1.statusCode) {
+            case 303: {
+              endLodingToast(toastID, "الرقم الذي ادخلته حطأ", "error");
+              break;
+            }
             case 302: {
               endLodingToast(toastID, "الرقم الذي ادخلته حطأ", "error");
               break;
@@ -83,7 +87,7 @@ const page = () => {
             case 301: {
               endLodingToast(
                 toastID,
-                "الرقم الذي ادخلته ليس عليه واتس ",
+                " الرقم الذي ادخلته ليس عليه واتس اب",
                 "error"
               );
               break;
@@ -160,7 +164,7 @@ const page = () => {
 
       endLodingToast(
         toastID,
-        " تم التسجيل بنجاح  dd صف",
+        "تم تسجيل الطالب بالصف بنجاح",
         "success"
       );
       // response.data.id
@@ -201,6 +205,10 @@ const page = () => {
         var message1 = error.response.data.messages[0];
         if (message1) {
           switch (message1.statusCode) {
+            case 303: {
+              endLodingToast(toastID, "هذا الرقم مضاف بالفعل", "error");
+              break;
+            }
             case 302: {
               endLodingToast(toastID, "الرقم الذي ادخلته حطأ", "error");
               break;
@@ -281,14 +289,18 @@ const page = () => {
 
   </div> */}
         {step === 1 && (
-          <div>
+          <div className="relative">
+            <div className="absolute top-[-7%] left-0 "> 
+            <h1 className="text-side12-color text-2xl ">1/4</h1>
+            </div>
+            <div className="direction_rtl">
             <InputAddClass
               type="number"
               lable="ادخل رقم الطالب"
               value={number}
               onChange={setNumber}
             />
-
+</div>
             <div>
               <h3 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">
                 خدمة رسائل الواتس اب
@@ -351,15 +363,20 @@ const page = () => {
         )}
 
         {step === 2 && (
-          <div>
+          <div className="relative">
+                  <div className="absolute top-[-7%] left-0 "> 
+            <h1 className="text-side12-color text-2xl ">2/4</h1>
+            </div>
     {!isTwoVisible && (
             <>
+                  <div className="direction_rtl">
               <InputAddClass
                 type="text"
                 lable="ادخل اسم الطالب"
                 value={nameStudent}
                 onChange={setNameStudent}
               />
+              </div>
               <div className="flex justify-center items-center gap-5 my-4 ">
                 <div className="flex flex-col gap-4 items-center justify-center">
                   <label
@@ -409,17 +426,12 @@ const page = () => {
               <div> 
   <h1 className="text-xl my-3 text-end ">
             {" "}
-            الطالب Aa:{" "}
+            الطالب :{" "}
             <span className="text-color-text text-xl">
               {theName || nameStudent}
             </span>{" "}
           </h1>
-          <h1 className="text-xl my-3 text-end ">
-            رقم الطالب هو :{" "}
-            <span className="text-color-text text-xl">
-              {theId || idStudent}
-            </span>{" "}
-          </h1>
+
              <div className="flex justify-between">
             <button className="bg-red-600 p-4 rounded-lg" onClick={handleGoBack}>العودة</button>
             <button className="bg-blue-600 p-4 rounded-lg" onClick={handleGo}>المتابعة </button>
@@ -441,7 +453,10 @@ const page = () => {
         )} */}
       </div>
 {step === 3 && (
-  <> 
+  <div className="relative">
+              <div className="absolute top-[-7%] left-0 "> 
+            <h1 className="text-side12-color text-2xl ">3/4</h1>
+            </div>
         <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">
             هل تريد اضافة رقم ولي امر
           </h1>
@@ -493,57 +508,79 @@ const page = () => {
              </div>
           )}
           {wantToAddParentNumber && (
+
+            
             <div className="duration-1000 transition-transform  ">
+               <div className="direction_rtl">
               <InputAddClass
                 value={valuePerentNumber}
                 onChange={setValuePerentNumber}
                 type="number"
                 lable="ادخل رقم ولي الأمر"
               />
-              <h1 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white 2sm:w-full">
-                هل تريد خدمة الواتس اب على هذا الرقم
-              </h1>
-              <div className="flex">
-                <div className="flex items-center mb-4">
+                </div>
+
+
+
+
+                <div>
+              <h3 className="mb-5 text-center pt-4 text-2xl font-medium text-gray-900 dark:text-white">
+                خدمة رسائل الواتس اب
+              </h3>
+              <ul className="grid w-full gap-6 md:grid-cols-2">
+                <li>
                   <input
-                    id="default-radio-1"
                     type="radio"
+                    id="hosting-big"
+                    name="hosting"
+                    value="hosting-big"
+                    className="hidden peer"
                     onChange={() => {
                       setCheckPerantWhats(true);
                     }}
-                    defaultValue
-                    name="default-radio"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
-                    htmlFor="default-radio-1"
-                    className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    htmlFor="hosting-big"
+                    className="inline-flex flex-row-reverse items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
-                    {" "}
-                    نعم
+                    <div className="block">
+                      <div className="w-full text-lg font-semibold">
+                        تفعيل رسائل الواتس اب على هذا الرقم
+                      </div>
+                    </div>
                   </label>
-                </div>
-                <div className="flex items-center">
+                </li>
+                <li>
                   <input
-                    defaultChecked
-                    id="default-radio-2"
                     type="radio"
+                    id="hosting-small"
+                    name="hosting"
+                    value="hosting-small"
+                    className="hidden peer"
+                    required
                     onChange={() => {
                       setCheckPerantWhats(false);
-                    }}
-                    defaultValue
-                    name="default-radio"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    }}                    defaultChecked
                   />
                   <label
-                    htmlFor="default-radio-2"
-                    className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    htmlFor="hosting-small"
+                    className="inline-flex flex-row-reverse items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
-                    لا{" "}
+                    <div className="block">
+                      <div className="w-full text-[lg 2sm:text-[16px] flex-row-reverse font-semibold">
+                        غير مهتم برسائل الواتس اب على هذا الرقم
+                      </div>
+                    </div>
                   </label>
-                </div>
-              </div>
+                </li>
+              </ul>
+            </div>
+
+
+
+
               {showDetailParent && (
+                <div className="relative"> 
                 <h3 className="text-end my-6 text-xl">
                   {" "}
                   الاسم :{" "}
@@ -551,6 +588,10 @@ const page = () => {
                     {DetailParent}
                   </span>{" "}
                 </h3>
+                <div className="absolute left-[47%] top-[-20%] "> 
+                <button className="bg-blue-600 p-4 rounded-lg" onClick={handleGo}>اكمل </button>
+                </div>
+                </div>
               )}
               {shwoNameParent && (
                 <div>
@@ -582,14 +623,13 @@ const page = () => {
  
             </div>
           )}
-  </>
+  </div>
 )}
       {step === 4 && (
-        <div>      
-    
-
-      
-
+        <div className="relative">      
+            <div className="absolute top-[-7%] left-0 2sm:top-[-16%]"> 
+            <h1 className="text-side12-color text-2xl ">4/4</h1>
+            </div>
           <label
             for="countries"
             class="text-end block my-4 text-xl font-medium text-gray-900 dark:text-white"
