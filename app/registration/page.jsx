@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Scanner from "../ui/scanner/Scanner";
 import Pop from "../ui/pop/Pop";
 import request from "../config/axiosconfigClient";
+import { sendToast } from "../func/toast";
 const page = () => {
   const scaner = useRef(null);
   const [showpop, setShowpop] = useState(false);
