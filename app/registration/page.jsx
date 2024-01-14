@@ -1,14 +1,17 @@
 "use client";
 import { ToastContainer, toast } from "react-toastify";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Scanner from "../ui/scanner/Scanner";
-
+import Pop from "../ui/pop/Pop";
+import request from "../config/axiosconfigClient";
 const page = () => {
   const scaner = useRef(null);
-
+  const [showpop, setShowpop] = useState(false);
+  const [student, setStudent] = useState({});
   function success(result) {
     scaner.current.pause();
-    request(`api/Student/${result}`)
+    console.log(result);
+    request(`api/Teacher/student/${result}`)
       .then((response) => {
         setStudent(response.data);
         setShowpop(true);
@@ -34,10 +37,16 @@ const page = () => {
     <div className="add-page">
       <ToastContainer />
 
-        <div className="main-content">
-          <Scanner success={success} scanner={scaner} />
-         
-        </div>
+      <div className="main-content">
+        <Scanner success={success} scanner={scaner} />
+        {showpop && (
+          <Pop
+            scanner={scaner}
+            setShowpop={setShowpop}
+            studentResponse={student}
+          />
+        )}
+      </div>
     </div>
   );
 };
