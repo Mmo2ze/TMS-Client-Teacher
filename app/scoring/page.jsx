@@ -15,7 +15,20 @@ const Page = () => {
   const [studentName, setStudentName] = useState("");
   const [studentId , setStudentId] = useState("");
   const [currentStudent, setCurrentStudent] = useState({});
+  const [score, setScore] = useState("");    
 
+  useEffect(() => {
+    const getdata = async () => {
+      try {
+        const response = await axios.get("/api/Teacher/quiz-maxvalue");
+        setScore(response.data.maxDegree);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getdata();
+  }, [score]);
 
 
   useEffect(() => {
@@ -41,7 +54,7 @@ const Page = () => {
 
 
 {showPop && ( <div className="overlay">   
-  <PopOllStudent placeholder="تسجيل درجات"   onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} /> 
+  <PopOllStudent placeholder="تسجيل درجات"  scores={score}  onRef={() => getdata()} onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} /> 
    </div>)}
 
    <ToastContainer />

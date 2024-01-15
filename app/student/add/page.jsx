@@ -576,9 +576,6 @@ const page = () => {
               </ul>
             </div>
 
-
-
-
               {showDetailParent && (
                 <div className="relative"> 
                 <h3 className="text-end my-6 text-xl">

@@ -10,11 +10,10 @@ const {
   import "react-toastify/dist/ReactToastify.css";
 import InputAddClass from "./addClass/InputAddClass";
 import {useEffect} from "react"
-const PopOllStudent = ({studentName , studentId , onCansle, placeholder }) => {
+const PopOllStudent = ({studentName , studentId , onCansle, placeholder , scores , onRef}) => {
     const [quizValue ,setQuizValue] = useState("")
     const [data, setData] = useState([]);
-
-    const [score, setScore] = useState("");    
+    const [score, setScore] = useState(scores);    
     const handelSubmit = async () => {
         var toastID = lodingToast();
         try {
@@ -22,20 +21,23 @@ const PopOllStudent = ({studentName , studentId , onCansle, placeholder }) => {
           await axios.post(`/api/Teacher/quiz`, {
             studentId: studentId,
             degree: parseInt(quizValue, 10), 
-            maxDegree: data.maxDegree,
+            maxDegree: parseInt(score, 10),
         });
         endLodingToast(toastID, "تم اضافة  الدرجة", "success");
           onCansle();
+          setScore(score);          
+          onRef()
           console.log("Data updated successfully!");
         } catch (error) {
-            if (error.response.status === 404) {
-                endLodingToast(toastID, " ادخل  ", "error");
-              } else if (error.response.status === 400) {
+            // if (error.response.status === 404) {
+            //     endLodingToast(toastID, " ادخل  ", "error");
+            //   } else 
+              if (error.response.status === 400) {
                 var message1 = error.response.data.messages[0];
                 if (message1) {
                   switch (message1.statusCode) {
                     case 301: {
-                      endLodingToast(toastID, 'تم اضافة درجة لهذا الطالب', "error");
+                      endLodingToast(toastID, ' تم اضافة درجة لهذا الطالب بالفعل', "warning");
                       break;
                     }
                     case 302: {
@@ -52,21 +54,8 @@ const PopOllStudent = ({studentName , studentId , onCansle, placeholder }) => {
         }
       };
       
-console.log(`tha score  is ${data.maxDegree}`)
-    useEffect(() => {
-      const getdata = async () => {
-        try {
-          const response = await axios.get("/api/Teacher/quiz-maxvalue");
-          setData(response.data);
-          setScore(response.data.maxDegree);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-  
-      getdata();
-    }, []);
-  
+console.log(`tha score  is ${scores}`)
+
 
 
     return (
