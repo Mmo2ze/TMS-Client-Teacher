@@ -35,7 +35,7 @@ const page = () => {
   }
 
   return (
-    <div className="add-page">
+    <div className="add-page pt-20">
       <ToastContainer />
 
       <div className="main-content">
