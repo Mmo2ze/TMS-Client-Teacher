@@ -196,9 +196,7 @@ const page = () => {
       );
       // endLodingToast(toastID, response.data.isvalid ? "تم بنجاح!" : 'فشل!');
     } catch (error) {
-      if (error.response.status === 404) {
-        // setShowNameStudent(!shwoNameStudent);
-    
+      if (error.response.status === 404) {    
         endLodingToast(toastID, " ادخل بيانات الطالب ", "success");
         setStep(2);
       } else if (error.response.status === 400) {
