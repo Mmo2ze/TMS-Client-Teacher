@@ -4,7 +4,7 @@ import axios from "../config/axiosconfigClient"
 import Link from "next/link";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Spinners from "../ui/Spinners";
-import PopDeleteAssistant from "../ui/home/PopDeleteAssistant";
+import PopDeleteOrder from "@/app/ui/PopDeleteOrder";
 function Page(){
 
 
@@ -12,7 +12,7 @@ function Page(){
     const [ordersFound, setOrdersFound] = useState(true)
     const [isLoading, setIsLoading] = useState(true);
     const [showDelete , setShowDelete] = useState(false)
-
+    const [deleteId , setDeleteId] = useState(null)
     useEffect(()=>{
         axios.get("api/Teacher/Cards")
         .then(response=>{
@@ -26,11 +26,23 @@ function Page(){
             console.log(err);
         })
     },[])
+
+    const handelDelete = (id)=>{
+        setShowDelete(true)
+        setDeleteId(id);
+    }
+    const updateObject = (id, updatedData) => {
+        setOrders((prevArray) =>
+            prevArray.map((obj) => (obj.id === id ? { ...obj, ...updatedData } : obj))
+        );
+    };
+
+
     return(
         <div className="pt-20 px-4  ">
       {showDelete && (
       <div className="overlay">
-        <PopDeleteAssistant onCansle={() => {setShowDelete(!showDelete)}}/>
+        <PopDeleteOrder  id={deleteId} restartData={updateObject} onCansle={() => {setShowDelete(!showDelete)} }/>
       </div>
     )}
       
@@ -61,7 +73,7 @@ function Page(){
                         { orders.map ( (order) => (
                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-base">
                             
-                          <td onClick={() =>setShowDelete(!showDelete)} className="px-6 py-4 text-color-red  cursor-pointer">
+                          <td onClick={() => handelDelete(order.id)} className="px-6 py-4 text-color-red  cursor-pointer">
                           <DeleteIcon/>
                           </td>
                         

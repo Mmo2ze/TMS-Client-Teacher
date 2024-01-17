@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from "../../config/axiosconfigClient"
+import axios from "../config/axiosconfigClient"
 
 const PopDeleteOrder = ({id , onCansle , restartData}) => {
     const handelDelete = async () => {
@@ -7,7 +7,7 @@ const PopDeleteOrder = ({id , onCansle , restartData}) => {
           console.log("Attempting to Delete data...");
           await axios.delete(`/api/Teacher/Cards/${id}`);
           onCansle();
-          restartData()
+          restartData(id, {orderStatus: "canceled"})
         } catch (error) {
           console.error("Error updating data:", error);
         }
