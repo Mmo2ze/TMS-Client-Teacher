@@ -38,6 +38,7 @@ module.exports = {
         "color-text3" : "#31c48d",
         "color-text4" : "#f98080",
         "color-red" : "#ff0000",
+        "color-aqua" : "#00ffff",
         "blue-color": "#1976d2" ,
         "button-color":"#1A56DB",
         "button-color2":"#0891b2",

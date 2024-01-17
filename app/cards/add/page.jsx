@@ -130,7 +130,7 @@ for (const item of studentClass) {
             sendToast("تم طلب الكروت بنجاح","success")
                 setTimeout(() => {
                     window.location.href = "/cards"
-                }, 3000);
+                }, 2000);
             } )
             .catch ( error => {
                 sendToast("حدث خطأ أثناء طلب الكروت","error")
@@ -141,7 +141,7 @@ for (const item of studentClass) {
 
     return (
     <div className="pt-20 px-4">
-        <div className='flex flex-row-reverse justify-around'>
+        <div className='flex flex-row-reverse justify-center w-[50%] 2sm:w-full m-auto gap-20 2sm:gap-6'>
             <ToastContainer/>
             <div className="relative">
                 <button onClick={handleDropdownOpenStudent} id="dropdownBgHoverButton"
@@ -174,13 +174,7 @@ for (const item of studentClass) {
                     </ul>
                 </div>
             </div>
-            <button onClick={OrderCards} id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
-                    data-dropdown-placement="bottom"
-                    className="text-white bg-blue-700 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button">طلب الكروت
-            </button>
-
-            <h5>{studentClass.length}عدد الكروت : </h5>
+     
             <div className="relative">
                 <button onClick={handleDropdownOpen} id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
                         data-dropdown-placement="bottom"
@@ -233,9 +227,16 @@ for (const item of studentClass) {
 
                 </div>
             </div>
-
         </div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-32">
+        <div className="mt-8 flex flex-col-reverse justify-center items-center gap-6"> 
+        <h1 className=" text-xl"> <span className="text-side12-color text-xl">{studentClass.length}</span> : عدد الكروت  </h1>
+            <button onClick={OrderCards} id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
+                    data-dropdown-placement="bottom"
+                    className="text-white bg-blue-700 w-36 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">طلب الكروت
+            </button>
+            </div>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-28 2sm:mt-16">
             <table className=" w-full text-sm  text-end text-gray-500 dark:text-gray-400">
                 <thead
                     className=" text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white text-xl 2sm:text-base">
