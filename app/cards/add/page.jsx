@@ -130,7 +130,7 @@ for (const item of studentClass) {
             sendToast("تم طلب الكروت بنجاح","success")
                 setTimeout(() => {
                     window.location.href = "/cards"
-                }, 2000);
+                }, 1000);
             } )
             .catch ( error => {
                 sendToast("حدث خطأ أثناء طلب الكروت","error")

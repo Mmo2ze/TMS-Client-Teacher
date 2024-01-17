@@ -58,7 +58,9 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
         <div className='md:flex md:flex-col '>
         <h1 className="md:mb-6 2sm:absolute top-[40%] left-7 "> <span className="text-color-text">8</span> &nbsp; <PersonIcon/> </h1>
         <div className="2sm:absolute top-[55%] left-2" > 
+        <Link  href={`/classes/student/${id}`}>
         <Button text="عرض" />
+         </Link>
         </div> 
         </div>
         <h1 className='text-color-text 2sm:text-lg 2sm:absolute top-[20%] right-7'>{name}</h1>
