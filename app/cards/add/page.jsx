@@ -27,22 +27,31 @@ const page = () => {
     console.log(`the studentClass is ${studentClass}`)
 
 
+function removeStudent (selectedStudent) {
+    setStudentClass(prevStudentClass => prevStudentClass.filter(st => st.privateId !== selectedStudent.privateId));
 
-    const handelstudent = (selectedStudent) => {
-      // تحقق مما إذا كان هذا الطالب موجودًا بالفعل في الجدول
-      const isStudentAlreadyAdded = studentClass.some(st => st.student.name === selectedStudent);
-    
+}
+    function isStudentAlreadyAdded (selectedStudent) {
+
+     return    studentClass.some ( st => st.privateId === selectedStudent.privateId );
+    }
+     const handelstudent = (selectedStudent) => {
+        // تحقق مما إذا كان هذا الطالب موجودًا بالفعل في الجدول
+
       // إذا لم يكن موجودًا، قم بإضافته إلى الجدول
-      if (!isStudentAlreadyAdded) {
+      if (!isStudentAlreadyAdded(selectedStudent)) {
         setStudentClass(prevStudentClass => [
           ...prevStudentClass,
           {
-            privateId: "NewID", 
+            privateId: selectedStudent.privateId,
             student: {
-              name: selectedStudent,
+              name: selectedStudent.student.name,
             },
           },
         ]);
+      }else {
+        // إذا كان موجودًا، قم بإزالته من الجدول
+          removeStudent(selectedStudent);
       }
     };
     
@@ -84,21 +93,22 @@ const page = () => {
 
     };
 
-
+    const removeClassStudents = (classId) => {
+        setSelectedClasses(prevSelectedClasses => prevSelectedClasses.filter(id => id !== classId))
+        setStudentClass(prevStudentClass => prevStudentClass.filter(st => st.classId !== classId));
+    }
     const handleClassSelection = async  (classId) => {
-      setSelectedClasses((prevSelectedClasses) => {
-        if (prevSelectedClasses.includes(classId)) {
-          return prevSelectedClasses.filter((id) => id !== classId);
-        } else {
-          return [...prevSelectedClasses, classId];
+        console.log(classId)
+        if(selectedClasses.includes(classId)){
+            removeClassStudents(classId)
+
+        }else {
+            const response = await axios.get(`/api/Teacher/class/${classId}?requiredStudents=true&requiredSections=false`)
+                    setStudentClass(prev=>[...prev,...response.data.students]);
+        setSelectedClasses(prevSelectedClasses => [...prevSelectedClasses, classId]);
         }
-      });
-      try {
-        const response = await axios.get(`/api/Teacher/class/${classId}?requiredStudents=true&requiredSections=false`);
-        setStudentClass(response.data.students || []); 
-      } catch (e) {
-        console.log(e);
-      }
+
+
     };
 
 
@@ -149,9 +159,9 @@ const page = () => {
           </div>
           <ul className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton">
           {data.map ((student) => (
-            <li key={student.student.id} onClick={() => handelstudent (student.student.name)}>
+            <li key={student.student.id} onClick={() => handelstudent (student)}>
               <div className="flex items-center ps-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                <input id="checkbox-item-11" type="checkbox" defaultValue className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                <input  checked={isStudentAlreadyAdded(student)} id="checkbox-item-11" type="checkbox" defaultValue = "" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                 <label htmlFor="checkbox-item-11" className="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{student.student && student.student.name}</label>
               </div>
             </li>
@@ -180,11 +190,11 @@ const page = () => {
           </thead>
           <tbody>
             {studentClass.map((st) => (
-              
+
               <tr className="bg-white dark:bg-gray-800 text-white text-xl 2sm:text-base">
  
               <td className="px-6 py-4 text-red-600">
-                <DeleteIcon sx={{ fontSize: 30 }}/>
+                <DeleteIcon onClick={()=>removeStudent(st)} sx={{ fontSize: 30 }}/>
               </td>
               <td className="px-6 py-4">
                {st.privateId}

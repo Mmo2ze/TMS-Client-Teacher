@@ -20,14 +20,14 @@ function Page(){
 
             console.log(err);
         })
-    })
+    },[])
     return(
         <div className="pt-20 px-4  ">
             {
                 orders.map ( (order) => (
                     <div>
                         <Link href={`/cards/${order.id}`}>
-                        {order.id} {order.orderedOn} {order.orderStatus}
+                        {order.id} {order.orderedOn} {order.orderStatus} {"Price:"+order.totalPrice} {"Quantity:"+order.totalPrice/10}
                         </Link>
                         <br/>
                     </div>
