@@ -21,7 +21,6 @@ const page = () => {
         setTimeout(() => {
           scaner.current.resume();
         }, 2000);
-
         if (
           error.response.data.title == "One or more validation errors occurred."
         )
@@ -33,7 +32,6 @@ const page = () => {
         }
       });
   }
-
   return (
     <div className="add-page pt-20">
       <ToastContainer />

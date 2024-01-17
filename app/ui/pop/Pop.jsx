@@ -4,8 +4,11 @@ import Imagesweman from "../../assets/images/mother.png"
 import { Button } from "@mui/material"
 import SendIcon from '@mui/icons-material/Send';
 import request from "../../config/axiosconfigClient";
-import { endLodingToast, lodingToast, sendToast } from "../../func/toast";
-import { ToastContainer } from "react-toastify";
+const {
+  endLodingToast,
+  lodingToast,
+  sendToast,
+} = require("./../../func/toast");
 import { useState } from "react";
 import Image from 'next/image'
 
@@ -13,45 +16,43 @@ function Pop({ scanner, setShowpop, studentResponse }) {
   const [degree, setdegree] = useState();
   const [lateness, setlateness] = useState();
   const handleSave = async () => {
-    var toastid = lodingToast()
+    var toastID = lodingToast()
     const latenessValue = lateness === undefined  ? 0 : lateness;
 
     request.post(
       `api/Teacher/student/attendance?studentId=${studentResponse.student.privateId}&lateMints=${latenessValue}`
       )
       .then((response) => {
-        endLodingToast(toastid, "added Successfully", "success");
+        endLodingToast(toastID, "5الرقم الذي ادخلته حطأ", "error");
         handleCansle();
       })
       .catch((error) => {
         console.log(`error is ${error.statusCode}`)
         handleCansle();
         if (error.response.status === 404) {    
-          endLodingToast(toastID, " ادخل بيانات الطالب ", "success");
+          endLodingToast(toastID, "1الرقم الذي ادخلته حطأ", "error");
         } else if (error.response.status === 400) {
           var message1 = error.response.data.messages[0];
           if (message1) {
             switch (message1.statusCode) {
               case 400: {
-                endLodingToast(toastID, "هذا الرقم مضاف بالفعل", "error");
+                endLodingToast(toastID, "2الرقم الذي ادخلته حطأ", "error");
                 break;
               }
               case 302: {
-                endLodingToast(toastID, "الرقم الذي ادخلته حطأ", "error");
+                endLodingToast(toastID, "3الرقم الذي ادخلته حطأ", "error");
                 break;
               }
                    case 302: {
-                endLodingToast(toastID, "الرقم الذي ادخلته حطأ", "error");
-                break;
+                    endLodingToast(toastID, "4الرقم الذي ادخلته حطأ", "error");
+                    break;
               }
-    
               default: {
                 endLodingToast(
                   toastID,
                   "هنالك مشكلة الرجاء المحاولة مرة اخرى",
                   "error"
                 );
-                break;
               }
             }
           }
