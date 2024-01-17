@@ -8,21 +8,22 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "../../../config/axiosconfigClient"
 
 const page = (props) => {
-    const [data , setData] = useState("")
+    const [data , setData] = useState([])
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const getdata = async () => {
           try {
             const response = await axios.get(`/api/Teacher/class/${props.params.id}?requiredStudents=true&requiredSections=false`);
-            setData(response.data);
+            setData(response.data.students  );
+            console.log(response.data.students  )
             setIsLoading(false);
 
           } catch (e) {
             console.log(e);
           }
         };
-  
+        getdata()
 
       }, []);
     
@@ -38,7 +39,7 @@ const page = (props) => {
       {isLoading && <Spinners/>}
       <div> 
 {!isLoading && data.map((da) => (
-<StudentBox name={da.name} id={da.id}/>
+<StudentBox name={da.student.name} id={da.id}/>
 ))}
 </div> 
 
