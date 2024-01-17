@@ -4,6 +4,7 @@ import axios from "../config/axiosconfigClient"
 import Link from "next/link";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Spinners from "../ui/Spinners";
+import AddIcon from '@mui/icons-material/Add';
 import PopDeleteOrder from "@/app/ui/PopDeleteOrder";
 function Page(){
 
@@ -45,7 +46,11 @@ function Page(){
         <PopDeleteOrder  id={deleteId} restartData={updateObject} onCansle={() => {setShowDelete(!showDelete)} }/>
       </div>
     )}
-      
+        <Link href="/cards/add">
+          <div className="text-color-text text-end mb-4"> 
+            <AddIcon sx={{ fontSize: 60 }} />
+          </div>
+          </Link>
                     <div className="relative overflow-x-auto rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-white rounded-lg">
                       <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white rounded-lg">
@@ -81,9 +86,9 @@ function Page(){
                           {order.id}
                           </td> */}
   <Link href={`/cards/${order.id}`}> 
-                          <td className="px-6 py-4" style={{ color: order.orderStatus === "Pending" ? "gold" : order.orderStatus === "ok" ? "green" : "blue" }}>
-  {order.orderStatus === "Pending" ? "معلق" : order.orderStatus === "ok" ? "تم" : "الغاء"}
-</td>
+  <td className="px-6 py-4" style={{ color: order.orderStatus === "Pending" ? "gold" : order.orderStatus === "Accepted" ? "green" : "red" }}>
+  {order.orderStatus === "Pending" ? "معلق" : order.orderStatus === "Accepted" ? "تم" : "الغاء"}
+  </td>
   </Link>
                           <td className="px-6 py-4">
                             {order.orderedOn}
@@ -94,7 +99,6 @@ function Page(){
                           <td className="px-6 py-4">
                           {order.totalPrice/10}
                           </td>
-                    
                         </tr>
     
                     ) )}
@@ -102,7 +106,7 @@ function Page(){
                     </table>
                     </div>
             { !ordersFound &&
-                <h1>لا يوجد طلبات</h1>
+                <h1 className="text-3xl flex justify-center text-white items-center mt-[20%]">لا يوجد طلبات</h1>
             }
             { isLoading &&
                <Spinners/>
