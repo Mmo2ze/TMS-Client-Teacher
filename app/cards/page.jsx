@@ -94,10 +94,10 @@ function Page(){
                             {order.orderedOn}
                           </td>
                           <td className="px-6 py-4">
-                          {order.totalPrice}
+                          {order.count*10}
                           </td>
                           <td className="px-6 py-4">
-                          {order.totalPrice/10}
+                          {order.count}
                           </td>
                         </tr>
     
