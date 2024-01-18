@@ -9,7 +9,7 @@ import PopUpdateClass from "./PopUpdateClass"
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopDeleteClass from "./PopDeleteClass"
 import Link from 'next/link'
-const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  updateData }) => {
+const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  updateData  , studentsCount}) => {
   const [showUpdate , setShowUpdate] = useState(false)
   const [sureDelete , setSureDelete] = useState(false)
 
@@ -56,7 +56,7 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
         </div>
         <div className='md:flex md:justify-between'>
         <div className='md:flex md:flex-col '>
-        <h1 className="md:mb-6 2sm:absolute top-[40%] left-7 "> <span className="text-color-text">8</span> &nbsp; <PersonIcon/> </h1>
+        <h1 className="md:mb-6 2sm:absolute top-[40%] left-7 "> <span className="text-color-text">{studentsCount}</span> &nbsp; <PersonIcon/> </h1>
         <div className="2sm:absolute top-[55%] left-2" > 
         <Link  href={`/classes/student/${id}`}>
         <Button text="عرض" />
@@ -65,7 +65,7 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
         </div>
         <h1 className='text-color-text 2sm:text-lg 2sm:absolute top-[20%] right-7'>{name}</h1>
         <div className='md:flex md:flex-col md:items-end'>
-        <h1 className="md:mb-6 2sm:absolute top-[40%] right-6"> <span className="text-color-text">6</span> &nbsp; <AccessTimeIcon/></h1>
+        <h1 className="md:mb-6 2sm:absolute top-[40%] right-6"> <span className="text-color-text">{basePaymentDelay}</span> &nbsp; <AccessTimeIcon/></h1>
         <div className="2sm:absolute top-[55%] right-2" > 
         <Link  href={`/classes/section/${id}`}>
         <Button text="عرض" />
