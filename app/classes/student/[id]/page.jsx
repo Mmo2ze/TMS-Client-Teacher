@@ -6,7 +6,7 @@ import StudentBox from "@/app/ui/student/StudentBox"
 import Spinners from '@/app/ui/Spinners';
 import { ToastContainer, toast } from "react-toastify";
 import axios from "../../../config/axiosconfigClient"
-
+import Link from 'next/link';
 const page = (props) => {
     const [data , setData] = useState([])
     const [isLoading, setIsLoading] = useState(true);
@@ -32,14 +32,16 @@ const page = (props) => {
         <ToastContainer/>
       <div className="p-4"> 
       <div className="flex  align-center justify-between text-color-text">
-      <div className="cursor-pointer"> <AccessTimeIcon sx={{ fontSize: 60 }}/></div>
+      <div className="cursor-pointer"> <Link href={`/classes/section/${props.params.id}`}>  <AccessTimeIcon sx={{ fontSize: 60 }}/></Link></div>
       <div className="cursor-pointer" > <AddIcon sx={{ fontSize: 60 }}/></div>
       </div>
  
       {isLoading && <Spinners/>}
       <div> 
 {!isLoading && data.map((da) => (
-<StudentBox name={da.student.name} id={da.id}/>
+  <Link href={`/student/${da.privateId}`}> 
+<StudentBox className={da.className} grade={da.grade} name={da.student.name} id={da.privateId}/>
+ </Link>
 ))}
 </div> 
 

@@ -80,7 +80,7 @@ const Page = () => {
         {!isLoading &&
           data.map((da) => (
             <Link key={da.student.id} href={`/student/${da.privateId}`}>
-              <StudentBox name={da.student.name} id={da.privateId} />
+              <StudentBox name={da.student.name} id={da.privateId} grade={da.grade} className={da.className}/>
             </Link>
           ))}
       </div>

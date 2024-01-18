@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PopAddSection from "@/app/ui/section/PopAddSection";
 import axios from "../../../config/axiosconfigClient"
 import { ToastContainer, toast } from "react-toastify";
-
+import Link from 'next/link';
 
 const page = (props) => {
     const [showAddSection , setShowAddSection] = useState(false)
@@ -49,13 +49,15 @@ const page = (props) => {
             {showAddSection && ( <div className="overlay"> <PopAddSection  restartData={() => getdata()} onCansle={() => setShowAddSection(!showAddSection)} id={props.params.id}/></div>)}
         <div className="p-4"> 
         <div className="flex  align-center justify-between text-color-text">
-        <div className="cursor-pointer"> <AccessibilityIcon sx={{ fontSize: 60 }}/></div>
+        <div className="cursor-pointer"><Link href={`/classes/student/${props.params.id}`}> <AccessibilityIcon sx={{ fontSize: 60 }}/> </Link></div>
         <div className="cursor-pointer" onClick={() => setShowAddSection(!showAddSection)}> <AddIcon sx={{ fontSize: 60 }}/></div>
         </div>
         {isLoading && <Spinners/>}
         <div> 
 {!isLoading && data.map((da) => (
+ 
   <BoxSection day={da.day} key={da.id} starttime={da.startTime} endtime={da.endTime} id={da.id} restartData={() => restartData}/>
+
   ))}
   </div> 
 

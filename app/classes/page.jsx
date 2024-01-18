@@ -49,7 +49,7 @@ const page = () => {
         <div className="relative overflow-x-auto p-4  ">
         {isLoading && <Spinners/>}
         {!isLoading && data.map((da) => (
-    <ClassBox   updateData={updateData} name={da.name} id={da.id} basePaymentPrice={da.basePaymentPrice} basePaymentDelay={da.basePaymentDelay} grade={da.grade}/>
+    <ClassBox  studentsCount={da.studentsCount} updateData={updateData} name={da.name} id={da.id} basePaymentPrice={da.basePaymentPrice} basePaymentDelay={da.basePaymentDelay} grade={da.grade}/>
     ))}
       </div>
     </div>
