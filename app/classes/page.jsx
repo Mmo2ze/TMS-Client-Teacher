@@ -46,6 +46,7 @@ const page = () => {
         </button> */}
         <ButtonAdd onClick={() => setShowAddClass(!showAddClass)} text="اضافة صف"/>
         </div>
+
         <div className="relative overflow-x-auto p-4  ">
         {isLoading && <Spinners/>}
         {!isLoading && data.map((da) => (

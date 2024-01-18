@@ -33,6 +33,7 @@ module.exports = {
         "side11-color" :"#003de8",
         "side12-color" :"#faca15",
         "side13-color" :"#f1e56a",
+        "side14-color" :"#0e1521",
         "color-text" : "#00ffe5",
         "color-text2" : "#dd7a51",
         "color-text3" : "#31c48d",

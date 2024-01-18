@@ -92,6 +92,14 @@ const page = () => {
               );
               break;
             }
+            case 400: {
+              endLodingToast(
+                toastID,
+                "هنالك خطأ ما الرجاء المحاولة مرة اخرى",
+                "error"
+              );
+              break;
+            }
             default: {
               endLodingToast(
                 toastID,
