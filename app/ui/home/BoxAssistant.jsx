@@ -16,8 +16,14 @@ const BoxAssistant = ({name , phone , roles , id  , restartData , rolesValues}) 
   const roleValue = roles && roles.length > 0 ? roles[0].value : '';
   const [showDelete , setShowDelete] = useState(false)
   const [showEdit , setShowEdit] = useState(false)
-  console.log("the roles are",(roles));
-  console.log("the rolesValues are",(rolesValues));
+  const rolesTranslations = {
+    AddUser: 'إضافة مستخدم',
+    AddClass: 'إضافة فصل',
+    AddPayment: 'إضافة دفعة',
+    ViewPayment: 'عرض الدفعات',
+    RecordAttendance: 'تسجيل الحضور',
+  };
+
   return (
 
   <div className="relative">
@@ -86,7 +92,7 @@ const BoxAssistant = ({name , phone , roles , id  , restartData , rolesValues}) 
 
             <div className="flex flex-wrap	 w-full	justify-around gap-2"> 
     {roles.map((rol) =>(
-      <ButtonRoles text={rol.value} key={rol.id} />
+        <ButtonRoles text={rolesTranslations[rol.value] || rol.value} key={rol.id} />
 
     ))}
 
