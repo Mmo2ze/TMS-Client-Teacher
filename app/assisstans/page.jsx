@@ -1,17 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAuth } from "../AppState";
 import { useRouter } from "next/navigation";
-import Spinners from "./ui/Spinners";
-import ButtonAdd from "./ui/ButtonAdd";
-import PopAddAssistant from "./ui/home/PopAddAssistant";
-import axios from "./config/axiosconfigClient";
-import BoxAssistant from "./ui/home/BoxAssistant";
-import Button from "./ui/Button";
+import Spinners from "../ui/Spinners";
+import ButtonAdd from "../ui/ButtonAdd";
+import PopAddAssistant from "../ui/home/PopAddAssistant";
+import axios from "../config/axiosconfigClient";
+import BoxAssistant from "../ui/home/BoxAssistant";
 import { ToastContainer, toast } from "react-toastify";
+import {useAuth} from "@/AppState";
 
 export default function Home() {
   const [showAddAssistant, setShowAddAssistant] = useState(false);
+
 
   const [isLoading, setIsLoading] = useState(true);
   const { HaveRole, Role } = useAuth();
