@@ -13,38 +13,33 @@ const page = (props) => {
     const [search , setSearch] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [searchWord, setSearchWord] = useState('');
+    const limit = 50;
+    const [notFound, setNotFound] = useState(false);
+    const [page, setPage] = useState(1);
 
-    // useEffect(() => {
-    //     const getdata = async () => {
-    //       try {
-    //         const response = await axios.get(`/api/Teacher/class/${props.params.id}?requiredStudents=true&requiredSections=false`);
-    //         setData(response.data.students  );
-    //         console.log(response.data.students  )
-    //         setIsLoading(false);
-
-    //       } catch (e) {
-    //         console.log(e);
-    //       }
-    //     };
-    //     getdata()
-
-    //   }, []);
     
       useEffect(() => {
         const delaySearch = setTimeout(() => {
           const fetchData = async () => {
             try {
-              const url = searchWord ? `/api/Teacher/student/search/${searchWord}?limit=1&page=1&classId=0` : `/api/Teacher/class/${props.params.id}?requiredStudents=true&requiredSections=false`;          
+
+              const url = `/api/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}`;
               const response = await axios.get(url);
-              setData(response.data.students);
+              setData(response.data);
+              console.log(response.data)
               setIsLoading(false);
+              setNotFound(false)
             } catch (error) {
+              if(error.response.status == 404){
+                console.log("not found")
+                setNotFound(true)
+              }
               console.error(error);
             }
           };
     
           fetchData();
-        }, 1000);
+        }, 500);
     
         return () => clearTimeout(delaySearch);
       }, [searchWord]);
@@ -81,8 +76,9 @@ const page = (props) => {
         </div>
  
       {isLoading && <Spinners/>}
+          {notFound && <div className="text-center mt-10 text-color-text"> لا يوجد نتائج </div>}
       <div> 
-{!isLoading && data.map((da) => (
+{(!isLoading &&!notFound)&& data.map((da) => (
   <Link href={`/student/${da.privateId}`}> 
 <StudentBox className={da.className} grade={da.grade} name={da.student.name} id={da.privateId}/>
  </Link>
@@ -95,11 +91,3 @@ const page = (props) => {
     )
 }
 export default page
-    // <input
-    //           type="search"
-    //           id="default-search"
-    //           autoComplete="off"
-    //           className="block text-end w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    //           placeholder="البحث عن طالب"
-    //           required
-    //         />

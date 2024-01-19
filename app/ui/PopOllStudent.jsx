@@ -1,21 +1,15 @@
 import {useState} from "react"
 import axios from "../config/axiosconfigClient"
-const {
-    endLodingToast,
-    lodingToast,
-    sendToast,
-  } = require("../func/toast");
-  import { ToastContainer, toast } from "react-toastify";
-  
-  import "react-toastify/dist/ReactToastify.css";
+import { endLodingToast, lodingToast, sendToast, }  from "../func/toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import InputAddClass from "./addClass/InputAddClass";
 import {useEffect} from "react"
-const PopOllStudent = ({studentName , studentId , onCansle, placeholder , scores , onRef}) => {
+const PopOllStudent = ({studentName , studentId , onCansle, placeholder , score ,setScore, onRef}) => {
     const [quizValue ,setQuizValue] = useState("")
     const [data, setData] = useState([]);
-    const [score, setScore] = useState(scores);    
     const handelSubmit = async () => {
-        var toastID = lodingToast();
+        let toastID = lodingToast();
         try {
           console.log("Attempting to update data...");
           await axios.post(`/api/Teacher/quiz`, {
@@ -54,7 +48,7 @@ const PopOllStudent = ({studentName , studentId , onCansle, placeholder , scores
         }
       };
       
-console.log(`tha score  is ${scores}`)
+console.log(`tha score  is ${score}`)
 
 
 

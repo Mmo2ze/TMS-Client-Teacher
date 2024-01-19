@@ -51,7 +51,6 @@ const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaul
     <div className=" fixed  w-[90%]  md:w-1/2 p-4 rounded-lg top-[55%] md:top-1/2 left-1/2 center bg-side4-color z-40">
 
         <h1 className="mb-5 text-3xl text-bold text-side12-color text-center"> {studentName} </h1> 
-        <h1 className="mb-2 text-2xl text-bold text-center">ادخل مدة التأخير</h1> 
         <div className="flex gap-3 items-center justify-center">
         <input onChange={(e)=> setDelay(e.target.value)} type="number"  className=" mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 placeholder:text-end" placeholder={placeholder} required />
         </div>

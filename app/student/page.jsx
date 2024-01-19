@@ -10,15 +10,21 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchWord, setSearchWord] = useState('');
+  const [notFound, setNotFound] = useState(false);
   useEffect(() => {
     const delaySearch = setTimeout(() => {
       const fetchData = async () => {
         try {
-          const url = searchWord ? `/api/Teacher/student/search/${searchWord}` : '/api/Teacher/student';
+          const url =  `/api/Teacher/student?searchWord=${searchWord}`;
+          setNotFound(false)
           const response = await axios.get(url);
           setData(response.data);
           setIsLoading(false);
         } catch (error) {
+          if(error.response.status == 404){
+            console.log("not found")
+            setNotFound(true)
+          }
           console.error(error);
         }
       };
@@ -32,6 +38,8 @@ const Page = () => {
 
 
 
+
+
   return (
     <div className="pt-20">
       <div className="flex gap-2 p-3 items-center text-color-text text-end">
@@ -39,6 +47,7 @@ const Page = () => {
           <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
             Search
           </label>
+
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
@@ -69,6 +78,7 @@ const Page = () => {
             />
           </div>
         </div>
+
         <div className="cursor-pointer">
           <Link href="/student/add">
             <AddIcon sx={{ fontSize: 60 }} />
@@ -77,7 +87,8 @@ const Page = () => {
       </div>
       <div>
         {isLoading && <Spinners />}
-        {!isLoading &&
+        {notFound && <h1 className="text-3xl flex justify-center text-white items-center mt-[20%]">لا يوجد طلاب</h1>}
+        {(!isLoading &&!notFound )&&
           data.map((da) => (
             <Link key={da.student.id} href={`/student/${da.privateId}`}>
               <StudentBox name={da.student.name} id={da.privateId} grade={da.grade} className={da.className}/>
