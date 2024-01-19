@@ -19,7 +19,6 @@ const page = (props) => {
     useEffect ( () => {
         const fetchData = async () => {
             try {
-
                 var response = await axios.get ( `/api/Teacher/student/payment/${props.params.id}?limit=${limit}&page=${page}` );
                 console.log ( response.data );
                 setStudent ( response.data.student );
@@ -31,7 +30,6 @@ const page = (props) => {
                     setNotFound ( true )
                 }else sendToast("حدث خطأ ما","error");
                 console.error ( error );
-
             }
         }
         fetchData ();

@@ -49,7 +49,6 @@ function Page(){
           <div className="text-color-text text-end mb-4"> 
             <AddIcon sx={{ fontSize: 60 }} />
           </div>
-            <h1></h1>
           </Link>
                     <div className="relative overflow-x-auto rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-white rounded-lg">
