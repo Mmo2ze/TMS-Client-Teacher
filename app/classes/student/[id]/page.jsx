@@ -76,7 +76,7 @@ const page = (props) => {
         </div>
  
       {isLoading && <Spinners/>}
-          {notFound && <div className="text-center mt-10 text-color-text"> لا يوجد نتائج </div>}
+          {notFound && <div className="text-center mt-10 text-2xl text-color-text"> لا يوجد نتائج </div>}
       <div> 
 {(!isLoading &&!notFound)&& data.map((da) => (
   <Link href={`/student/${da.privateId}`}> 

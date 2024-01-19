@@ -1,6 +1,6 @@
 "use client"
 import {useEffect, useState} from 'react'
-import InputStudent from '@/app/ui/InputStudent';
+import InputAddClass from '@/app/ui/addClass/InputAddClass';
 import axios from "../../../config/axiosconfigClient";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -145,7 +145,9 @@ const page = (props) => {
                             </option>
                         ) )}
                     </select>
-                    <InputStudent lable="المبلغ" placeholder={paymentAmount + "$"}/>
+                    <div className="direction_rtl">
+                    <InputAddClass lable="المبلغ" />
+                    </div>
                     <div className="text-center mt-6">
                         <button onClick={addPayment} type="button"
                                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full">
@@ -157,7 +159,7 @@ const page = (props) => {
             )}
             <div className="tabel-payment">
                 <div className="relative overflow-x-auto rounded-md">
-                    {notFound ? <div className="text-center text-red-500">لا يوجد مصاريف</div> :
+                    {notFound ? <div className="text-center mt-10 text-3xl text-color-text">لا يوجد مصاريف</div> :
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
                                 className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
