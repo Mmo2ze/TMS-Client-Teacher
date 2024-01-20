@@ -5,7 +5,7 @@ import Link from "next/link";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Spinners from "../ui/Spinners";
 import AddIcon from '@mui/icons-material/Add';
-import PopDeleteOrder from "@/app/ui/PopDeleteOrder";
+import PopDeleteOrder from "@/app/ui/popdeleteorder";
 function Page(){
 
 
