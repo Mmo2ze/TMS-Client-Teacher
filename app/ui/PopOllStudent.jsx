@@ -1,11 +1,10 @@
 import {useState} from "react"
-import axios from "../config/axiosconfigClient"
 import { endLodingToast, lodingToast, sendToast, }  from "../func/toast";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputAddClass from "./addClass/InputAddClass";
 import {useEffect} from "react"
-const PopOllStudent = ({studentName , studentId , onCansle, placeholder , score ,setScore, onRef}) => {
+const PopOllStudent = ({studentName , studentId , onCansle, placeholder , score ,setScore, onRef,axios}) => {
     const [quizValue ,setQuizValue] = useState("")
     const [data, setData] = useState([]);
     const handelSubmit = async () => {

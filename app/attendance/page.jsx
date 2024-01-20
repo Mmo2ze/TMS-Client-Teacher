@@ -48,7 +48,9 @@ const Page = () => {
                 <ToastContainer/>
 
 
-                {showPop && (<div className="overlay"><PopAttendance placeholder="مدة التأخير"
+                {showPop && (<div className="overlay"><PopAttendance
+                    axiox={axios}
+                    placeholder="مدة التأخير"
                                                                      onCansle={() => setShowPop ( !showPop )}
                                                                      studentName={currentStudent.name}
                                                                      studentId={currentStudent.id}/></div>)}

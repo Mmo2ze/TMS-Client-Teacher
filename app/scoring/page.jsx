@@ -60,7 +60,7 @@ const Page = () => {
 
 
         {showPop && ( <div className="overlay">
-          <PopOllStudent placeholder="تسجيل درجات"  score={score} setScore={setScore} onRef={() => getdata()} onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} />
+          <PopOllStudent placeholder="تسجيل درجات"  axios={axios} score={score} setScore={setScore} onRef={() => getdata()} onCansle={() => setShowPop(!showPop)} studentName={currentStudent.name} studentId={currentStudent.id} />
         </div>)}
 
         <ToastContainer />

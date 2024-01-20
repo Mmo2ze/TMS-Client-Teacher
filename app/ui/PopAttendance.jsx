@@ -1,5 +1,4 @@
 import {useState} from "react"
-import axios from "../config/axiosconfigClient"
 const {
     endLodingToast,
     lodingToast,
@@ -10,7 +9,7 @@ const {
   import "react-toastify/dist/ReactToastify.css";
 import InputAddClass from "./addClass/InputAddClass";
 
-const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaultScore}) => {
+const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaultScore,axiox}) => {
     const [delay ,setDelay] = useState(0)
     const [score ,setScore] = useState(defaultScore)
     const handelSubmit = async () => {
