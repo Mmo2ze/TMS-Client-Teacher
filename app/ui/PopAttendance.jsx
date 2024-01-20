@@ -9,7 +9,7 @@ const {
   import "react-toastify/dist/ReactToastify.css";
 import InputAddClass from "./addClass/InputAddClass";
 
-const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaultScore,axiox}) => {
+const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaultScore,axios}) => {
     const [delay ,setDelay] = useState(0)
     const [score ,setScore] = useState(defaultScore)
     const handelSubmit = async () => {

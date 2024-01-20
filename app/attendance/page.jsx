@@ -49,7 +49,7 @@ const Page = () => {
 
 
                 {showPop && (<div className="overlay"><PopAttendance
-                    axiox={axios}
+                    axios={axios}
                     placeholder="مدة التأخير"
                                                                      onCansle={() => setShowPop ( !showPop )}
                                                                      studentName={currentStudent.name}
