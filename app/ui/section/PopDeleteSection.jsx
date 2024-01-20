@@ -1,7 +1,6 @@
 
-import axios from "../../config/axiosconfigClient"
 
-const PopDeleteSection = ({id , onCansle , restartData }) => {
+const PopDeleteSection = ({id , onCansle , axios,restartData }) => {
     const handelDelete = async () => {
         try {
           console.log("Attempting to Delete data...");

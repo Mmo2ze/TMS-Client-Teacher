@@ -65,6 +65,7 @@ const page = (props) => {
                         { !isLoading && data.map ( (da) => (
 
                             <BoxSection day={da.day} key={da.id} starttime={da.startTime} endtime={da.endTime}
+                                        axios={axios}
                                         id={da.id} restartData={() => restartData}/>
 
                         ) )}

@@ -2,7 +2,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import InputAddClass from './InputAddClass';
 import {useState } from "react"
-import axios from "../../config/axiosconfigClient"
 import ButtonAdd from '../ButtonAdd';
 const {
   endLodingToast,
@@ -13,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
-const PopAddClass = ({onCansle , onGet}) => {
+const PopAddClass = ({onCansle , onGet,axios}) => {
   const [name, setName] = useState("");
   const [paymentPrice, setPaymentPrice] = useState("");
   const [paymentDelay, setPaymentDelay] = useState("");

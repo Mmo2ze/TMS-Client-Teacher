@@ -1,7 +1,6 @@
 import React from 'react'
-import axios from "../../config/axiosconfigClient"
 
-const PopDeleteClass = ({onCansle , id , restartData}) => {
+const PopDeleteClass = ({onCansle , id ,axios, restartData}) => {
 
   const handelDelete = async () => {
     try {

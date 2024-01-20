@@ -1,7 +1,6 @@
 import React from 'react'
-import axios from "../../config/axiosconfigClient"
 
-const PopDeleteAssistant = ({name ,id , onCansle , restartData}) => {
+const PopDeleteAssistant = ({name ,id , onCansle , axios,restartData}) => {
     const handelDelete = async () => {
         try {
           console.log("Attempting to Delete data...");

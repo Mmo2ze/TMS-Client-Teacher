@@ -2,13 +2,12 @@ import {useState , useEffect} from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import InputAddClass from '../addClass/InputAddClass';
 import ButtonAdd from '../ButtonAdd';
-import axios from "../../config/axiosconfigClient"
 
-const PopUpdateAssistant = ({names , phones , id  , rol, onCansle , restartData  , rolesValues}) => {
+const PopUpdateAssistant = ({names , phones , id  , rol,axios, onCansle , restartData  , rolesValues}) => {
   console.log("the rolesValues are box are",(rolesValues));
   const [name , setName] = useState(names) 
   const [phone , setPhone] = useState(phones) 
-  const [rolse , setRolse] = useState(rol) 
+  const [rolse , setRolse] = useState(rol)
   const [isDropdownOpenStudent, setIsDropdownOpenStudent] = useState(false);
   const [rolseAssistant, setRolseAssistant] = useState([
     { name: "AddUser", isSelected: false },

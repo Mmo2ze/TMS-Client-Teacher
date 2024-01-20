@@ -9,7 +9,7 @@ import PopUpdateClass from "./PopUpdateClass"
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopDeleteClass from "./PopDeleteClass"
 import Link from 'next/link'
-const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  updateData  , studentsCount}) => {
+const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,axios,  updateData  , studentsCount}) => {
   const [showUpdate , setShowUpdate] = useState(false)
   const [sureDelete , setSureDelete] = useState(false)
 
@@ -21,7 +21,7 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
 
   return (
     <div className={`2sm:h-64 2sm:text-xl 2sm:rounded-lg img_liner md:flex md:flex-col md:gap-8 md:p-6 md:rounded-lg md:text-2xl text-bold mb-4 relative`}>
-      {sureDelete && (<div className="overlay"><PopDeleteClass id={id} restartData={updateData}  onCansle={() => {
+      {sureDelete && (<div className="overlay"><PopDeleteClass axios={axios} id={id} restartData={updateData}  onCansle={() => {
             setSureDelete(!sureDelete);
        
           }} /> </div> )}
@@ -30,6 +30,7 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,  up
 
 {showUpdate && (<div className="overlay">
         <PopUpdateClass
+            axios={axios}
           onCansle={() => {
             setShowUpdate(!showUpdate);
             updateData();

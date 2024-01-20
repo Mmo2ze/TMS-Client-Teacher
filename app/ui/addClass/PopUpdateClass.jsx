@@ -2,13 +2,12 @@ import React from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import {useState } from "react"
 import InputAddClass from './InputAddClass';
-import axios from "../../config/axiosconfigClient"
 const {
   endLodingToast,
   lodingToast,
   sendToast,
 } = require("../../func/toast");
-const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPaymentDelay, initialGrade , initialId }) => {
+const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPaymentDelay,axios, initialGrade , initialId }) => {
   const [name, setName] = useState(initialName);
   const [paymentPrice, setPaymentPrice] = useState(initialPaymentPrice);
   const [paymentDelay, setPaymentDelay] = useState(initialPaymentDelay);

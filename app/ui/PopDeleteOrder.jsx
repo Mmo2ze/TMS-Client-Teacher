@@ -1,12 +1,11 @@
 import React from 'react'
-import axios from "../config/axiosconfigClient"
 
-const PopDeleteOrder = ({id , onCansle , restartData}) => {
+const PopDeleteOrder = ({id , onCancel , restartData,axios}) => {
     const handelDelete = async () => {
         try {
           console.log("Attempting to Delete data...");
           await axios.delete(`/api/Teacher/Cards/${id}`);
-          onCansle();
+            onCancel();
           restartData(id, {orderStatus: "canceled"})
         } catch (error) {
           console.error("Error updating data:", error);
@@ -24,7 +23,7 @@ const PopDeleteOrder = ({id , onCansle , restartData}) => {
       </svg>
       </div>
         <div className="flex justify-between px-4 mt-4">
-            <button onClick={onCansle} type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+            <button onClick={onCancel} type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                 
                 الغاء
             </button>

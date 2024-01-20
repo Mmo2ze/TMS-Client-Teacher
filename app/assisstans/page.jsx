@@ -51,6 +51,7 @@ export default function Home() {
           <div className="overlay">
             {" "}
             <PopAddAssistant
+                axios={axios}
               restartData={restartData}
               onCansle={() => setShowAddAssistant(!showAddAssistant)}
             />{" "}
@@ -70,6 +71,7 @@ export default function Home() {
           {!isLoading &&
             data.map((da) => (
               <BoxAssistant
+                  axios={axios}
                 restartData={restartData}
                 name={da.name}
                 phone={da.phone}

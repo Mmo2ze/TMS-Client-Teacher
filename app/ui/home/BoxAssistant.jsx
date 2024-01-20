@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PopDeleteAssistant from "./PopDeleteAssistant"
 import PopUpdateAssistant from "./PopUpdateAssistant"
-const BoxAssistant = ({name , phone , roles , id  , restartData , rolesValues}) => {
+const BoxAssistant = ({name , phone , roles , id  , restartData,axios , rolesValues}) => {
   const roleValue = roles && roles.length > 0 ? roles[0].value : '';
   const [showDelete , setShowDelete] = useState(false)
   const [showEdit , setShowEdit] = useState(false)
@@ -29,7 +29,7 @@ const BoxAssistant = ({name , phone , roles , id  , restartData , rolesValues}) 
   <div className="relative">
     {showDelete && (
       <div className="overlay">
-        <PopDeleteAssistant restartData={restartData} name={name} id={id} onCansle={() => {setShowDelete(!showDelete)}}/>
+        <PopDeleteAssistant axios={axios} restartData={restartData} name={name} id={id} onCansle={() => {setShowDelete(!showDelete)}}/>
       </div>
     )}
       {showEdit && (

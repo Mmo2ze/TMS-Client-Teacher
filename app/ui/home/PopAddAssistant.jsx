@@ -1,6 +1,5 @@
 "use client"
 import {useState} from "react"
-import axios from "../../config/axiosconfigClient"
 import CloseIcon from '@mui/icons-material/Close';
 import ButtonAdd from "../ButtonAdd";
 import InputAddClass from "../addClass/InputAddClass";
@@ -12,7 +11,7 @@ const {
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-const PopAddAssistant = ({onCansle , restartData}) => {
+const PopAddAssistant = ({onCansle , restartData,axios}) => {
   const [name , setName] = useState("")
   const [phone , setPhone] = useState("")
   const [rolse, setRolse] = useState("");

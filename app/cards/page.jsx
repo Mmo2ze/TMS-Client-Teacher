@@ -9,9 +9,6 @@ import { useRouter } from "next/navigation";
 import {useAuth} from "/AppState";
 
 function Page() {
-
-
-
     const router = useRouter ();
     const {HaveRole, Roles, axios} = useAuth ();
     const [orders, setOrders] = useState ( [] )
@@ -50,7 +47,7 @@ function Page() {
             <div className="pt-20 px-4  ">
                 {showDelete && (
                     <div className="overlay">
-                        <PopDeleteOrder id={deleteId} restartData={updateObject} onCansle={() => {
+                        <PopDeleteOrder  axios={axios} id={deleteId} restartData={updateObject} onCancel={() => {
                             setShowDelete ( !showDelete )
                         }}/>
                     </div>
