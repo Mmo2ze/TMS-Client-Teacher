@@ -1,6 +1,19 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-    reactStrictMode: false
-}
+    /** @type {import('next').NextConfig} */
+    const nextConfig = {
+        reactStrictMode: false,
+        async headers() {
+            return [
+                {
+                    source: '/(.*)?', // Matches all pages
+                    headers: [
+                        {
+                            key: 'X-Frame-Options',
+                            value: 'DENY',
+                        }
+                    ]
+                }
+            ]
+        }
+    }
 
-module.exports = nextConfig
+    module.exports = nextConfig

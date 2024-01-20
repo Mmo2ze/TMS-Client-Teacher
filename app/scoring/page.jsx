@@ -2,12 +2,14 @@
 import { useState, useEffect } from 'react';
 import StudentBox from "../ui/student/StudentBox";
 import PopOllStudent from "../ui/PopOllStudent";
-import axios from "../config/axiosconfigClient";
 import Spinners from '../ui/Spinners';
 import Link from "next/link"
 import { ToastContainer, toast } from "react-toastify";
-
+import { useRouter } from "next/navigation";
+import {useAuth} from "/AppState";
 const Page = () => {
+  const router = useRouter ();
+  const {HaveRole, Roles, axios} = useAuth ();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchWord, setSearchWord] = useState("");
@@ -48,8 +50,10 @@ const Page = () => {
       fetchData();
     }, 500);
     return () => clearTimeout(delaySearch);
-  }, [searchWord]);
+  }, [searchWord,Roles]);
 
+  if (HaveRole ( [null] )) return <Spinners/>;
+  else if (HaveRole ( ["Teacher", "Assistant"] )) {
   return (
       <div className="pt-20 px-2 text-end">
 
@@ -87,7 +91,10 @@ const Page = () => {
             })
         )}
       </div>
-  );
+  );} else {
+    router.push ( "/login" );
+  }
+
 };
 
 export default Page;

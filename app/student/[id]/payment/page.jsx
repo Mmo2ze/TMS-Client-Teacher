@@ -1,12 +1,16 @@
 "use client"
 import {useEffect, useState} from 'react'
-import InputAddClass from '@/app/ui/addClass/InputAddClass';
-import axios from "../../../config/axiosconfigClient";
+import InputAddClass from '../../../ui/addClass/InputAddClass';
+import Spinners from '../../../ui/Spinners'
+import { useRouter } from "next/navigation";
+import {useAuth} from "/AppState";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {sendToast} from "@/app/func/toast";
+import {sendToast} from "../../../func/toast";
 
 const page = (props) => {
+    const router = useRouter ();
+    const {HaveRole, Roles, axios} = useAuth ();
     const [showInputPayment, setShowInputPayment] = useState ( false );
     const [paymentAmount, setPaymentAmount] = useState ( 0 );
     const [payments, setPayments] = useState ( [] );
@@ -17,6 +21,7 @@ const page = (props) => {
     };
     const [student, setStudent] = useState ( {payments: []} );
     useEffect ( () => {
+        if (HaveRole ( [null] )) return;
         const fetchData = async () => {
             try {
                 var response = await axios.get ( `/api/Teacher/student/payment/${props.params.id}?limit=${limit}&page=${page}` );
@@ -28,12 +33,12 @@ const page = (props) => {
             } catch (error) {
                 if (error.response.status == 404) {
                     setNotFound ( true )
-                }else sendToast("حدث خطأ ما","error");
+                } else sendToast ( "حدث خطأ ما", "error" );
                 console.error ( error );
             }
         }
         fetchData ();
-    }, [] );
+    }, [Roles] );
 
     const Arabicmonths = [
         "يناير",
@@ -122,96 +127,101 @@ const page = (props) => {
         } )
     }
 
-    return (
-        <div className="pt-20 px-4">
-            <div className='text-end'>
-                <ToastContainer/>
-                <button onClick={toggleInputPayment} type="button"
-                        className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                    اضافة دفع
-                </button>
-            </div>
-            {showInputPayment && (
-
-
-                <div className="mb-6 img_liner_2 p-4 rounded-lg">
-                    <select value={sellected} onChange={(e) => handleMonthChange ( e.target.value )} id="countries"
-                            className="text-end bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        {nextMonths.map ( (nextMonth, index) => (
-                            <option key={index} value={index}>
-                                {nextMonth}
-                            </option>
-                        ) )}
-                    </select>
-                    <div className="direction_rtl">
-                    <InputAddClass lable="المبلغ" />
-                    </div>
-                    <div className="text-center mt-6">
-                        <button onClick={addPayment} type="button"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full">
-                            ارسال
-                        </button>
-                    </div>
+    if (HaveRole ( [null] )) return <Spinners/>;
+    else if (HaveRole ( ["Teacher", "Assistant"] )) {
+        return (
+            <div className="pt-20 px-4">
+                <div className='text-end'>
+                    <ToastContainer/>
+                    <button onClick={toggleInputPayment} type="button"
+                            className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        اضافة دفع
+                    </button>
                 </div>
+                {showInputPayment && (
 
-            )}
-            <div className="tabel-payment">
-                <div className="relative overflow-x-auto rounded-md">
-                    {notFound ? <div className="text-center mt-10 text-3xl text-color-text">لا يوجد مصاريف</div> :
-                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
-                            <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    الشهر
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    يوم الدفع
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    الحالة
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    المستلم
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    السعر
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    تحديث بواسطه
-                                </th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {payments.map ( (payment, index) => (
-                                <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td className="px-6 py-4">{payment.billDate}</td>
-                                    <td className="px-6 py-4">{convertToReadableDateTime ( payment.createdAt )}</td>
-                                    <td className="px-6 py-4">
-                                        <button
-                                            className=" bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"
-                                            color="green">
-                                            مدفوع
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4">{payment.createdBy}</td>
-                                    <td className="px-6 py-4">{payment.amount}</td>
-                                    <td className="px-6 py-4">{payment.updateBy ? payment.updateBy : "لم يحدث"}</td>
-                                </tr>
+                    <div className="mb-6 img_liner_2 p-4 rounded-lg">
+                        <select value={sellected} onChange={(e) => handleMonthChange ( e.target.value )} id="countries"
+                                className="text-end bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            {nextMonths.map ( (nextMonth, index) => (
+                                <option key={index} value={index}>
+                                    {nextMonth}
+                                </option>
                             ) )}
-                            </tbody>
+                        </select>
+                        <div className="direction_rtl">
+                            <InputAddClass lable="المبلغ"/>
+                        </div>
+                        <div className="text-center mt-6">
+                            <button onClick={addPayment} type="button"
+                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full">
+                                ارسال
+                            </button>
+                        </div>
+                    </div>
+
+                )}
+                <div className="tabel-payment">
+                    <div className="relative overflow-x-auto rounded-md">
+                        {notFound ? <div className="text-center mt-10 text-3xl text-color-text">لا يوجد مصاريف</div> :
+                            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
+                                <tr>
+                                    <th scope="col" className="px-6 py-3">
+                                        الشهر
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        يوم الدفع
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        الحالة
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        المستلم
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        السعر
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        تحديث بواسطه
+                                    </th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {payments.map ( (payment, index) => (
+                                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td className="px-6 py-4">{payment.billDate}</td>
+                                        <td className="px-6 py-4">{convertToReadableDateTime ( payment.createdAt )}</td>
+                                        <td className="px-6 py-4">
+                                            <button
+                                                className=" bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"
+                                                color="green">
+                                                مدفوع
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4">{payment.createdBy}</td>
+                                        <td className="px-6 py-4">{payment.amount}</td>
+                                        <td className="px-6 py-4">{payment.updateBy ? payment.updateBy : "لم يحدث"}</td>
+                                    </tr>
+                                ) )}
+                                </tbody>
 
 
-                        </table>
-                    }
+                            </table>
+                        }
+                    </div>
                 </div>
+
+
             </div>
-
-
-        </div>
-    )
+        )
+    }
+    else {
+        router.push ( "/login" );
+    }
 }
-
 export default page

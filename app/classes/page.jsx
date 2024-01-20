@@ -1,17 +1,20 @@
 "use client"
 import {useState , useEffect} from 'react'
 import PopAddClass from '../ui/addClass/PopAddClass'
-import Spinners from '../ui/Spinners'
-import axios from "../config/axiosconfigClient"
 import ClassBox from '../ui/addClass/ClassBox'
 import ButtonAdd from "../ui/ButtonAdd"
 import { ToastContainer, toast } from "react-toastify";
-
+import Spinners from '../ui/Spinners'
+import { useRouter } from "next/navigation";
+import {useAuth} from "/AppState";
 const page = () => {
+    const router = useRouter ();
+    const {HaveRole, Roles, axios} = useAuth ();
     const [showAddClass , setShowAddClass] = useState(false)
     const [data, setData] = useState([""]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+      if (HaveRole ( [null] )) return;
       const getdata = async () => {
         try {
           const response = await axios.get("/api/Teacher/class");
@@ -22,7 +25,7 @@ const page = () => {
         }
       };
       getdata(); 
-    }, [showAddClass]);
+    }, [showAddClass,Roles]);
 
     const updateData = async () => {
       try {
@@ -35,7 +38,9 @@ const page = () => {
     };
 
 
-  return (
+    if (HaveRole ( [null] )) return <Spinners/>;
+    else if (HaveRole ( ["Teacher", "Assistant"] )) {
+    return (
     <div className="mt-3 pt-20 ">
         <ToastContainer/>
 
@@ -55,4 +60,8 @@ const page = () => {
       </div>
     </div>
   )}
+    else {
+        router.push ( "/login" );
+    }
+}
 export default page

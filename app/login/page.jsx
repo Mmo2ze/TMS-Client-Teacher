@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "../config/axiosconfigClient";
+import axios from "../config/clientaxaios";
 import { useAuth } from "../../AppState";
 import { useRouter } from "next/navigation";
 import Spinners from "../ui/Spinners";
+import {error} from "next/dist/build/output/log";
 const isEgyptianNumber = (number) => {
   const pattern = /^01\d{9}$/;
   return pattern.test(number);
@@ -19,42 +20,64 @@ const page = () => {
   const router = useRouter();
   useEffect(() => {
     if(!HaveRole([null]))
-    if (!HaveRole(["UnAuthorized", "HaveAdminCode"])) {
+    if (!HaveRole(["UnAuthorized", "HaveTeacherCode"])) {
       router.push("/");
     }
-    if (HaveRole(["HaveAdminCode"])) setCodeCode(true);
+    if (HaveRole(["HaveTeacherCode"])) setCodeCode(true);
   }, [Roles]);
   const handelSubmitCode = async (e) => {
     e.preventDefault();
-    var body = valueCode;
+    var body = {code :valueCode};
     try {
       var response = await axios.post(
-        "/api/Auth/teacher/verify",
+        "/api/verify",
         JSON.stringify(body),
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
+
       );
-      localStorage.setItem("token", response.data.data.token);
-      document.cookie = `token=${response.data.data.token}`;
       window.location.href = "/";
-    } catch (e) {}
+    } catch (e) {
+      if(e.response.status == 400){
+        switch (e.response.errors){
+          case "invalid code":toast.error("الرمز غير صحيح");break;
+          case "code used":{
+            toast.error("لقد حاولت اكثرؤ من مرة");
+            setTimeout(
+                () => {
+                  window.location.href = "/";
+                },
+                3000
+            )
+            break;
+          }
+          case"code expired": {
+            toast.error ( "انتهت صلاحية الرمز" );
+            setTimeout(
+              () => {
+                window.location.href = "/";
+              },
+              3000
+            )
+            break;
+          }
+        }
+      }
+      toast.error("الرمز غير صحيح");
+    }
   };
 
   const handleSentCode = async (e) => {
     e.preventDefault();
     if (isEgyptianNumber(phoneNumber)) {
-      var body = phoneNumber;
+      var body = {phone:phoneNumber};
       try {
         var response = await axios.post(
-          "/api/Auth/teacher/login",
+          "/api/login",
           JSON.stringify(body)
         );
-        localStorage.setItem("token", response.data.data.token);
-        document.cookie = `token=${response.data.data.token}`;
-
         setCodeCode(true);
-      } catch (e) {}
+      } catch (e) {
+        toast.error("حدث خطأ ما");
+      }
     } else {
       toast.error("الرقم المدخل غير صحيح. يجب أن يكون بصيغة مصرية صحيحة.");
     }
@@ -62,7 +85,7 @@ const page = () => {
   if (HaveRole([null])) {
     return <Spinners/>;
   }
-  if (HaveRole(["UnAuthorized", "HaveAdminCode"])) {
+  if (HaveRole(["UnAuthorized", "HaveTeacherCode", ])) {
     return (
       <>
         {sentCode ? (

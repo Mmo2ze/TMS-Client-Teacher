@@ -2,13 +2,17 @@
 import { useState  , useEffect } from "react";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AddIcon from '@mui/icons-material/Add';
-import StudentBox from "@/app/ui/student/StudentBox"
-import Spinners from '@/app/ui/Spinners';
+import StudentBox from "../../../ui/student/StudentBox"
+import Spinners from "../../../ui/Spinners"
 import { ToastContainer, toast } from "react-toastify";
-import axios from "../../../config/axiosconfigClient"
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
+import {useAuth} from "/AppState";
 import HomeIcon from '@mui/icons-material/Home';
 const page = (props) => {
+
+    const router = useRouter ();
+    const {HaveRole, Roles, axios} = useAuth ();
     const [data , setData] = useState([])
     const [search , setSearch] = useState([])
     const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +25,9 @@ const page = (props) => {
       useEffect(() => {
         const delaySearch = setTimeout(() => {
           const fetchData = async () => {
-            try {
+              if (HaveRole ( [null] )) return;
+
+              try {
 
               const url = `/api/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}`;
               const response = await axios.get(url);
@@ -42,9 +48,10 @@ const page = (props) => {
         }, 500);
     
         return () => clearTimeout(delaySearch);
-      }, [searchWord]);
-    
+      }, [searchWord,Roles]);
 
+    if (HaveRole ( [null] )) return <Spinners/>;
+    else if (HaveRole ( ["Teacher", "Assistant"] )) {
     return (
         <div className="pt-20 px-2">
         <ToastContainer/>
@@ -89,5 +96,8 @@ const page = (props) => {
       </div> 
       </div>
     )
+} else {
+        router.push ( "/login" );
+    }
 }
 export default page

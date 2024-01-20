@@ -4,21 +4,19 @@ import { useRouter } from "next/navigation";
 import Spinners from "../ui/Spinners";
 import ButtonAdd from "../ui/ButtonAdd";
 import PopAddAssistant from "../ui/home/PopAddAssistant";
-import axios from "../config/axiosconfigClient";
 import BoxAssistant from "../ui/home/BoxAssistant";
 import { ToastContainer, toast } from "react-toastify";
-import {useAuth} from "@/AppState";
+import {useAuth} from "/AppState";
 
 export default function Home() {
-  const [showAddAssistant, setShowAddAssistant] = useState(false);
-
-
+  const [showAddAssistant, setShowAddAssistant] = useState(false); const router = useRouter();
+  const { HaveRole, Roles ,axios} = useAuth();
   const [isLoading, setIsLoading] = useState(true);
-  const { HaveRole, Role } = useAuth();
   const [data, setData] = useState([""]);
-  const router = useRouter();
+
 
   useEffect(() => {
+    if(HaveRole([null])) return;
     const getdata = async () => {
       try {
         const response = await axios.get("/api/Teacher/assistant");
@@ -29,9 +27,8 @@ export default function Home() {
         console.log(e);
       }
     };
-
     getdata();
-  }, []);
+  }, [Roles]);
 
 
   const restartData = async () => {
@@ -59,7 +56,7 @@ export default function Home() {
             />{" "}
           </div>
         )}
-        {/* <div className="text-end"> 
+        {/* <div className="text-end">
         <Button text="المساعدين"/>
       </div> */}
         <div className="text-end">
@@ -91,8 +88,3 @@ export default function Home() {
   }
 }
 
-// Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJUZWFjaGVyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIwMTA5NTU3OTIwMCIsImlkIjoiMjciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoi2KMv2KfYrdmF2K8g2LnZiNi2IiwiZXhwIjoxNzA3MzE2MTMwfQ.X7lK1YFuwgkZdt1CB8TQ87pvO4v8B9Q6TmNagRW1PPM
-// 01002792637
-// 01023757596
-// 01009677306
-// 01095634680

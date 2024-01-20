@@ -1,11 +1,16 @@
 "use client"
 import {useState, useEffect} from 'react'
-import axios from "../../config/axiosconfigClient"
 import DeleteIcon from '@mui/icons-material/Delete';
-import {sendToast} from "@/app/func/toast";
+import {sendToast} from "../../func/toast";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
+import {useAuth} from "/AppState";
+import Spinners from "../../ui/Spinners";
+
 const page = () => {
+    const router = useRouter ();
+    const {HaveRole, Roles, axios} = useAuth ();
     const [isDropdownOpenStudent, setIsDropdownOpenStudent] = useState (false);
     const [isDropdownOpen, setIsDropdownOpen] = useState (false);
     const [classes, setClasses] = useState ([]);
@@ -15,6 +20,7 @@ const page = () => {
     const [studentClass , setStudentClass] = useState([])
     
     useEffect (() => {
+        if (HaveRole ( [null] )) return;
         const getdata = async () => {
             try {
                 const response = await axios.get ("/api/Teacher/class");
@@ -25,7 +31,7 @@ const page = () => {
         };
 
         getdata ();
-    }, []);
+    }, [Roles]);
 
     console.log(`the studentClass is ${studentClass}`)
 
@@ -39,9 +45,7 @@ function removeStudent (selectedStudent) {
      return    studentClass.some ( st => st.privateId === selectedStudent.privateId );
     }
      const handelstudent = (selectedStudent) => {
-        // تحقق مما إذا كان هذا الطالب موجودًا بالفعل في الجدول
 
-      // إذا لم يكن موجودًا، قم بإضافته إلى الجدول
       if (!isStudentAlreadyAdded(selectedStudent)) {
         setStudentClass(prevStudentClass => [
           ...prevStudentClass,
@@ -53,13 +57,13 @@ function removeStudent (selectedStudent) {
           },
         ]);
       }else {
-        // إذا كان موجودًا، قم بإزالته من الجدول
           removeStudent(selectedStudent);
       }
     };
     
 
     useEffect (() => {
+if (HaveRole ( [null] )) return;
       const delaySearch = setTimeout (() => {
           const fetchData = async () => {
               try {
@@ -74,7 +78,7 @@ function removeStudent (selectedStudent) {
       }, 1000);
 
       return () => clearTimeout (delaySearch);
-  }, [searchWord]);
+  }, [searchWord,Roles]);
 
 
 
@@ -122,10 +126,10 @@ function removeStudent (selectedStudent) {
         }
 
         let responseData = []
-for (const item of studentClass) {
-    responseData.push(item.privateId);
-}
- axios.post ( "/api/Teacher/Cards", responseData )
+        for (const item of studentClass) {
+            responseData.push(item.privateId);
+        }
+        axios.post ( "/api/Teacher/Cards", responseData )
             .then ( response => {
             sendToast("تم طلب الكروت بنجاح","success")
                 setTimeout(() => {
@@ -138,7 +142,8 @@ for (const item of studentClass) {
             } );
 
     }
-
+    if (HaveRole ( [null] )) return <Spinners/>;
+    else if (HaveRole ( ["Teacher", "Assistant"] )) {
     return (
     <div className="pt-20 px-4">
         <div className='flex flex-row-reverse justify-center w-[50%] 2sm:w-full m-auto gap-20 2sm:gap-6'>
@@ -277,6 +282,10 @@ for (const item of studentClass) {
     
     </div>
   )
+}
+else {
+    router.push ( "/login" );
+}
 }
 
 export default page

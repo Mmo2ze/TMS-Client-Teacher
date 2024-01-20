@@ -1,14 +1,17 @@
 
 'use client'
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import  axios from "./app/config/axiosconfigClient"
-
+import React, {createContext, useContext, useState, useEffect, useMemo} from 'react';
+import  axiosNextApi from "./app/config/clientaxaios";
+import axiosMain from "axios"
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
   const [Roles, setRoles] = useState([null]);
+  const [jwt,setJwt] = useState(null);
+
   function HaveRole(RequiredRoles) {
     for (const value of Roles) {
       if (RequiredRoles.includes(value)) {
@@ -17,25 +20,54 @@ export const AuthProvider = ({ children }) => {
     }
     return false; // No duplicate values found
   }
+
+  const axios = useMemo(() => {
+    return axiosMain.create({
+      baseURL: "https://zagazig.store",
+      headers: {
+        accept: "*/*",
+        "Content-Type": "application/json",
+        Authorization: `bearer ${jwt}`,
+      },
+    });
+  }, [jwt]);
+
+
   useEffect(() => {
-
-    const TestAut = async () => {
+    const GetJWt = async () => {
       try {
-        console.log("auth Context")
+        let res = await axiosNextApi.get("/api/jwt/");
+        setJwt(res.data.token);
+      } catch (e) {
+        setJwt("");
+      }
+    };
 
-        const response = await axios.get('/api/auth/myroles');
+
+
+
+    GetJWt();
+
+
+  }, []);
+
+
+  useEffect ( () => {
+    const TestAut = async () => {
+      if(jwt == null ) return ;
+      try {
+        const response = await axios.get('/api/auth/myRoles');
         setRoles(response.data);
-        
       } catch (error) {
         setRoles(["UnAuthorized"]);
         console.log("UnAuthorized");
       }
     };
-    TestAut(); 
-  }, []); 
+    TestAut();
+  }, [jwt] );
 
   return (
-    <AuthContext.Provider value={{ Roles ,HaveRole ,setRoles}}>
+    <AuthContext.Provider value={{ Roles ,HaveRole ,setRoles,axios}}>
       {children}
     </AuthContext.Provider>
   );

@@ -6,7 +6,7 @@ import axios from 'axios'
 export async function POST(req:NextRequest) {
     let token = cookies().get("sesstion");
     let instance = axios.create({
-        baseURL: "https://localhost:7208/",
+        baseURL: "https://zagazig.store/",
         headers: {
             accept: "*/*",
             "Content-Type": "application/json"
@@ -30,7 +30,6 @@ export async function POST(req:NextRequest) {
         console.log(res.data)
         var jwt = res.data.data.token;
         cookies().set('sesstion',jwt,{
-            expires: Date.now()+1000*60*60*24*30,
             httpOnly:true,
             secure:false,
             path:"/",
@@ -40,15 +39,24 @@ export async function POST(req:NextRequest) {
         console.log(err.response.data)
         if(err.response.status == 400){
             if(err.response.data.messages != undefined) {
-                if(err.response.data.messages[0].statusCode == 901){
-                    var jwt = err.response.data.data.token;
-                    cookies().set('sesstion',jwt,{
-                        expires: Date.now()+1000*60*60*24*30,
-                        httpOnly:true,
-                        secure:false,
-                        path:"/",
-                    })
-                    return NextResponse.json({ errors: 'invalid code' }, { status: 400 });
+                switch (err.response.data.messages[0].statusCode) {
+                    case 901:
+                        var jwt = err.response.data.data.token;
+                        cookies().set('sesstion',jwt,{
+                            httpOnly:true,
+                            secure:false,
+                            path:"/",
+                        })
+                        return NextResponse.json({ errors: 'invalid code' }, { status: 400 });
+                        case 902:
+                            cookies().delete('sesstion')
+                        return NextResponse.json({ errors: 'code used' }, { status: 400 });
+                    case 903:
+                        cookies().delete('sesstion')
+                        return NextResponse.json({ errors: 'code expired' }, { status: 400 });
+                    default:
+                        cookies().delete('sesstion')
+                        return NextResponse.json({ errors: 'Unknown error' }, { status: 500 });
                 }
             }
         }

@@ -3,18 +3,22 @@ import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useRef, useState } from "react";
 import Scanner from "../ui/scanner/Scanner";
 import Pop from "../ui/pop/Pop";
-import request from "../config/axiosconfigClient";
 import { sendToast } from "../func/toast";
 import "react-toastify/dist/ReactToastify.css";
+import Spinners from '../ui/Spinners'
+import { useRouter } from "next/navigation";
+import {useAuth} from "/AppState";
 
 const page = () => {
   const scaner = useRef(null);
+  const router = useRouter ();
+  const {HaveRole, Roles, axios} = useAuth ();
   const [showpop, setShowpop] = useState(false);
   const [student, setStudent] = useState({});
   function success(result) {
     scaner.current.pause();
     console.log(result);
-    request(`api/Teacher/student/${result}`)
+    axios(`api/Teacher/student/${result}`)
       .then((response) => {
         setStudent(response.data);
         setShowpop(true);
@@ -34,6 +38,8 @@ const page = () => {
         }
       });
   }
+  if (HaveRole ( [null] )) return <Spinners/>;
+  else if (HaveRole ( ["Teacher", "Assistant"] )) {
   return (
     <div className="add-page pt-20">
       <ToastContainer />
@@ -50,6 +56,10 @@ const page = () => {
       </div>
     </div>
   );
-};
+} else {
+    router.push ( "/login" );
+  }
+}
+
 
 export default page;
