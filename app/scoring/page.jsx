@@ -31,10 +31,11 @@ const Page = () => {
     };
 
     getdata();
-  }, []);
+  }, [Roles]);
 
 
   useEffect(() => {
+    if (HaveRole ( [null] )) return;
     const delaySearch = setTimeout(() => {
       const fetchData = async () => {
         try {

@@ -170,6 +170,7 @@ const page = () => {
       // setTwoVisible(!isTwoVisible);
       setSetpOneOne ( true )
       setStep ( 3 );
+
       setIdStudent ( response.data.id );
 
       endLodingToast (
@@ -197,7 +198,7 @@ const page = () => {
       // setOneVisible(!response.data.isvalid);
       setTwoVisible ( response.data.isvalid );
       setStep ( 2 );
-      setTheId ( response.data.data.id );
+      setTheId ( response.data.data.publicId );
       setTheName ( response.data.data.name );
       endLodingToast (
           toastID,
