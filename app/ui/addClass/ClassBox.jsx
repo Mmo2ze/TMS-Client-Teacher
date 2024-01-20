@@ -9,7 +9,7 @@ import PopUpdateClass from "./PopUpdateClass"
 import DeleteIcon from '@mui/icons-material/Delete';
 import PopDeleteClass from "./PopDeleteClass"
 import Link from 'next/link'
-const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,axios,  updateData  , studentsCount}) => {
+const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,axios,  updateData  , sectionsCount,studentsCount}) => {
   const [showUpdate , setShowUpdate] = useState(false)
   const [sureDelete , setSureDelete] = useState(false)
 
@@ -66,7 +66,7 @@ const ClassBox = ({name , basePaymentPrice , basePaymentDelay , grade , id ,axio
         </div>
         <h1 className='text-color-text 2sm:text-lg 2sm:absolute top-[20%] right-7'>{name}</h1>
         <div className='md:flex md:flex-col md:items-end'>
-        <h1 className="md:mb-6 2sm:absolute top-[40%] right-6"> <span className="text-color-text">{basePaymentDelay}</span> &nbsp; <AccessTimeIcon/></h1>
+        <h1 className="md:mb-6 2sm:absolute top-[40%] right-6"> <span className="text-color-text">{sectionsCount}</span> &nbsp; <AccessTimeIcon/></h1>
         <div className="2sm:absolute top-[55%] right-2" > 
         <Link  href={`/classes/section/${id}`}>
         <Button text="عرض" />
