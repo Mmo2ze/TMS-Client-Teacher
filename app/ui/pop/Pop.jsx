@@ -26,37 +26,29 @@ function Pop({ scanner, setShowpop, studentResponse,axios }) {
         handleCansle();
       })
       .catch((error) => {
-        console.log(`error is ${error.statusCode}`)
-        handleCansle();
-        if (error.response.status === 404) {    
-          endLodingToast(toastID, "1الرقم الذي ادخلته حطأ", "error");
-        } else if (error.response.status === 400) {
-          var message1 = error.response.data.messages[0];
-          if (message1) {
-            switch (message1.statusCode) {
-              case 400: {
-                endLodingToast(toastID, "2الرقم الذي ادخلته حطأ", "error");
-                break;
+          if (error.response.status === 404) {
+              endLodingToast(toastID, " id  ", "error");
+          } else if (error.response.status === 400) {
+              var message1 = error.response.data.messages[0];
+              if (message1) {
+                  switch (message1.statusCode) {
+                      case 302: {
+                          endLodingToast(toastID, 'الرقم   حطأ', "error");
+                          break;
+                      }
+                      case 301: {
+                          endLodingToast(toastID, "ليس للطالب محاضرة الان", "error");
+                          break;
+                      }
+                      default: {
+                          endLodingToast(toastID, " المحاولة مرة اخرى", "error");
+                          break;
+                      }
+                  }
               }
-              case 302: {
-                endLodingToast(toastID, "3الرقم الذي ادخلته حطأ", "error");
-                break;
-              }
-                   case 302: {
-                    endLodingToast(toastID, "4الرقم الذي ادخلته حطأ", "error");
-                    break;
-              }
-              default: {
-                endLodingToast(
-                  toastID,
-                  "هنالك مشكلة الرجاء المحاولة مرة اخرى",
-                  "error"
-                );
-              }
-            }
           }
-        }
-      });
+      }
+      );
   };
 
 
