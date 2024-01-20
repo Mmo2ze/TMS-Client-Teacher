@@ -114,16 +114,17 @@ const page = (props) => {
         axios.post ( `/api/Teacher/payment`, data ).then ( (response) => {
             console.log ( response.data );
             sendToast ( "تم اضافة الدفعة بنجاح", "success" );
+            setNotFound(false);
             setPayments ( [...payments, response.data.data] )
         } ).catch ( (error) => {
             if (error.response.status == 404) {
                 sendToast ( "الطالب غير موجود", "error" )
             }
-            if (error.status == 400) {
+            if (error.response.status == 400) {
                 if (error.data.messages[0].statusCode == 301) {
                     sendToast ( "لقد تم اضافة دفعة لهذا الطالب بالفعل", "warning" );
                 } else sendToast ( "حدث خطأ ما", "error" );
-            }
+            }else sendToast ( "حدث خطأ ما", "error" );
         } )
     }
 
