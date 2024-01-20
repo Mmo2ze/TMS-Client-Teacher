@@ -7,6 +7,10 @@
                     source: '/(.*)?', // Matches all pages
                     headers: [
                         {
+                            key:"Access-Control-Allow-Origin",
+                            value:"*",
+                        },
+                        {
                             key: 'X-Frame-Options',
                             value: 'DENY',
                         }
