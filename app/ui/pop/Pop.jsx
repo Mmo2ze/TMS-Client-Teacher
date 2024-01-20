@@ -3,7 +3,6 @@ import Imagesman from "../../assets/images/6769264_60111.jpg"
 import Imagesweman from "../../assets/images/mother.png"
 import { Button } from "@mui/material"
 import SendIcon from '@mui/icons-material/Send';
-import request from "../../config/axiosconfigClient";
 const {
   endLodingToast,
   lodingToast,
@@ -12,14 +11,14 @@ const {
 import { useState } from "react";
 import Image from 'next/image'
 
-function Pop({ scanner, setShowpop, studentResponse }) {
+function Pop({ scanner, setShowpop, studentResponse,axios }) {
   const [degree, setdegree] = useState();
   const [lateness, setlateness] = useState();
   const handleSave = async () => {
     var toastID = lodingToast()
     const latenessValue = lateness === undefined  ? 0 : lateness;
 
-    request.post(
+      axios.post(
       `api/Teacher/student/attendance?studentId=${studentResponse.student.privateId}&lateMints=${latenessValue}`
       )
       .then((response) => {

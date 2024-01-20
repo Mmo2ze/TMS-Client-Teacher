@@ -48,6 +48,7 @@ const page = () => {
         <Scanner success={success} scanner={scaner} />
         {showpop && (
           <Pop
+              axios={axios}
             scanner={scaner}
             setShowpop={setShowpop}
             studentResponse={student}
