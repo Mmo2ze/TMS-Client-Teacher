@@ -14,6 +14,14 @@
                 }
             ]
         }
+        ,  async rewrites() {
+            return [
+                {
+                    source: "/api/:path*",
+                    destination: 'https://tass.ist/:path*',
+                },
+            ]
+        },
     }
 
     module.exports = nextConfig
