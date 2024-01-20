@@ -6,7 +6,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
-import axios from "../../config/axiosconfigClient";
 import ButtonAdd from "../ButtonAdd";
 import "react-toastify/dist/ReactToastify.css";
 const {
@@ -16,7 +15,7 @@ const {
 } = require("../../func/toast");
 import { ToastContainer, toast } from "react-toastify";
 
-const PopAddSection = ({ id, onCansle, restartData }) => {
+const PopAddSection = ({ id, onCansle, restartData ,axios}) => {
   const [day, setDay] = useState("");
   const [start, setStart] = useState("");
   const [duration, setDuration] = useState("");

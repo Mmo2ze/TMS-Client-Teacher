@@ -50,7 +50,7 @@ const page = (props) => {
         return (
             <div className="pt-20">
                 <ToastContainer/>
-                {showAddSection && (<div className="overlay"><PopAddSection restartData={() => getdata ()}
+                {showAddSection && (<div className="overlay"><PopAddSection axios={axios} restartData={() => getdata ()}
                                                                             onCansle={() => setShowAddSection ( !showAddSection )}
                                                                             id={props.params.id}/></div>)}
                 <div className="p-4">
