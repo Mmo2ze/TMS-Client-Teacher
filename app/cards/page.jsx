@@ -4,7 +4,7 @@ import Link from "next/link";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Spinners from "../ui/Spinners";
 import AddIcon from '@mui/icons-material/Add';
-import PopDeleteOrder from "../ui/popdeleteorder";
+// import PopDeleteOrder from "../ui/popdeleteorder";
 import { useRouter } from "next/navigation";
 import {useAuth} from "/AppState";
 
@@ -45,13 +45,13 @@ function Page() {
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
         return (
             <div className="pt-20 px-4  ">
-                {showDelete && (
-                    <div className="overlay">
-                        <PopDeleteOrder  axios={axios} id={deleteId} restartData={updateObject} onCancel={() => {
-                            setShowDelete ( !showDelete )
-                        }}/>
-                    </div>
-                )}
+                {/*{showDelete && (*/}
+                {/*    <div className="overlay">*/}
+                {/*        <PopDeleteOrder  axios={axios} id={deleteId} restartData={updateObject} onCancel={() => {*/}
+                {/*            setShowDelete ( !showDelete )*/}
+                {/*        }}/>*/}
+                {/*    </div>*/}
+                {/*)}*/}
                 <Link href="/cards/add">
                     <div className="text-color-text text-end mb-4">
                         <AddIcon sx={{fontSize: 60}}/>
