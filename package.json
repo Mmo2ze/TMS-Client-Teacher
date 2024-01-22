@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install --save date-fns && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -20,7 +20,7 @@
     "@react-pdf/renderer": "^3.1.14",
     "axios": "^1.6.2",
     "build": "^0.1.4",
-    "date-fns": "^3.0.6",
+    "date-fns": "^3.3.1",
     "dayjs": "^1.11.10",
     "flowbite": "^2.2.0",
     "html5-qrcode": "^2.3.8",
