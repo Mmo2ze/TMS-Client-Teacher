@@ -24,7 +24,7 @@ const page = (props) => {
         if (HaveRole ( [null] )) return;
         const fetchData = async () => {
             try {
-                var response = await axios.get ( `/api/Teacher/student/payment/${props.params.id}?limit=${limit}&page=${page}` );
+                var response = await axios.get ( `/api/Teacher/student/payment/${props.params.id}?limit=${limit}&page=${page}`);
                 console.log ( response.data );
                 setStudent ( response.data.student );
                 setPaymentAmount ( response.data.student.paymentAmount )
@@ -118,11 +118,13 @@ const page = (props) => {
             setPayments ( [...payments, response.data.data] )
         } ).catch ( (error) => {
             if (error.response.status == 404) {
+
                 sendToast ( "الطالب غير موجود", "error" )
             }
             if (error.response.status == 400) {
-                if (error.data.messages[0].statusCode == 301) {
-                    sendToast ( "لقد تم اضافة دفعة لهذا الطالب بالفعل", "warning" );
+                console.log("تم الدفع من قبل")
+                if (error.response.data.messages[0].statusCode == 301) {
+                    sendToast ( "تم دفع هذا الشهر من قبل ", "warning" );
                 } else sendToast ( "حدث خطأ ما", "error" );
             }else sendToast ( "حدث خطأ ما", "error" );
         } )
@@ -152,7 +154,7 @@ const page = (props) => {
                             ) )}
                         </select>
                         <div className="direction_rtl">
-                            <InputAddClass lable="المبلغ"/>
+                            <InputAddClass onChange={setPaymentAmount} value={paymentAmount} lable="المبلغ"/>
                         </div>
                         <div className="text-center mt-6">
                             <button onClick={addPayment} type="button"

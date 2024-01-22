@@ -1,0 +1,143 @@
+.olvs_amount {
+    color: white;
+    font-weight: 600;
+    font-size: 51px;
+    margin-bottom: 20px;
+    text-align: end;
+}
+
+.table-container {
+    min-height: 24%;
+    overflow-y: auto;
+}
+.table-in_owner::-webkit-scrollbar {
+    display: none;
+}
+.table-payment_student::-webkit-scrollbar {
+    display: none;
+}
+.edit_name-students {
+    color: #dda11d;
+    font-weight: bold;
+}
+@media screen and (max-width: 990px) {
+    .table-payment_student table {
+        width: 100%;
+    }
+    .table-payment_student thead {
+        display: none;
+    }
+    .table-payment_student tbody {
+        border-bottom: 10px solid #111928;
+    }
+    .table-payment_student th,
+    .table-payment_student td {
+        display: block;
+        width: 100%;
+        text-align: left;
+        direction: rtl;
+        display: flex;
+        gap: 25%;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .table-payment_student th {
+        font-weight: bold;
+    }
+
+    .table-payment_student tbody tr {
+        margin-bottom: 20px;
+        border-bottom: 10px solid white !important;
+    }
+
+    .table-payment_student tbody td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+        margin-right: 5px;
+    }
+    /* .table-payment_student tbody tr td:nth-child(5):first-child{
+          color: red;
+      } */
+
+    .table-payment_student tbody tr .last_name_student {
+        color: #32c189;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .edit_name-students {
+        font-size: 18px;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 990px) {
+    .olvs_amount {
+        font-size: 40px;
+    }
+
+}
+@media (max-width: 770px) {
+
+}
+.the_div-in_date {
+    text-align: right;
+    margin: 0 0 10px 0;
+}
+.custom-datepicker {
+    width: 100% !important;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    outline: none;
+    background-color: #233876 !important;
+    border: none !important;
+    color: white !important;
+    text-align: right !important;
+    cursor: pointer;
+}
+
+.icon_date {
+    position: relative;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+@media (max-width: 720px) {
+    .icon_date {
+        left: 50%;
+        top: -13px;
+    }
+}
+
+.pop_date {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999999;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+}
+.rdrCalendarWrapper {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+.close-button {
+    position: absolute;
+    top: 7%;
+    right: 14%;
+    color: red;
+    font-size: 60px !important;
+    cursor: pointer !important;
+}
+@media (max-width: 720px) {
+    .close-button {
+        top: 14%;
+        right: 40%;
+    }
+}
