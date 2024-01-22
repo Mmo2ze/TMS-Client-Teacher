@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm install --save date-fns && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,12 +19,13 @@
     "@mui/x-date-pickers-pro": "^6.18.3",
     "@react-pdf/renderer": "^3.1.14",
     "axios": "^1.6.2",
+    "build": "^0.1.4",
     "date-fns": "^3.3.1",
     "dayjs": "^1.11.10",
     "flowbite": "^2.2.0",
     "html5-qrcode": "^2.3.8",
     "jspdf": "^2.5.1",
-    "next": "14.0.3",
+    "next": "^14.0.3",
     "qrcode.react": "^3.1.0",
     "qrious": "^4.0.2",
     "react": "^18",
