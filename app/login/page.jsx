@@ -76,7 +76,9 @@ const page = () => {
         );
         setCodeCode(true);
       } catch (e) {
-        toast.error("حدث خطأ ما");
+        if(error.response.status == 401){
+            toast.error("غير مصرح لك بالدخول  ");
+      }else toast("حدث خطأ ما")
       }
     } else {
       toast.error("الرقم المدخل غير صحيح. يجب أن يكون بصيغة مصرية صحيحة.");
