@@ -30,6 +30,7 @@ export async function POST(req:NextRequest) {
         console.log(res.data)
         var jwt = res.data.data.token;
         cookies().set('sesstion',jwt,{
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
             httpOnly:true,
             secure:false,
             path:"/",
