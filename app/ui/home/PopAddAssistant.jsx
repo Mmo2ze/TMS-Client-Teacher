@@ -21,7 +21,9 @@ const PopAddAssistant = ({onCansle , restartData,axios}) => {
     { name: "AddClass", isSelected: false },
     { name: "AddPayment", isSelected: false },
     { name: "ViewPayment", isSelected: false },
-    { name: "RecordAttendance", isSelected: false }
+    { name: "RecordAttendance", isSelected: false },
+    { name: "RecordCards", isSelected: false },
+    { name: "RecordQuiz ", isSelected: false },
   ]);
   const handleSubmitAssis = (event) => {
     const selectedRolse = rolseAssistant.map(rol => ({
