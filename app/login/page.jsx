@@ -90,6 +90,7 @@ const page = () => {
   if (HaveRole(["UnAuthorized", "HaveTeacherCode", ])) {
     return (
       <>
+          <ToastContainer/>
         {sentCode ? (
           <section className="pt-20  bg-gray-900 text-end">
             <div className=" flex direction-r flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -163,18 +164,6 @@ const page = () => {
             </div>
           </section>
         )}
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
       </>
     );
   }
