@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
   }, [jwt] );
 
   return (
-    <AuthContext.Provider value={{ Roles ,HaveRole ,setRoles,axios}}>
+    <AuthContext.Provider value={{ Roles ,HaveRole ,axios}}>
       {children}
     </AuthContext.Provider>
   );
