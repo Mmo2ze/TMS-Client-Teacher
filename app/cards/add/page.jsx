@@ -120,7 +120,7 @@ if (HaveRole ( [null] )) return;
 
 
     function OrderCards () {
-        if(studentClass.length==0){
+        if(studentClass.length===0){
             sendToast("يجب اختيار طلاب","error")
             return;
         }

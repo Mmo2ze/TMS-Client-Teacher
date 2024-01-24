@@ -27,13 +27,13 @@ color: white;
   background: rgb(23,33,51);
   background: linear-gradient(52deg, rgba(23,33,51,1) 0%, rgba(17,25,40,1) 30%, rgba(0,0,0,1) 95%);
 }
-.img-rolse{
+.img-roles{
   background: rgb(19,19,19);
   background: linear-gradient(90deg, rgba(19,19,19,1) 9%, rgba(32,35,37,1) 41%, rgba(45,51,54,1) 74%);
 }
 .MuiInputBase-input{
   background-color: #374151 !important; 
-  color:white important;
+  /*color:white important;*/
   border-radius:6px;
   text-align: end;
 }

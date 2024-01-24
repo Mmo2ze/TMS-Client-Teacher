@@ -23,7 +23,7 @@ function Page() {
             .then ( response => {
                 setIsLoading ( false )
                 setOrders ( response.data );
-                if (response.data.length == 0)
+                if (response.data.length === 0)
                     setOrdersFound ( false )
             } ).catch ( err => {
             setIsLoading ( false )
