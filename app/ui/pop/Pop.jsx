@@ -5,7 +5,7 @@ import { Button } from "@mui/material"
 import SendIcon from '@mui/icons-material/Send';
 const {
   endLodingToast,
-  lodingToast,
+  loadingToast,
   sendToast,
 } = require("./../../func/toast");
 import { useState } from "react";
@@ -15,7 +15,7 @@ function Pop({ scanner, setShowpop, studentResponse,axios }) {
   const [degree, setdegree] = useState();
   const [lateness, setlateness] = useState();
   const handleSave = async () => {
-    var toastID = lodingToast()
+    var toastID = loadingToast()
     const latenessValue = lateness === undefined  ? 0 : lateness;
 
       axios.post(

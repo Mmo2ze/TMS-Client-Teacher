@@ -10,11 +10,13 @@ const PopUpdateAssistant = ({names , phones , id  , rol,axios, onCansle , restar
   const [rolse , setRolse] = useState(rol)
   const [isDropdownOpenStudent, setIsDropdownOpenStudent] = useState(false);
   const [rolseAssistant, setRolseAssistant] = useState([
-    { name: "AddUser", isSelected: false },
-    { name: "AddClass", isSelected: false },
-    { name: "AddPayment", isSelected: false },
-    { name: "ViewPayment", isSelected: false },
-    { name: "RecordAttendance", isSelected: false }
+      { name: "AddUser", isSelected: false },
+      { name: "AddClass", isSelected: false },
+      { name: "AddPayment", isSelected: false },
+      { name: "ViewPayment", isSelected: false },
+      { name: "RecordAttendance", isSelected: false },
+      { name: "RecordCards", isSelected: false },
+      { name: "RecordQuiz", isSelected: false },
   ]);
   const handleSubmitAssis = (event) => {
     setRolse(event.target.value);};

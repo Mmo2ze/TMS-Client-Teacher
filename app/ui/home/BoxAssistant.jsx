@@ -22,6 +22,8 @@ const BoxAssistant = ({name , phone , roles , id  , restartData,axios , rolesVal
     AddPayment: 'إضافة دفعة',
     ViewPayment: 'عرض الدفعات',
     RecordAttendance: 'تسجيل الحضور',
+    RecordCards: 'تسجيل البطاقات',
+      RecordQuiz: 'تسجيل الاختبارات',
   };
 
   return (
@@ -34,7 +36,7 @@ const BoxAssistant = ({name , phone , roles , id  , restartData,axios , rolesVal
     )}
       {showEdit && (
       <div className="overlay">
-        <PopUpdateAssistant rolesValues={rolesValues}  id={id} restartData={restartData} rol={roleValue} names={name} phones={phone} onCansle={() => {setShowEdit(!showEdit)}}/>
+        <PopUpdateAssistant axios={axios} rolesValues={rolesValues}  id={id} restartData={restartData} rol={roleValue} names={name} phones={phone} onCansle={() => {setShowEdit(!showEdit)}}/>
       </div>
     )}
 

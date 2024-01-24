@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const {
   endLodingToast,
-  lodingToast,
+  loadingToast,
   sendToast,
 } = require("./../../func/toast");
 
@@ -56,7 +56,7 @@ const page = () => {
   };
 
   const getParent = async () => {
-    var toastID = lodingToast ();
+    var toastID = loadingToast ();
 
     try {
       const response = await axios.get (
@@ -117,7 +117,7 @@ const page = () => {
   };
 
   const handelRegistParent = async () => {
-    var toastID = lodingToast ();
+    var toastID = loadingToast ();
 
     try {
       console.log ( "Attempting to update data..." );
@@ -145,7 +145,7 @@ const page = () => {
   };
 
   const handelRegist = async () => {
-    var toastID = lodingToast ();
+    var toastID = loadingToast ();
 
     try {
       if ( !nameStudent || !number || !gender) {
@@ -186,7 +186,7 @@ const page = () => {
   };
 
   const handelSubmit = async () => {
-    var toastID = lodingToast ();
+    var toastID = loadingToast ();
     try {
       console.log ( "Attempting to update data..." );
       const response = await axios.post ( `/api/Teacher/student/check`, {
@@ -245,7 +245,7 @@ const page = () => {
   };
 
   const handelAdd = async () => {
-    var toastID = lodingToast ();
+    var toastID = loadingToast ();
 
     try {
       console.log ( "Attempting to update data..." );

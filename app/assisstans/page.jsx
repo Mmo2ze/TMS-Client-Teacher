@@ -43,7 +43,7 @@ export default function Home() {
   };
 
   if (HaveRole([null])) return <Spinners />;
-  else if (HaveRole(["Teacher", "Assistant"])) {
+  else if (HaveRole(["Teacher"])) {
     return (
       <main className="pt-20">
         <ToastContainer />

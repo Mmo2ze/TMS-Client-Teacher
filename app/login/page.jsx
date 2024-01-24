@@ -6,7 +6,7 @@ import axios from "../config/clientaxaios";
 import { useAuth } from "../../AppState";
 import { useRouter } from "next/navigation";
 import Spinners from "../ui/Spinners";
-import {error} from "next/dist/build/output/log";
+import {sendToast} from "../func/toast";
 const isEgyptianNumber = (number) => {
   const pattern = /^01\d{9}$/;
   return pattern.test(number);
@@ -40,7 +40,7 @@ const page = () => {
         switch (e.response.errors){
           case "invalid code":toast.error("الرمز غير صحيح");break;
           case "code used":{
-            toast.error("لقد حاولت اكثرؤ من مرة");
+            sendToast("لقد حاولت اكثرؤ من مرة","error")
             setTimeout(
                 () => {
                   window.location.href = "/";
@@ -50,7 +50,7 @@ const page = () => {
             break;
           }
           case"code expired": {
-            toast.error ( "انتهت صلاحية الرمز" );
+            sendToast("انتهت صلاحية الرمز","error")
             setTimeout(
               () => {
                 window.location.href = "/";
@@ -61,7 +61,7 @@ const page = () => {
           }
         }
       }
-      toast.error("الرمز غير صحيح");
+      sendToast("الرمز غير صحيح","error")
     }
   };
 
@@ -76,12 +76,12 @@ const page = () => {
         );
         setCodeCode(true);
       } catch (e) {
-        if(error.response.status == 401){
-            toast.error("غير مصرح لك بالدخول  ");
+        if(e.response.status === 403){
+          sendToast("غير مصرح لك بالدخول","error")
       }else toast("حدث خطأ ما")
       }
     } else {
-      toast.error("الرقم المدخل غير صحيح. يجب أن يكون بصيغة مصرية صحيحة.");
+      sendToast("الرقم المدخل غير صحيح. يجب أن يكون بصيغة مصرية صحيحة.","error")
     }
   };
   if (HaveRole([null])) {

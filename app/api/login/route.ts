@@ -15,7 +15,7 @@ export async function POST(req:NextRequest) {
         },
     });
     if(token?.value != undefined && token?.value != ""){
-      return NextResponse.json({ message: "not authorized" },{status:401});
+    cookies().delete("sesstion")
     }
     const {phone} = await req.json()
     if(phone.length !=11){

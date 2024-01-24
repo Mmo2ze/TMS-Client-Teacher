@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import {useAuth} from "/AppState";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {sendToast} from "../../../func/toast";
-
+import {sendToast,loadingToast,endLodingToast} from "../../../func/toast";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 const page = (props) => {
     const router = useRouter ();
     const {HaveRole, Roles, axios} = useAuth ();
@@ -16,6 +17,9 @@ const page = (props) => {
     const [payments, setPayments] = useState ( [] );
     const [sellected, setSellected] = useState ( 1 );
     const [notFound, setNotFound] = useState ( false );
+    const [ShowUpdatePopup, setShowUpdatePopup] = useState ( false );
+    const [updatePaymentId, setUpdatePaymentId] = useState ( 0 );
+    const [paymentBillDate, setPaymentBillDate] = useState ( "" );
     const toggleInputPayment = () => {
         setShowInputPayment ( !showInputPayment );
     };
@@ -27,7 +31,8 @@ const page = (props) => {
                 var response = await axios.get ( `/api/Teacher/student/payment/${props.params.id}?limit=${limit}&page=${page}`);
                 console.log ( response.data );
                 setStudent ( response.data.student );
-                setPaymentAmount ( response.data.student.paymentAmount )
+                setPaymentAmount (response.data.student.paymentAmount)
+                console.log("the payment amount is ",response.data.student.paymentAmount)
                 setPayments ( response.data.payments )
                 setNotFound ( false )
             } catch (error) {
@@ -96,8 +101,8 @@ const page = (props) => {
     }
 
     function handleMonthChange (e) {
+        console.log(typeof (e))
         setSellected ( e )
-
     }
 
     function addPayment () {
@@ -130,6 +135,87 @@ const page = (props) => {
         } )
     }
 
+    function deletePayment (payment) {
+        console.log(payment)
+        let toast = loadingToast();
+        axios.delete ( `/api/Teacher/payment/${payment.id}` ).then ( (response) => {
+            endLodingToast ( toast,"تم الحذف بنجاح", "success" );
+            setPayments ( (prevArray) => prevArray.filter ( (obj) => obj.id !== payment.id ) );
+        }).catch( (error) => {
+            endLodingToast(toast,"حدث خطأ ما", "error" );
+        })
+
+    }
+
+    const findIndexByDate = (dateString) => {
+        const [year, month] = dateString.split('-');
+
+        for (let i = 0; i < months.length; i++) {
+            if (month== months[i].getMonth() && year == months[i].getFullYear()) {
+                return i;
+            }
+        }
+
+        // Return -1 if the date is not found
+        return -1;
+    };
+
+    function showUpdatePayment (payment) {
+
+
+// Example usage:
+        var dateToFind = payment.billDate;
+        const index = findIndexByDate(dateToFind);
+        console.log(index)
+        setShowUpdatePopup(true);
+        setUpdatePaymentId(payment.id);
+        setPaymentAmount(payment.amount);
+        setPaymentBillDate(payment.billDate);
+
+    }
+
+    function updatePayment () {
+        // console.log(sellected)
+        // let date = months[sellected];
+        // let month = date.getMonth () + 1;
+        // let year = date.getFullYear ();
+        // month = month > 9 ? month : `0${month}`;
+        // date = `${year}-${month}-01`
+        const data = {
+            amount: paymentAmount,
+            billDate: paymentBillDate
+        }
+        axios.put ( `/api/Teacher/payment/${updatePaymentId}`, data ).then ( (response) => {
+            console.log ( response.data );
+            sendToast ( "تم تحديث الدفعة بنجاح", "success" );
+            setNotFound(false);
+            setPayments ( (prevArray) => prevArray.map ( (obj) => {
+                if (obj.id === updatePaymentId) {
+                    return {
+                        ...obj,
+                        amount: paymentAmount,
+                        billDate: paymentBillDate
+                    };
+                }
+                return obj;
+            } ) );
+            setShowUpdatePopup(false);
+        } ).catch ( (error) => {
+            if (error.response.status == 404) {
+
+                sendToast ( "الطالب غير موجود", "error" )
+            }
+            if (error.response.status == 400) {
+                console.log("تم الدفع من قبل")
+                if (error.response.data.messages[0].statusCode == 301) {
+                    sendToast ( "تم دفع هذا الشهر من قبل ", "warning" );
+                } else if(error.response.data.messages[0].statusCode == 306)
+                        sendToast("لا يمكنك تحديث دفعه مساعد اخر ", "warning");
+                    else sendToast ( "حدث خطأ ما", "error" );
+            }else sendToast ( "حدث خطأ ما", "error" );
+        } )
+    }
+
     if (HaveRole ( [null] )) return <Spinners/>;
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
         return (
@@ -142,10 +228,8 @@ const page = (props) => {
                     </button>
                 </div>
                 {showInputPayment && (
-
-
                     <div className="mb-6 img_liner_2 p-4 rounded-lg">
-                        <select value={sellected} onChange={(e) => handleMonthChange ( e.target.value )} id="countries"
+                        <select defaultValue={sellected} onChange={(e) => handleMonthChange ( e.target.value )} id="countries"
                                 className="text-end bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             {nextMonths.map ( (nextMonth, index) => (
                                 <option key={index} value={index}>
@@ -167,11 +251,11 @@ const page = (props) => {
                 )}
                 <div className="tabel-payment">
                     <div className="relative overflow-x-auto rounded-md">
-                        {notFound ? <div className="text-center mt-10 text-3xl text-color-text">لا يوجد مصاريف</div> :
+                        {payments.length === 0 ?
+                            <div className="text-center mt-10 text-3xl text-color-text">لا يوجد مصاريف</div> :
                             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
                                     className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
                                         الشهر
@@ -191,6 +275,12 @@ const page = (props) => {
                                     <th scope="col" className="px-6 py-3">
                                         تحديث بواسطه
                                     </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        حذف
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        تعديل
+                                    </th>
                                 </tr>
                                 </thead>
 
@@ -209,21 +299,45 @@ const page = (props) => {
                                         <td className="px-6 py-4">{payment.createdBy}</td>
                                         <td className="px-6 py-4">{payment.amount}</td>
                                         <td className="px-6 py-4">{payment.updateBy ? payment.updateBy : "لم يحدث"}</td>
+                                        <td className="px-6 py-4 text-color-red cursor-pointer">
+                                            <DeleteIcon onClick={() => deletePayment ( payment )}/>
+                                        </td>
+                                        <td className="px-6 py-4 text-color-aqua cursor-pointer">
+                                            <EditIcon onClick={() => showUpdatePayment ( payment )}/>
+                                        </td>
                                     </tr>
                                 ) )}
                                 </tbody>
-
-
                             </table>
                         }
+                        {ShowUpdatePopup && (
+                        <div className="mb-6 img_liner_2 p-4 rounded-lg">
+                            {/*<select  onChange={(e) => handleMonthChange ( e.target.value )}*/}
+                            {/*        id="countries2"*/}
+                            {/*        className="text-end bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">*/}
+                            {/*    {nextMonths.map ( (nextMonth, index) => (*/}
+                            {/*        <option key={index} value={index}>*/}
+                            {/*            {nextMonth}*/}
+                            {/*        </option>*/}
+                            {/*    ) )}*/}
+                            {/*</select>*/}
+                            <div className="direction_rtl">
+                                <InputAddClass onChange={setPaymentAmount} value={paymentAmount} lable="المبلغ"/>
+                            </div>
+                            <div className="text-center mt-6">
+                                <button onClick={updatePayment} type="button"
+                                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full">
+                                    تحديث
+                                </button>
+                            </div>
+                        </div> )}
                     </div>
                 </div>
 
 
             </div>
         )
-    }
-    else {
+    } else {
         router.push ( "/login" );
     }
 }

@@ -5,7 +5,7 @@ import ButtonAdd from "../ButtonAdd";
 import InputAddClass from "../addClass/InputAddClass";
 const {
   endLodingToast,
-  lodingToast,
+  loadingToast,
   sendToast,
 } = require("../../func/toast");
 import { ToastContainer, toast } from "react-toastify";
@@ -23,7 +23,7 @@ const PopAddAssistant = ({onCansle , restartData,axios}) => {
     { name: "ViewPayment", isSelected: false },
     { name: "RecordAttendance", isSelected: false },
     { name: "RecordCards", isSelected: false },
-    { name: "RecordQuiz ", isSelected: false },
+    { name: "RecordQuiz", isSelected: false },
   ]);
   const handleSubmitAssis = (event) => {
     const selectedRolse = rolseAssistant.map(rol => ({
@@ -34,7 +34,7 @@ const PopAddAssistant = ({onCansle , restartData,axios}) => {
   };
   
     const handelSubmit = async () => {
-      var toastID = lodingToast();
+      var toastID = loadingToast();
 
       try {
         if (!name || !phone || !rolseAssistant) {

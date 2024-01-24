@@ -4,7 +4,7 @@ import {useState } from "react"
 import InputAddClass from './InputAddClass';
 const {
   endLodingToast,
-  lodingToast,
+  loadingToast,
   sendToast,
 } = require("../../func/toast");
 const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPaymentDelay,axios, initialGrade , initialId }) => {
@@ -16,7 +16,7 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
 
 
   const handelUpdate = async () => {
-    var toastID = lodingToast();
+    var toastID = loadingToast();
 
     try {
       console.log("Attempting to update data...");

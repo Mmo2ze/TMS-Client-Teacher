@@ -1,7 +1,7 @@
 import {useState} from "react"
 const {
     endLodingToast,
-    lodingToast,
+    loadingToast,
     sendToast,
   } = require("../func/toast");
   import { ToastContainer, toast } from "react-toastify";
@@ -13,7 +13,7 @@ const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaul
     const [delay ,setDelay] = useState(0)
     const [score ,setScore] = useState(defaultScore)
     const handelSubmit = async () => {
-        var toastID = lodingToast();
+        var toastID = loadingToast();
         try {
           console.log("Attempting to update data...");
           await axios.post(`/api/Teacher/student/attendance?studentId=${studentId}&lateMints=${parseInt(delay, 10)}`);

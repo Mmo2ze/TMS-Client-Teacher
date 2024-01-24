@@ -10,7 +10,7 @@ import ButtonAdd from "../ButtonAdd";
 import "react-toastify/dist/ReactToastify.css";
 const {
   endLodingToast,
-  lodingToast,
+  loadingToast,
   sendToast,
 } = require("../../func/toast");
 import { ToastContainer, toast } from "react-toastify";
@@ -46,7 +46,7 @@ const PopAddSection = ({ id, onCansle, restartData ,axios}) => {
   }, [start, duration]);
 
   const handelUpdate = async () => {
-    var toastID = lodingToast();
+    var toastID = loadingToast();
 
     try {
       console.log("Attempting to update data...");

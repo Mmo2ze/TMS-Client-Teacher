@@ -5,7 +5,7 @@ import {useState } from "react"
 import ButtonAdd from '../ButtonAdd';
 const {
   endLodingToast,
-  lodingToast,
+  loadingToast,
   sendToast,
 } = require("../../func/toast");
 import { ToastContainer, toast } from "react-toastify";
@@ -20,7 +20,7 @@ const PopAddClass = ({onCansle , onGet,axios}) => {
   const handleGradeChange = (event) => {
     setGrade(event.target.value);};
     const handelSubmit = async () => {
-      var toastID = lodingToast();
+      var toastID = loadingToast();
 
       try {
         if (!name || !paymentPrice || !paymentDelay || !grade) {
