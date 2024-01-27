@@ -17,7 +17,7 @@ const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaul
         try {
           console.log("Attempting to update data...");
           await axios.post(`/api/Teacher/student/attendance?studentId=${studentId}&lateMints=${parseInt(delay, 10)}`);
-        endLodingToast(toastID, "تم اضافة  الدرجة", "success");
+        endLodingToast(toastID, "تم تسجيل حضور الطالب", "success");
           onCansle();
           console.log("Data updated successfully!");
         } catch (error) {
@@ -32,7 +32,7 @@ const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaul
                       break;
                     }
                     case 301: {
-                      endLodingToast(toastID, "ليس للطالب محاضرة الان", "error");
+                      endLodingToast(toastID, "تم تسجيل حضور الطالب من قبل", "warning");
                       break;
                     }
                     default: {

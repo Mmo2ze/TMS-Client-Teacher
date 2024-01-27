@@ -275,12 +275,15 @@ const page = (props) => {
                                     <th scope="col" className="px-6 py-3">
                                         تحديث بواسطه
                                     </th>
+                                    {HaveRole(["Teacher","AddPayment"]) &&(
+                                        <div>
                                     <th scope="col" className="px-6 py-3">
                                         حذف
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         تعديل
                                     </th>
+                                </div>)}
                                 </tr>
                                 </thead>
 
@@ -299,21 +302,26 @@ const page = (props) => {
                                         <td className="px-6 py-4">{payment.createdBy}</td>
                                         <td className="px-6 py-4">{payment.amount}</td>
                                         <td className="px-6 py-4">{payment.updateBy ? payment.updateBy : "لم يحدث"}</td>
-                                        <td className="px-6 py-4 text-color-red cursor-pointer">
-                                            <DeleteIcon onClick={() => deletePayment ( payment )}/>
-                                        </td>
-                                        <td className="px-6 py-4 text-color-aqua cursor-pointer">
-                                            <EditIcon onClick={() => showUpdatePayment ( payment )}/>
-                                        </td>
-                                    </tr>
-                                ) )}
-                                </tbody>
-                            </table>
-                        }
-                        {ShowUpdatePopup && (
-                        <div className="mb-6 img_liner_2 p-4 rounded-lg">
-                            {/*<select  onChange={(e) => handleMonthChange ( e.target.value )}*/}
-                            {/*        id="countries2"*/}
+                                         {HaveRole(["Teacher","AddPayment"]) &&(
+                                            <div>
+
+                                                <td className="px-6 py-4 text-color-red cursor-pointer">
+                                                    <DeleteIcon onClick={() => deletePayment ( payment )}/>
+                                                </td>
+                                                <td className="px-6 py-4 text-color-aqua cursor-pointer">
+                                                    <EditIcon onClick={() => showUpdatePayment ( payment )}/>
+                                                </td>
+                                            </div>)
+                                        }
+                                            </tr>
+                                            ) )}
+                                    </tbody>
+                                    </table>
+                                }
+                                {ShowUpdatePopup && (
+                                    <div className="mb-6 img_liner_2 p-4 rounded-lg">
+                                        {/*<select  onChange={(e) => handleMonthChange ( e.target.value )}*/}
+                                        {/*        id="countries2"*/}
                             {/*        className="text-end bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">*/}
                             {/*    {nextMonths.map ( (nextMonth, index) => (*/}
                             {/*        <option key={index} value={index}>*/}
@@ -333,8 +341,6 @@ const page = (props) => {
                         </div> )}
                     </div>
                 </div>
-
-
             </div>
         )
     } else {
