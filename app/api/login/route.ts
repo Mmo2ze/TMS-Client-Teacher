@@ -8,7 +8,7 @@ export async function POST(req:NextRequest) {
     let token = cookies().get("sesstion");
     console.log("token",token)
     let instance = axios.create({
-        baseURL: "https://zagazig.store/",
+        baseURL: "https://api.tass.ist/",
         headers: {
             accept: "*/*",
             "Content-Type": "application/json"
@@ -35,6 +35,7 @@ export async function POST(req:NextRequest) {
     })
     return NextResponse.json({ message: "success" });
     }catch(err){
+        console.log(err)
          if(err.response.data.messages[0].statusCode == 403){
           // return NextResponse({redirect:{destination:"/login",permanent:false}})
              return NextResponse.json({ errors: 'You are not autorized' }, { status: 403 });
