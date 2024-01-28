@@ -26,6 +26,7 @@ export async function POST(req:NextRequest) {
     console.log(code)
     try{
 
+
         let res = await instance.post("/api/Auth/teacher/verify",code)
         console.log(res.data)
         var jwt = res.data.data.token;
