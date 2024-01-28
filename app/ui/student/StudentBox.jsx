@@ -1,6 +1,6 @@
-
 import Image from 'next/image'
 import img1 from "../../../public/mother.png"
+import img2 from "../../../public/man.jpg"
 
 
 
@@ -8,16 +8,15 @@ const StudentBox = ({name , id , grade , className}) => {
 // /api/Teacher/student
 
     return (
-        <> 
+    <> 
         <div className="img_liner px-4 pt-4 flex m-4 rounded-lg flex-col gap-3 md:text-3xl 2sm:relative 2sm:h-40 2sm:text-lg cursor-pointer"> 
         <div className="flex justify-between w-full 2sm:absolute ">     
-        <Image src={img1} width={65} height={65}  alt="Picture of the author"/>
+        <Image src={grade === 'Male' ? img2 : img1} width={65} height={65}  alt="Picture of the author"/>
         <div className="2sm:absolute top-[70%] right-6">{grade === 'FirstSecondary' && 'أولى ثانوي'}
-              {grade === 'SecondSecondary' && 'ثاني ثانوي'}
-              {grade === 'ThirdSecondary' && 'ثالث ثانوي'}</div>
+        {grade === 'SecondSecondary' && 'ثاني ثانوي'}
+        {grade === 'ThirdSecondary' && 'ثالث ثانوي'}</div>
         <div className="2sm:absolute top-0 right-6"> {name}  </div>
         </div>
-
         <div className="flex justify-between w-full   items-center">     
         <div className="2sm:absolute top-[75%] right-4"> {className}</div>
         <div className="text-color-text  pb-3.5 2sm:absolute top-[75%] right-[46%] 2sm:text-xl">  {id}</div>
@@ -27,9 +26,8 @@ const StudentBox = ({name , id , grade , className}) => {
         </button> 
         </div>
         </div>
-    </div>
-   
-        </>
+        </div>
+    </>
     )
 }
 
