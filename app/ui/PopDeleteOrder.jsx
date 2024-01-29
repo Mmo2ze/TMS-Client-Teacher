@@ -15,7 +15,7 @@ const PopDeleteOrder = ({id , onCancel , restartData,axios}) => {
       
   return (
     <div className="fixed z-50 py-4 bg-side7-color md:mt-7 rounded-lg w-[96%]  md:w-1/2 mt-2 top-[55%] md:top-1/2 left-1/2 center text-end">
-        <h1 className='mb-6 text-2xl md:text-3xl text-center text-color-red'>هل انت متأكد من حذف هذا الطبي </h1>
+        <h1 className='mb-6 text-2xl md:text-3xl text-center text-color-red'>هل انت متأكد من حذف هذا الطلب </h1>
         <p className="text-color-text2 bg-side-color p-2 mb-4">بعد تأكيد الحذف سيتم حذف  الطلب المرسل</p>
         <div >
         <svg className=" mx-auto mb-8 w-[84px] h-[82px] text-gray-800 dark:text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

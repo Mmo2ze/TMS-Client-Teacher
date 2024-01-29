@@ -31,8 +31,8 @@ const PopUpdateQuiz = ({onCansle , axios}) => {
  <div className="absolute top-0 left-2 cursor-pointer">
         <CloseIcon sx={{ fontSize: 50 }} onClick={onCansle} color="primary"/>
        </div>       
-       <InputAddClass onChange={setNewDegree} type={newDegree} lable="ادخل الدرجة العظمى الجديدة" type="number"/>
-       <InputAddClass onChange={setScore} type={score}  lable="ادخل الدرجة الجديدة" type="number"/>
+       <InputAddClass onChange={setNewDegree} value={newDegree} lable="ادخل الدرجة العظمى الجديدة" type="number"/>
+       <InputAddClass onChange={setScore} value={score}  lable="ادخل الدرجة الجديدة" type="number"/>
        <div className="flex justify-between px-4 mt-4">
        <button  type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">
                 تأكيد
