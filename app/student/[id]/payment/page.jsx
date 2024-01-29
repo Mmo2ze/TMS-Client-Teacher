@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import {sendToast,loadingToast,endLodingToast} from "../../../func/toast";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import PopDeletePayment from './../../../ui/student/PopDeletePayment';
+import CloseIcon from '@mui/icons-material/Close';
 const page = (props) => {
     const router = useRouter ();
     const {HaveRole, Roles, axios} = useAuth ();
@@ -20,6 +22,8 @@ const page = (props) => {
     const [ShowUpdatePopup, setShowUpdatePopup] = useState ( false );
     const [updatePaymentId, setUpdatePaymentId] = useState ( 0 );
     const [paymentBillDate, setPaymentBillDate] = useState ( "" );
+    const [showPopDelete , setShowPopDelete] = useState(false);
+    const [paymentId , setPaymentId] = useState("")
     const toggleInputPayment = () => {
         setShowInputPayment ( !showInputPayment );
     };
@@ -136,14 +140,8 @@ const page = (props) => {
     }
 
     function deletePayment (payment) {
-        console.log(payment)
-        let toast = loadingToast();
-        axios.delete ( `/api/Teacher/payment/${payment.id}` ).then ( (response) => {
-            endLodingToast ( toast,"تم الحذف بنجاح", "success" );
-            setPayments ( (prevArray) => prevArray.filter ( (obj) => obj.id !== payment.id ) );
-        }).catch( (error) => {
-            endLodingToast(toast,"حدث خطأ ما", "error" );
-        })
+        setShowPopDelete(!showPopDelete)
+        setPaymentId(payment.id)
 
     }
 
@@ -167,7 +165,7 @@ const page = (props) => {
         var dateToFind = payment.billDate;
         const index = findIndexByDate(dateToFind);
         console.log(index)
-        setShowUpdatePopup(true);
+        setShowUpdatePopup(!ShowUpdatePopup);
         setUpdatePaymentId(payment.id);
         setPaymentAmount(payment.amount);
         setPaymentBillDate(payment.billDate);
@@ -220,6 +218,7 @@ const page = (props) => {
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
         return (
             <div className="pt-20 px-4">
+                  {showPopDelete && ( <div className="overlay"> <PopDeletePayment id={paymentId} axios={axios} onCansle={() => setShowPopDelete(!showPopDelete)}/> </div>)}
                 <div className='text-end'>
                     <ToastContainer/>
                     <button onClick={toggleInputPayment} type="button"
@@ -318,8 +317,10 @@ const page = (props) => {
                                     </tbody>
                                     </table>
                                 }
+                    </div>
+                </div>
                                 {ShowUpdatePopup && (
-                                    <div className="mb-6 img_liner_2 p-4 rounded-lg">
+                                    <div className="mb-6 img_liner_2 p-4 rounded-lg fixed w-[90%] top-[23%] left-[5%]">
                                         {/*<select  onChange={(e) => handleMonthChange ( e.target.value )}*/}
                                         {/*        id="countries2"*/}
                             {/*        className="text-end bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">*/}
@@ -329,18 +330,17 @@ const page = (props) => {
                             {/*        </option>*/}
                             {/*    ) )}*/}
                             {/*</select>*/}
-                            <div className="direction_rtl">
+                            <div className="absolute top-3 cursor-pointer" onClick={() => setShowUpdatePopup(false)}> <CloseIcon  color="primary" sx={{ fontSize: 50 }} /></div>
+                            <div className="direction_rtl mb-6 pr-2">
                                 <InputAddClass onChange={setPaymentAmount} value={paymentAmount} lable="المبلغ"/>
                             </div>
-                            <div className="text-center mt-6">
+                            <div className="text-center mt-6 ">
                                 <button onClick={updatePayment} type="button"
                                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full">
                                     تحديث
                                 </button>
                             </div>
                         </div> )}
-                    </div>
-                </div>
             </div>
         )
     } else {
