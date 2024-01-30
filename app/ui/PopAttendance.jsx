@@ -16,7 +16,7 @@ const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaul
         var toastID = loadingToast();
         try {
           console.log("Attempting to update data...");
-          await axios.post(`/api/v1/Teacher/student/attendance?studentId=${studentId}&lateMints=${parseInt(delay, 10)}`);
+          await axios.post(`/api/v1/Teacher/attendance?studentId=${studentId}&lateMints=${parseInt(delay, 10)}`);
         endLodingToast(toastID, "تم تسجيل حضور الطالب", "success");
           onCansle();
           console.log("Data updated successfully!");
