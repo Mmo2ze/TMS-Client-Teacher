@@ -23,7 +23,7 @@ const page = () => {
         if (HaveRole ( [null] )) return;
         const getdata = async () => {
             try {
-                const response = await axios.get ("/api/Teacher/class");
+                const response = await axios.get ("/api/v1/Teacher/class");
                 setClasses (response.data);
             } catch (e) {
                 console.log (e);
@@ -67,7 +67,7 @@ if (HaveRole ( [null] )) return;
       const delaySearch = setTimeout (() => {
           const fetchData = async () => {
               try {
-                  const url = `/api/Teacher/student/search/${searchWord}`;
+                  const url = `/api/v1/Teacher/student/search/${searchWord}`;
                   const response = await axios.get (url);
                   setData (response.data);
               } catch (error) {
@@ -110,7 +110,7 @@ if (HaveRole ( [null] )) return;
             removeClassStudents(classId)
 
         }else {
-            const response = await axios.get(`/api/Teacher/class/${classId}?requiredStudents=true&requiredSections=false`)
+            const response = await axios.get(`/api/v1/Teacher/class/${classId}?requiredStudents=true&requiredSections=false`)
                     setStudentClass(prev=>[...prev,...response.data.students]);
         setSelectedClasses(prevSelectedClasses => [...prevSelectedClasses, classId]);
         }
@@ -129,7 +129,7 @@ if (HaveRole ( [null] )) return;
         for (const item of studentClass) {
             responseData.push(item.privateId);
         }
-        axios.post ( "/api/Teacher/Cards", responseData )
+        axios.post ( "/api/v1/Teacher/Cards", responseData )
             .then ( response => {
             sendToast("تم طلب الكروت بنجاح","success")
                 setTimeout(() => {

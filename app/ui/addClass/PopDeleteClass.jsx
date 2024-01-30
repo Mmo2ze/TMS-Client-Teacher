@@ -5,7 +5,7 @@ const PopDeleteClass = ({onCansle , id ,axios, restartData}) => {
   const handelDelete = async () => {
     try {
       console.log("Attempting to Delete data...");
-      await axios.delete(`/api/Teacher/class/${id}`);
+      await axios.delete(`/api/v1/Teacher/class/${id}`);
       onCansle();
       restartData()
     } catch (error) {

@@ -4,7 +4,7 @@ const PopDeleteSection = ({id , onCansle , axios,restartData }) => {
     const handelDelete = async () => {
         try {
           console.log("Attempting to Delete data...");
-          await axios.delete(`/api/Teacher/section/${id}`);
+          await axios.delete(`/api/v1/Teacher/section/${id}`);
           onCansle();
           restartData()
         } catch (error) {

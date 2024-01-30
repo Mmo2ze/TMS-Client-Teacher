@@ -6,7 +6,7 @@ const PopDeletePayment = ({onCansle , axios , id}) => {
   
   const handleSubmit = () => {
     let toast = loadingToast();
-    axios.delete ( `/api/Teacher/payment/${id}` ).then ( (response) => {
+    axios.delete ( `/api/v1/Teacher/payment/${id}` ).then ( (response) => {
         endLodingToast ( toast,"تم الحذف بنجاح", "success" );
         setPayments ( (prevArray) => prevArray.filter ( (obj) => obj.id !== id ) );
     }).catch( (error) => {

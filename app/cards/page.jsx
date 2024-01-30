@@ -19,7 +19,7 @@ function Page() {
     const [deleteId, setDeleteId] = useState ( null )
     useEffect ( () => {
         if (HaveRole ( [null] )) return;
-        axios.get ( "api/Teacher/Cards" )
+        axios.get ( "api/v1/Teacher/Cards" )
             .then ( response => {
                 setIsLoading ( false )
                 setOrders ( response.data );

@@ -27,7 +27,7 @@ const page = (props) => {
     const getdata = async () => {
       if (HaveRole ( [null] )) return;
       try {
-        const response = await axios.get ( `/api/Teacher/student/${props.params.id}` );
+        const response = await axios.get ( `/api/v1/Teacher/student/${props.params.id}` );
         setData ( response.data.data );
         setIsLoading ( false );
         // console.log(`sadasdas${response.data.data.privateId}`)

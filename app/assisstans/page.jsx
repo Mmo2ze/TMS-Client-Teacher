@@ -19,7 +19,7 @@ export default function Home() {
     if(HaveRole([null])) return;
     const getdata = async () => {
       try {
-        const response = await axios.get("/api/Teacher/assistant");
+        const response = await axios.get("/api/v1/Teacher/assistant");
         setData(response.data);
           console.log(`tha data in rolse is ${data}`);
         setIsLoading(false);
@@ -33,7 +33,7 @@ export default function Home() {
 
   const restartData = async () => {
     try {
-      const response = await axios.get("/api/Teacher/assistant");
+      const response = await axios.get("/api/v1/Teacher/assistant");
       setData(response.data);
       setIsLoading(false);
       console.log(`tha data in rolse is  2 ${data.roles}`);

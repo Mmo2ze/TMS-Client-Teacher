@@ -20,7 +20,7 @@ const PopUpdateClass = ({onCansle , initialName, initialPaymentPrice, initialPay
 
     try {
       console.log("Attempting to update data...");
-      await axios.put(`/api/Teacher/class/${initialId}`, {
+      await axios.put(`/api/v1/Teacher/class/${initialId}`, {
         name: name,
         basePaymentPrice: paymentPrice,
         basePaymentDelay: paymentDelay,

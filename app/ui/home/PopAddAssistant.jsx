@@ -43,7 +43,7 @@ const PopAddAssistant = ({onCansle , restartData,axios}) => {
           return;
         }
         console.log("Attempting to update data...");
-        await axios.post(`/api/Teacher/assistant`, {
+        await axios.post(`/api/v1/Teacher/assistant`, {
           name: name,
           phone:phone,
           assistantRoles: rolseAssistant.filter(rol => rol.isSelected).map(rol => rol.name)

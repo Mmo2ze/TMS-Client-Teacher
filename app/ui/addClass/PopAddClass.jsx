@@ -30,7 +30,7 @@ const PopAddClass = ({onCansle , onGet,axios}) => {
           return;
         }
         console.log("Attempting to update data...");
-        await axios.post(`/api/Teacher/class`, {
+        await axios.post(`/api/v1/Teacher/class`, {
           name: name,
           basePaymentPrice: paymentPrice,
           basePaymentDelay: paymentDelay,

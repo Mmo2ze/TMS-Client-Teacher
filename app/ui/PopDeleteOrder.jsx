@@ -4,7 +4,7 @@ const PopDeleteOrder = ({id , onCancel , restartData,axios}) => {
     const handelDelete = async () => {
         try {
           console.log("Attempting to Delete data...");
-          await axios.delete(`/api/Teacher/Cards/${id}`);
+          await axios.delete(`/api/v1/Teacher/Cards/${id}`);
             onCancel();
           restartData(id, {orderStatus: "canceled"})
         } catch (error) {

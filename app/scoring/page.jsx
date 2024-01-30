@@ -23,7 +23,7 @@ const Page = () => {
   useEffect(() => {
     const getdata = async () => {
       try {
-        const response = await axios.get("/api/Teacher/quiz-maxvalue");
+        const response = await axios.get("/api/v1/Teacher/quiz-maxvalue");
         setScore(response.data.maxDegree);
       } catch (e) {
         console.log(e);
@@ -39,7 +39,7 @@ const Page = () => {
     const delaySearch = setTimeout(() => {
       const fetchData = async () => {
         try {
-          const url =  `/api/Teacher/student?${searchWord}&limit=${limit}&page=${page}`;
+          const url =  `/api/v1/Teacher/student?${searchWord}&limit=${limit}&page=${page}`;
           const response = await axios.get(url);
           setData(response.data);
           setIsLoading(false);

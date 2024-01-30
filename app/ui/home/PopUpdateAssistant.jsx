@@ -27,7 +27,7 @@ const PopUpdateAssistant = ({names , phones , id  , rol,axios, onCansle , restar
           .filter((rol) => rol.isSelected)
           .map((selectedRol) => selectedRol.name);
     
-        await axios.put(`/api/Teacher/assistant/${id}`, {
+        await axios.put(`/api/v1/Teacher/assistant/${id}`, {
           name: name,
           phone: phone,
           assistantRoles: selectedRoles,
