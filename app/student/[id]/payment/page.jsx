@@ -125,6 +125,7 @@ const page = (props) => {
             sendToast ( "تم اضافة الدفعة بنجاح", "success" );
             setNotFound(false);
             setPayments ( [...payments, response.data.data] )
+            setShowInputPayment ( !showInputPayment );
         } ).catch ( (error) => {
             if (error.response.status == 404) {
 
@@ -217,8 +218,8 @@ const page = (props) => {
     if (HaveRole ( [null] )) return <Spinners/>;
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
         return (
-            <div className="pt-20 px-4">
-                  {showPopDelete && ( <div className="overlay"> <PopDeletePayment id={paymentId} axios={axios} onCansle={() => setShowPopDelete(!showPopDelete)}/> </div>)}
+            <div className="pt-20 px-4 relative">
+                  {showPopDelete && ( <div className="overlay"> <PopDeletePayment text="هل انت متأكد من حذف هذا الدفع للطالب " conferm="بعد تأكيد الحذف سيتم حذف  الدفع للشهر المحدد" id={paymentId} axios={axios} onCansle={() => setShowPopDelete(!showPopDelete)}/> </div>)}
                 <div className='text-end'>
                     <ToastContainer/>
                     <button onClick={toggleInputPayment} type="button"

@@ -2,16 +2,20 @@
 import {useState} from 'react'
 import {sendToast,loadingToast,endLodingToast} from "../../func/toast";
 
-const PopDeletePayment = ({onCansle , axios , id , text , conferm}) => {
+const PopDeleteQuiz = ({onCansle , axios , id , text , conferm}) => {
   
   const handleSubmit = () => {
     let toast = loadingToast();
-    axios.delete ( `/api/v1/Teacher/payment/${id}` ).then ( (response) => {
-        endLodingToast ( toast,"تم الحذف بنجاح", "success" );
-        setPayments ( (prevArray) => prevArray.filter ( (obj) => obj.id !== id ) );
-    }).catch( (error) => {
-        endLodingToast(toast,"حدث خطأ ما", "error" );
-    })
+    axios.delete(`api/v1/Teacher/quiz/${id}`).then((res) => {
+      let newQuizzes = quizzes.filter((quiz) => {
+          return quiz.id !== id;
+      })
+      setQuizzes(newQuizzes);
+      endLodingToast ( toast,"تم الحذف بنجاح", "success" );
+      onCansle()
+  }).catch((err) => {
+    endLodingToast(toast,"حدث خطأ ما", "error" );
+  })
   }
   return (
     <div>
@@ -39,4 +43,4 @@ const PopDeletePayment = ({onCansle , axios , id , text , conferm}) => {
   )
 }
 
-export default PopDeletePayment
+export default PopDeleteQuiz

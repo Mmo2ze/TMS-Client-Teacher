@@ -5,11 +5,15 @@ import Spinners from "../../../ui/Spinners";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PopUpdateQuiz from './../../../ui/student/PopUpdateQuiz';
+import PopDeleteQuiz from './../../../ui/student/PopDeleteQuiz';
+
 
 function Page(prop) {
     const {Roles, HaveRole, axios} = useAuth ();
     const [quizzes, setQuizzes] = useState ( [] );
     const [showPopUpdate , setShowPopUpdate] = useState(false)
+    const [showPopDelete , setShowPoDelete] = useState(false)
+    const [theId , setTheId] = useState("")
 
     useEffect ( () => {
         if(HaveRole(["Teacher", "Assistant"]))
@@ -34,12 +38,18 @@ function Page(prop) {
         })
     }
 
+    const handeleDelet = (id) => {
+        setShowPoDelete ( !showPopDelete )
+        setTheId(id)
+    }
+
     if (HaveRole ( [null] ))
         return <Spinners/>
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
         return (
             <div className="pt-20 px-4">
                 {showPopUpdate && ( <div className="overlay"> <PopUpdateQuiz axios={axios} onCansle={() => setShowPopUpdate(!showPopUpdate)}/> </div>)}
+                {showPopDelete && ( <div className="overlay"> <PopDeleteQuiz id={theId} text="هل انت متأكد من حذف هذا الامتحان للطالب" conferm="بعد تأكيد الحذف لم تستطيع ارجاع درجة هذا الامتحان" axios={axios} onCansle={() => setShowPoDelete (!showPopDelete )}/> </div>)}
 
                         <div>
                             {/* <h1>Quiz Id :{quiz.id}</h1>
@@ -88,7 +98,7 @@ function Page(prop) {
                                          {HaveRole(["Teacher","AddPayment"]) &&(
                                             <div>
                                                 <td className="px-6 py-4 pr-16 2sm:pr-4 text-color-red cursor-pointer">
-                                                    <DeleteIcon onClick={() => deletePayment ( payment )}/>
+                                                    <DeleteIcon onClick={() => handeleDelet(quiz.id)}/>
                                                 </td>
                                                 <td className="px-6 py-4 text-color-aqua cursor-pointer">
                                                     <EditIcon onClick={() => setShowPopUpdate ( !showPopUpdate )}/>
