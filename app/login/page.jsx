@@ -7,6 +7,9 @@ import { useAuth } from "../../AppState";
 import { useRouter } from "next/navigation";
 import Spinners from "../ui/Spinners";
 import {sendToast} from "../func/toast";
+import avatar from "../../public/Login2.gif"
+import Image from 'next/image'
+
 const isEgyptianNumber = (number) => {
   const pattern = /^01\d{9}$/;
   return pattern.test(number);
@@ -90,6 +93,12 @@ const page = () => {
   if (HaveRole(["UnAuthorized", "HaveTeacherCode", ])) {
     return (
       <>
+        <Image
+      src={avatar}
+      width={500}
+      height={500}
+      alt="Picture of the author"
+    />
           <ToastContainer/>
         {sentCode ? (
           <section className="pt-20  bg-gray-900 text-end">
