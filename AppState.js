@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     const TestAut = async () => {
       if(jwt == null ) return ;
       try {
-        const response = await axios.get('/api/auth/myRoles');
+        const response = await axios.get('/api/v1/auth/myRoles');
         setRoles(response.data);
       } catch (error) {
         setRoles(["UnAuthorized"]);

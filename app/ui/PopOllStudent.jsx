@@ -11,7 +11,7 @@ const PopOllStudent = ({studentName , studentId , onCansle, placeholder , score 
         let toastID = loadingToast();
         try {
           console.log("Attempting to update data...");
-          await axios.post(`/api/Teacher/quiz`, {
+          await axios.post(`/api/v1/Teacher/quiz`, {
             studentId: studentId,
             degree: parseInt(quizValue, 10), 
             maxDegree: parseInt(score, 10),

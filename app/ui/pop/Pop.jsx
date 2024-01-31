@@ -19,7 +19,7 @@ function Pop({ scanner, setShowpop, studentResponse,axios }) {
     const latenessValue = lateness === undefined  ? 0 : lateness;
 
       axios.post(
-      `api/Teacher/student/attendance?studentId=${studentResponse.student.privateId}&lateMints=${latenessValue}`
+      `api/v1/Teacher/student/attendance?studentId=${studentResponse.student.privateId}&lateMints=${latenessValue}`
       )
       .then((response) => {
         endLodingToast(toastID, "5الرقم الذي ادخلته حطأ", "error");

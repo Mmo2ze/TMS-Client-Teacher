@@ -60,7 +60,7 @@ const PopAddSection = ({ id, onCansle, restartData ,axios}) => {
         endLodingToast(toastID, "يرجى تعبئة جميع الحقول", "error");
         return;
       }
-      await axios.post(`/api/Teacher/section`, {
+      await axios.post(`/api/v1/Teacher/section`, {
         classId: id,
         day: day,
         starttime: formattedStartTime,

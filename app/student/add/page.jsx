@@ -60,7 +60,7 @@ const page = () => {
 
     try {
       const response = await axios.get (
-          `/api/Teacher/parent/check/${valuePerentNumber}?hasWhatsapp=${checkPerantWhats}`
+          `/api/v1/Teacher/parent/check/${valuePerentNumber}?hasWhatsapp=${checkPerantWhats}`
       );
       setPerentPhone ( response.data.isvalid );
       if (response.data.isvalid) {
@@ -131,7 +131,7 @@ const page = () => {
       };
 
       const response = await axios.post (
-          `/api/Teacher/parent/register`,
+          `/api/v1/Teacher/parent/register`,
           requestData
       );
       setDetailParentId ( response.data.id );
@@ -163,7 +163,7 @@ const page = () => {
       };
 
       const response = await axios.post (
-          `/api/Teacher/student/register`,
+          `/api/v1/Teacher/student/register`,
           requestData
       );
       console.log ( "Data updated successfully!" );
@@ -189,7 +189,7 @@ const page = () => {
     var toastID = loadingToast ();
     try {
       console.log ( "Attempting to update data..." );
-      const response = await axios.post ( `/api/Teacher/student/check`, {
+      const response = await axios.post ( `/api/v1/Teacher/student/check`, {
         phone: number,
         hasWhatsapp: whatsappEnabled,
       } );
@@ -253,7 +253,7 @@ const page = () => {
           ? parseInt ( theId, 10 )
           : parseInt ( idStudent, 10 );
 
-      const response = await axios.post ( `/api/Teacher/student`, {
+      const response = await axios.post ( `/api/v1/Teacher/student`, {
         studentId: studentIdToSend,
         classId: parseInt ( selectedGrade, 10 ),
         parentId: DetailParentId,
@@ -268,7 +268,7 @@ const page = () => {
   useEffect ( () => {
     const getdata = async () => {
       try {
-        const response = await axios.get ( "/api/Teacher/class" );
+        const response = await axios.get ( "/api/v1/Teacher/class" );
         setData ( response.data );
       } catch (e) {
         console.log ( e );

@@ -32,7 +32,7 @@ const page = (props) => {
         if (HaveRole ( [null] )) return;
         const fetchData = async () => {
             try {
-                var response = await axios.get ( `/api/Teacher/student/payment/${props.params.id}?limit=${limit}&page=${page}`);
+                var response = await axios.get ( `/api/v1/Teacher/student/payment/${props.params.id}?limit=${limit}&page=${page}`);
                 console.log ( response.data );
                 setStudent ( response.data.student );
                 setPaymentAmount (response.data.student.paymentAmount)
@@ -120,7 +120,7 @@ const page = (props) => {
             amount: paymentAmount,
             date: date
         }
-        axios.post ( `/api/Teacher/payment`, data ).then ( (response) => {
+        axios.post ( `/api/v1/Teacher/payment`, data ).then ( (response) => {
             console.log ( response.data );
             sendToast ( "تم اضافة الدفعة بنجاح", "success" );
             setNotFound(false);
@@ -183,7 +183,7 @@ const page = (props) => {
             amount: paymentAmount,
             billDate: paymentBillDate
         }
-        axios.put ( `/api/Teacher/payment/${updatePaymentId}`, data ).then ( (response) => {
+        axios.put ( `/api/v1/Teacher/payment/${updatePaymentId}`, data ).then ( (response) => {
             console.log ( response.data );
             sendToast ( "تم تحديث الدفعة بنجاح", "success" );
             setNotFound(false);

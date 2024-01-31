@@ -12,7 +12,7 @@ const PopUpdateQuiz = ({onCansle , axios}) => {
             degree: 10,
             rate: 10
         }
-        axios.put(`api/Teacher/quiz/${id}`,body).then((res) => {
+        axios.put(`api/v1/Teacher/quiz/${id}`,body).then((res) => {
     let updatedQuiz = res.data.data;
      let newQuizzes = quizzes.map((quiz) => {
         if (quiz.id === updatedQuiz.id) {

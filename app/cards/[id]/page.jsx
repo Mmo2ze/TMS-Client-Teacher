@@ -14,7 +14,7 @@ function Page(props) {
     const [cards, setCards] = useState ( [] )
     useEffect ( () => {
         if (HaveRole ( [null] )) return;
-        axios.get ( `api/Teacher/Cards/${props.params.id}` )
+        axios.get ( `api/v1/Teacher/Cards/${props.params.id}` )
             .then ( response => {
                 setCards ( response.data )
             } ).catch ( err => {
@@ -32,7 +32,7 @@ function Page(props) {
         cards.map ( (card) => {
             data.push ( card.privateId )
         } )
-        axios.put ( `api/Teacher/Cards/${props.params.id}`, data )
+        axios.put ( `api/v1/Teacher/Cards/${props.params.id}`, data )
             .then ( response => {
                 sendToast ( "تم تحديث البيانات بنجاح", "success" )
                 setTimeout ( () => window.location.href = "/cards"

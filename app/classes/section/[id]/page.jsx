@@ -21,7 +21,7 @@ const page = (props) => {
         if (HaveRole ( [null] )) return;
         const getdata = async () => {
             try {
-                const response = await axios.get ( `/api/Teacher/class/section/${props.params.id}` );
+                const response = await axios.get ( `/api/v1/Teacher/class/section/${props.params.id}` );
                 setData ( response.data );
                 setIsLoading ( false );
 
@@ -36,7 +36,7 @@ const page = (props) => {
 
     const restartData = async () => {
         try {
-            const response = await axios.get ( `/api/Teacher/class/section/${props.params.id}` );
+            const response = await axios.get ( `/api/v1/Teacher/class/section/${props.params.id}` );
             setData ( response.data );
             setIsLoading ( false );
 

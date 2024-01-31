@@ -13,7 +13,7 @@ function Page(prop) {
 
     useEffect ( () => {
         if(HaveRole(["Teacher", "Assistant"]))
-        axios.get(`api/Teacher/student/quiz/${prop.params.id}?limit=10&page=1`).then((res) => {
+        axios.get(`api/v1/Teacher/student/quiz/${prop.params.id}?limit=10&page=1`).then((res) => {
             console.log(res.data);
             setQuizzes(res.data);
         }).catch((err) => {
@@ -24,7 +24,7 @@ function Page(prop) {
  
 
     function DeleteQuiz (id) {
-        axios.delete(`api/Teacher/quiz/${id}`).then((res) => {
+        axios.delete(`api/v1/Teacher/quiz/${id}`).then((res) => {
             let newQuizzes = quizzes.filter((quiz) => {
                 return quiz.id !== id;
             })

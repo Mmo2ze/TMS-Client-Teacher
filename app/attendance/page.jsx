@@ -26,7 +26,7 @@ const Page = () => {
         const delaySearch = setTimeout ( () => {
             const fetchData = async () => {
                 try {
-                    const url = `/api/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}`;
+                    const url = `/api/v1/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}`;
                     const response = await axios.get ( url );
                     setData ( response.data );
                     setIsLoading ( false );

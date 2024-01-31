@@ -17,7 +17,7 @@ const page = () => {
       if (HaveRole ( [null] )) return;
       const getdata = async () => {
         try {
-          const response = await axios.get("/api/Teacher/class");
+          const response = await axios.get("/api/v1/Teacher/class");
           setData(response.data);
           setIsLoading(false);
         } catch (e) {
@@ -29,7 +29,7 @@ const page = () => {
 
     const updateData = async () => {
       try {
-        const response = await axios.get("/api/Teacher/class");
+        const response = await axios.get("/api/v1/Teacher/class");
         setData(response.data);
         setIsLoading(false);
       } catch (e) {

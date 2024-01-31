@@ -38,7 +38,7 @@ function PaymentTable({axios}) {
         const startDateString = dateRange[0].startDate.toDateString();
         const endDateString = dateRange[0].endDate.toDateString();
         axios.get(
-            `api/Teacher/payments?start=${startDateString}&end=${endDateString}`
+            `api/v1/Teacher/payments?start=${startDateString}&end=${endDateString}`
         ).then((res) => {
             setPayments(res.data.data);
             const total = res.data.data.reduce((acc, payment) => {

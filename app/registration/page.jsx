@@ -18,7 +18,7 @@ const page = () => {
   function success(result) {
     scaner.current.pause();
     console.log(result);
-    axios(`api/Teacher/student/${result}`)
+    axios(`api/v1/Teacher/student/${result}`)
       .then((response) => {
         setStudent(response.data);
         setShowpop(true);

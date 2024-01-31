@@ -25,7 +25,7 @@ export async function POST(req:NextRequest) {
     console.log(phone)
     try{
 
-    let res = await instance.post("/api/Auth/teacher/login",phone)
+    let res = await instance.post("/api/v1/Auth/teacher/login",phone)
         console.log("res",res.data)
     let jwt = res.data.data.token;
     cookies().set('sesstion',jwt,{

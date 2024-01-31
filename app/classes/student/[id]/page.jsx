@@ -29,7 +29,7 @@ const page = (props) => {
 
               try {
 
-              const url = `/api/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}`;
+              const url = `/api/v1/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}`;
               const response = await axios.get(url);
               setData(response.data);
               console.log(response.data)
