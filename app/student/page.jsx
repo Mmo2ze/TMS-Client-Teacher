@@ -94,7 +94,7 @@ const Page = () => {
             {( !isLoading && !notFound) &&
                 data.map ( (da) => (
                     <Link key={da.student.id} href={`/student/${da.privateId}`}>
-                      <StudentBox name={da.student.name} id={da.privateId} grade={da.grade} className={da.className}/>
+                      <StudentBox name={da.student.name} id={da.privateId} grade={da.grade} className={da.className} gender={da.student.gender}/>
                     </Link>
                 ) )}
           </div>
