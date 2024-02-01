@@ -20,14 +20,7 @@ const Page = () => {
                 {HaveRole ( ["Teacher","AddPayment"] ) &&
                 <PaymentTable axios={axios}/>
                 }
-                <h1>Welcome To Tass </h1>
-                <h5>you are </h5>
-                <div>
-                    {Roles.map ( (role, index) => (
-                        <h5 key={index}>{role}</h5>
-                    ) )
-                    }
-                </div>
+      
 
             </div>
         );

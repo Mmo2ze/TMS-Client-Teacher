@@ -86,7 +86,8 @@ const Page = () => {
                       id: student.privateId
                     });
                   }}>
-                    <StudentBox name={student.student.name} id={student.privateId} key={student.student.privateId} />
+                    
+                    <StudentBox name={student.student.name} grade={student.grade} className={student.className} id={student.privateId} key={student.student.privateId} />
                   </div>
               );
             })

@@ -22,7 +22,6 @@ const PopOllStudent = ({studentName , studentId , onCansle, placeholder , score 
           onRef()
           console.log("Data updated successfully!");
         } catch (error) {
-
               if (error.response.status === 400) {
                 let message1 = error.response.data.messages[0];
                 if (message1) {
