@@ -33,7 +33,7 @@ if(typeof localStorage != "undefined" && localStorage != null){
 
 
 const instance = axios.create({
-  baseURL: "https://api.tass.ist/",
+  baseURL: "https://dev.tass.ist/",
   headers: {
     accept: "*/*",
     "Content-Type": "application/json",

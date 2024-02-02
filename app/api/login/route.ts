@@ -8,7 +8,7 @@ export async function POST(req:NextRequest) {
     let token = cookies().get("sesstion");
     console.log("token",token)
     let instance = axios.create({
-        baseURL: "https://api.tass.ist/",
+        baseURL: "https://dev.tass.ist/",
         headers: {
             accept: "*/*",
             "Content-Type": "application/json"

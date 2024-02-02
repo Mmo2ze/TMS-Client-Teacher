@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   const axios = useMemo(() => {
     return axiosMain.create({
-      baseURL: "https://api.tass.ist",
+      baseURL: "https://dev.tass.ist",
       headers: {
         accept: "*/*",
         "Content-Type": "application/json",
