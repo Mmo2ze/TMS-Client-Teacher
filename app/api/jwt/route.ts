@@ -20,7 +20,7 @@ export async function GET(req:NextRequest) {
 
     // Set a new response header `x-hello-from-middleware2`
     response.headers.set('x-hello-from-middleware2', 'hello')
-    let token = cookies().get("sesstion");
+    let token = cookies().get("session");
     if(token == null || token.value == undefined || token.value == ""){
 
        // return NextResponse.json({ message: "not authorized" },{status:401});
@@ -50,6 +50,6 @@ export async function GET(req:NextRequest) {
 }
 export async function DELETE(req:NextRequest) {
 
-    cookies().delete('sesstion')
+    cookies().delete('session')
     return NextResponse.json({  });
 }
