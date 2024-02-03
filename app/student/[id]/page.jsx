@@ -5,7 +5,7 @@ import img2 from "../../../public/man.jpg";
 import Image from "next/image";
 import Button from "../../ui/Button";
 import Spinners from '../../ui/Spinners';
-import InputStudent from "../../ui/InputStudent";
+import InputDetailsStudent from "../../ui/student/InputDetailsStudent";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Link from "next/link";
@@ -16,6 +16,7 @@ const page = (props) => {
   const router = useRouter ();
   const {HaveRole, Roles, axios} = useAuth ();
   const [data, setData] = useState ( [] );
+  const [dataClasses, setDataClasses] = useState ( [] );
   const [isLoading, setIsLoading] = useState ( true );
   const [studentId, setStudentId] = useState ( "" )
   const [studentName, setStudentName] = useState ( "" )
@@ -24,6 +25,11 @@ const page = (props) => {
   const [studentPhone, setStudentPhone] = useState ( "" )
   const [studentGender, setStudentGender] = useState ( "" )
   const [parentPhone, setParentPhone] = useState ( "" )
+  const [paymentDaly, setPaymentDaly] = useState ( "" )
+  const [paymentAmount , setPaymentAmount ] = useState("")
+  const [selectedClassId, setSelectedClassId] = useState(0);
+
+  const [enable , setEnable] = useState(true)
   useEffect ( () => {
     const getdata = async () => {
       if (HaveRole ( [null] )) return;
@@ -39,7 +45,8 @@ const page = (props) => {
         setStudentGender ( response.data.student.student.gender )
         setStudentId ( response.data.student.privateId );
         setParentPhone ( response.data.parent.phone )
-        
+        setPaymentDaly( response.data.student.paymentDelay )
+        setPaymentAmount( response.data.student.paymentAmount )
       } catch (e) {
         console.log ( e );
       }
@@ -47,6 +54,42 @@ const page = (props) => {
 
     getdata ();
   }, [Roles] );
+
+
+  
+    const putData = async () => {
+      try {
+        const response = await axios.put(`api/v1/Teacher/student/${studentId}`,{
+          studentPhone: studentPhone,
+  parentPhone: parentPhone,
+  classId: selectedClassId, 
+    gender: studentGender,
+  status: "Active",
+  paymentPrice: paymentAmount,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+
+
+  useEffect(() => {
+    if (HaveRole ( [null] )) return;
+    const getdataClasses = async () => {
+      try {
+        const response = await axios.get("/api/v1/Teacher/class");
+        setDataClasses(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getdataClasses(); 
+  }, [Roles]);
+
+
+
+
   console.log ( `sadasdas${studentId}` )
   if (HaveRole ( [null] )) return <Spinners/>;
   else if (HaveRole ( ["Teacher", "Assistant"] )) {
@@ -142,50 +185,81 @@ const page = (props) => {
             </div> */}
 
               {/* <InputStudent lable="الصف" placeholder={studentGrade}/> */}
-            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
-              <InputStudent lable="رقم ولي الامر" placeholder={studentPhone}/>
-              <InputStudent lable="الرقم" placeholder={studentPhone}/>
+            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col direction_rtl">
+              <InputDetailsStudent type="number" lable="الرقم" value={studentPhone} onChange={setStudentPhone} enable={enable}/>
+              <InputDetailsStudent type="number" lable="رقم ولي الامر" value={parentPhone} onChange={setParentPhone} enable={enable}/>
             </div>
 
-            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
-              <InputStudent lable="الشعبة" placeholder={studentClass}/>
-              <InputStudent lable="السعر" placeholder="200$"/>
+            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col direction_rtl items-center">
+              {/* <InputDetailsStudent lable="الشعبة" value={studentClass} onChange={setStudentClass}  enable={enable}/> */}
+              <div className='w-full mt-[50px] 2sm:mt-[20px]'>
+      
+              <select
+  disabled={enable}
+  id="countries"
+  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  value={selectedClassId}
+  onChange={(e) => setSelectedClassId(e.target.value)}
+>
+  {dataClasses.map((cl) => (
+    <option key={cl.id} value={cl.id}>
+      {cl.name}
+    </option>
+  ))}
+</select>
+      </div>
+              <InputDetailsStudent type="number"  lable="المبلغ" value={paymentAmount} onChange={setPaymentAmount}  enable={enable}/>
             </div>
 
-            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col items-center">
+            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col items-center direction_rtl">
 
-              <InputStudent lable="مدة التأخير" placeholder="7"/>
+              <InputDetailsStudent type="number"  lable="مدة التأخير" value={paymentDaly} onChange={setPaymentDaly}  enable={enable}/>
            
 
-              <div className="flex flex-1">
-  <div className="flex items-center mb-4">
+
+
+ </div>
+              <div className="flex flex-1 justify-around mb-6">
+  <div className="flex items-center  flex-col-reverse mb-4">
     <input
       id="male-radio"
       type="radio"
       name="gender-radio"
-      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+      className="w-4 h-4 mt-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
       checked={studentGender === 'Male'}
+      onChange={() => setStudentGender('Male')}
+      disabled={enable}
     />
     <label htmlFor="male-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
       ذكر
     </label>
   </div>
-  <div className="flex items-center">
-    <input
-      id="female-radio"
-      type="radio"
-      name="gender-radio"
-      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-      checked={studentGender === 'Female'}
-    />
+  <div className="flex items-center flex-col-reverse mb-4">
+  <input
+    id="female-radio"
+    type="radio"
+    name="gender-radio"
+    className="w-4 h-4 mt-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+    checked={studentGender === 'Female'}
+    onChange={() => setStudentGender('Female')}
+    disabled={enable}
+  />
     <label htmlFor="female-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
       أنثى
     </label>
   </div>
 </div>
+<div className="flex justify-around gap-6">
 
+ <button onClick={()=> setEnable(!enable)} type="button" className=" w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+ تعديل
+  </button>
+  
+  <button onClick={() => putData()} type="button" className="focus:outline-none w-1/2  text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+    حفظ
+    </button>
 
- </div>
+</div>
           </div>
         </div>
     );
