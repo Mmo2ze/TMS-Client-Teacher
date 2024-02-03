@@ -20,25 +20,50 @@ const Page = () => {
 
 
     const [page, setPage] = useState ( 1 );
+    // useEffect ( () => {
+
+    //     if (HaveRole ( [null] )) return;
+    //     const delaySearch = setTimeout ( () => {
+    //         const fetchData = async () => {
+    //             try {
+    //                 const url = `/api/v1/Teacher/student?searchWord=${searchWord}`;
+    //                 const response = await axios.get ( url );
+    //                 setData ( response.data );
+    //                 setIsLoading ( false );
+    //             } catch (error) {
+    //                 console.error ( error );
+    //             }
+    //         };
+
+    //         fetchData ();
+    //     }, 2000 );
+    //     return () => clearTimeout ( delaySearch );
+    // }, [searchWord, Roles] );
+
     useEffect ( () => {
-        console.log(Roles)
         if (HaveRole ( [null] )) return;
         const delaySearch = setTimeout ( () => {
-            const fetchData = async () => {
-                try {
-                    const url = `/api/v1/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}`;
-                    const response = await axios.get ( url );
-                    setData ( response.data );
-                    setIsLoading ( false );
-                } catch (error) {
-                    console.error ( error );
-                }
-            };
-
-            fetchData ();
-        }, 2000 );
+          const fetchData = async () => {
+            try {
+              const url = `/api/v1/Teacher/student?searchWord=${searchWord}`;
+              const response = await axios.get ( url );
+              setData ( response.data );
+              setIsLoading ( false );
+            } catch (error) {
+              if (error.response.status == 404) {
+                console.log ( "not found" )
+              }
+              console.error ( error );
+            }
+          };
+    
+          fetchData ();
+        }, 1000 );
+    
         return () => clearTimeout ( delaySearch );
-    }, [searchWord, Roles] );
+      }, [searchWord, Roles] );
+    
+
 
     if (HaveRole ( [null] )) return <Spinners/>;
     else if (HaveRole ( ["Teacher", "Assistant"] )) {

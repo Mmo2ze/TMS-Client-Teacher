@@ -88,7 +88,7 @@ const Page = () => {
             </div>
           </div>
           <div>
-            {isLoading && <Spinners/>}
+          {isLoading && !notFound && <Spinners/>}
             {notFound &&
                 <h1 className="text-3xl flex justify-center text-white items-center mt-[20%]">لا يوجد طلاب</h1>}
             {( !isLoading && !notFound) &&
