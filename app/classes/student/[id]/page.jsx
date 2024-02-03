@@ -124,7 +124,7 @@ const page = (props) => {
       <div> 
 {(!isLoading &&!notFound)&& data.map((da) => (
   <Link href={`/student/${da.privateId}`}> 
-<StudentBox className={da.className} grade={da.grade} name={da.student.name} id={da.privateId}gender={da.student.gender}/>
+<StudentBox className={da.className} grade={da.grade} name={da.student.name} id={da.privateId}gender={da.student.gender}isPayed={da.isPayed}/>
  </Link>
 ))}
 </div> 

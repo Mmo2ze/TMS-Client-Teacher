@@ -4,7 +4,7 @@ import img2 from "../../../public/man.jpg"
 
 
 
-const StudentBox = ({name , id , grade , className,gender}) => {
+const StudentBox = ({name , id , grade , className,gender,isPayed}) => {
 // /api/Teacher/student
 
     return (
@@ -20,10 +20,16 @@ const StudentBox = ({name , id , grade , className,gender}) => {
         <div className="flex justify-between w-full   items-center">     
         <div className="2sm:absolute top-[75%] right-4"> {className}</div>
         <div className="text-color-text  pb-3.5 2sm:absolute top-[75%] right-[46%] 2sm:text-xl">  {id}</div>
-        <div className="2sm:absolute top-[70%] left-1"> 
+
+            <div className="2sm:absolute top-[70%] left-1">
+                {
+                    isPayed?
         <button type="button" className=" text-green-700 2sm:w-28 w-40  border border-green-700   font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 bg-side10-color   cursor-default">
         مدفوع
-        </button> 
+        </button>:<button type="button" className=" text-red-700 2sm:w-28 w-40  border border-red-700   font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 bg-side10-color   cursor-default">
+        غير مدفوع
+        </button>
+                }
         </div>
         </div>
         </div>
