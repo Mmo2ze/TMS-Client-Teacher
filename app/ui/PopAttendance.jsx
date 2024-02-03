@@ -27,12 +27,16 @@ const PopAttendance = ({studentName , studentId , onCansle, placeholder , defaul
                 var message1 = error.response.data.messages[0];
                 if (message1) {
                   switch (message1.statusCode) {
-                    case 302: {
-                      endLodingToast(toastID, 'الرقم   حطأ', "error");
+                    case 301: {
+                      endLodingToast(toastID, 'التاريخ خطا', "error");
                       break;
                     }
-                    case 301: {
+                    case 302: {
                       endLodingToast(toastID, "تم تسجيل حضور الطالب من قبل", "warning");
+                      break;
+                    }
+                    case 303: {
+                      endLodingToast(toastID, "هذا الطالب ليس لديه حصه اليوم", "warning");
                       break;
                     }
                     default: {

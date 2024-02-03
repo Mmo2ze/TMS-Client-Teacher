@@ -101,7 +101,16 @@ const Page = () => {
                                     id: student.privateId
                                 } );
                             }}>
+                                <div onClick={() => {
+                                    setShowPop ( !showPop );
+                                    setCurrentStudent ( {
+                                        name: student.student.name,
+                                        id: student.privateId
+                                    } );
+                                }}>
+                                    <StudentBox name={student.student.name} id={student.privateId} grade={student.grade} className={student.className} gender={student.student.gender}isPayed={student.isPayed}/>
 
+                                </div>
                             </div>
                         );
                     } )
