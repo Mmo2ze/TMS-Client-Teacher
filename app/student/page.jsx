@@ -88,13 +88,13 @@ const Page = () => {
             </div>
           </div>
           <div>
-            {isLoading && <Spinners/>}
+          {isLoading && !notFound && <Spinners/>}
             {notFound &&
                 <h1 className="text-3xl flex justify-center text-white items-center mt-[20%]">لا يوجد طلاب</h1>}
             {( !isLoading && !notFound) &&
                 data.map ( (da) => (
                     <Link key={da.student.id} href={`/student/${da.privateId}`}>
-                      <StudentBox name={da.student.name} id={da.privateId} grade={da.grade} className={da.className} gender={da.student.gender}/>
+                      <StudentBox name={da.student.name} id={da.privateId} grade={da.grade} className={da.className} gender={da.student.gender}isPayed={da.isPayed}/>
                     </Link>
                 ) )}
           </div>

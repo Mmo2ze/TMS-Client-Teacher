@@ -2,7 +2,8 @@
 import React, { useState , useEffect } from 'react';
 import Link from 'next/link'
 import {useAuth} from "AppState";
-
+import axios from "../config/clientaxaios";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 const Navbar = () => {
@@ -22,8 +23,13 @@ const Navbar = () => {
         setShouldCloseMenu(false);
       }
     }, [shouldCloseMenu]);
-  
-  
+  function Logout(){
+      axios.delete('api/jwt').then(
+          res=>window.location.href = '/login'
+      )
+
+  }
+  if(HaveRole(['Teacher','Assistant']))
     return (
       <nav className="bg-white border-gray-200  dark:bg-nav-color text-end text-lg text-bold fixed w-full top-0 z-50">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -150,7 +156,7 @@ const Navbar = () => {
         </Link>
           </li>
       )}
-      <li>
+      {/* <li>
         <Link
           href="/"
           className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
@@ -158,8 +164,10 @@ const Navbar = () => {
         >
           الصفحة الرئيسية
         </Link>
+      </li> */}
+      <li>
+      <button onClick={Logout}><LogoutIcon color="primary"  className="2sm:mt-6" sx={{ fontSize: 30 }}/></button>
       </li>
-
 
             </ul>
           </div>

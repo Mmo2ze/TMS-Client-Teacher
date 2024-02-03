@@ -44,7 +44,7 @@ const Page = () => {
           setData(response.data);
           setIsLoading(false);
         } catch (error) {
-          console.error(error);
+          console.error("ERROR",error);
         }
       };
 
@@ -80,19 +80,21 @@ const Page = () => {
 
               return (
                   <div onClick={() => {
-                    setShowPop(!showPop);
-                    setCurrentStudent({
+                    setShowPop ( !showPop );
+                    setCurrentStudent ( {
                       name: student.student.name,
                       id: student.privateId
-                    });
+                    } );
                   }}>
+                    <StudentBox name={student.student.name} id={student.privateId} grade={student.grade} className={student.className} gender={student.student.gender}isPayed={student.isPayed}/>
 
                   </div>
               );
-            })
+            } )
         )}
       </div>
-  );} else {
+  );
+  } else {
     router.push ( "/login" );
   }
 

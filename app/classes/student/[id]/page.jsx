@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import {useAuth} from "/AppState";
 import HomeIcon from '@mui/icons-material/Home';
+import {Paid} from "@mui/icons-material";
 const page = (props) => {
 
     const router = useRouter ();
@@ -19,8 +20,42 @@ const page = (props) => {
     const [searchWord, setSearchWord] = useState('');
     const limit = 50;
     const [notFound, setNotFound] = useState(false);
-    const [page, setPage] = useState(1);
+    const PaymentStatus = Object.freeze( {
+        Paid : 0,
+        Unpaid : 1,
+        All : 2,
+    });
+    const    AttendanceStatus  = Object.freeze({
+        Non:0 ,
+        True :1 ,
+        False: 2,
+    });
+    const [attendanceFilter, setAttendanceFilter] = useState(AttendanceStatus.Non)
+    const [PaymentFilter, setPaymentFilter] = useState(PaymentStatus.All);
 
+
+    const [page, setPage] = useState(1);
+    const handleSelectChange = (e) => {
+        switch (e.target.value) {
+            case "1":
+                setPaymentFilter(PaymentStatus.Paid);
+            break
+            case "2":
+                setPaymentFilter(PaymentStatus.Unpaid);
+            break;
+            case "3":
+                setAttendanceFilter(AttendanceStatus.True);
+                break
+            case "4":
+                setAttendanceFilter(AttendanceStatus.False);
+                break
+            default:
+                setPaymentFilter(PaymentStatus.All);
+                setAttendanceFilter(AttendanceStatus.Non)
+
+        }
+
+    };
     
       useEffect(() => {
         const delaySearch = setTimeout(() => {
@@ -29,7 +64,7 @@ const page = (props) => {
 
               try {
 
-              const url = `/api/v1/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}`;
+              const url = `/api/v1/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}&PaymentStatus=${PaymentFilter}&attend=${attendanceFilter}`;
               const response = await axios.get(url);
               setData(response.data);
               console.log(response.data)
@@ -48,7 +83,7 @@ const page = (props) => {
         }, 500);
     
         return () => clearTimeout(delaySearch);
-      }, [searchWord,Roles]);
+      }, [searchWord,Roles,PaymentFilter,page,limit,attendanceFilter]);
 
     if (HaveRole ( [null] )) return <Spinners/>;
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
@@ -62,10 +97,12 @@ const page = (props) => {
       </div>
       <div className="mt-6 w-[95%] 2sm:w-[90%] mx-auto direction_rtl">
         {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">فلترة الطلاب</label> */}
-        <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>الجميع</option>
-          <option value="FR">مدفوع</option>
-          <option value="DE">غير مدفوع</option>
+        <select   onChange={(e) => handleSelectChange(e)} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="0">الجميع</option>
+        <option value="1">مدفوع</option>
+        <option value="2">غير مدفوع</option>
+        <option value="3">الحضور</option>
+        <option value="4">الغياب</option>
         </select>
       </div>
 
@@ -87,7 +124,7 @@ const page = (props) => {
       <div> 
 {(!isLoading &&!notFound)&& data.map((da) => (
   <Link href={`/student/${da.privateId}`}> 
-<StudentBox className={da.className} grade={da.grade} name={da.student.name} id={da.privateId}gender={da.student.gender}/>
+<StudentBox className={da.className} grade={da.grade} name={da.student.name} id={da.privateId}gender={da.student.gender}isPayed={da.isPayed}/>
  </Link>
 ))}
 </div> 
