@@ -1,6 +1,7 @@
 "use client"
 import {useState , useEffect} from 'react'
 import img1 from "../../../public/mother.png";
+import img2 from "../../../public/man.jpg";
 import Image from "next/image";
 import Button from "../../ui/Button";
 import Spinners from '../../ui/Spinners';
@@ -35,9 +36,10 @@ const page = (props) => {
         setStudentClass ( response.data.student.className )
         setStudentGrade ( response.data.student.grade )
         setStudentPhone ( response.data.student.student.phone )
-        setStudentGender ( response.data.student.gender )
+        setStudentGender ( response.data.student.student.gender )
         setStudentId ( response.data.student.privateId );
         setParentPhone ( response.data.parent.phone )
+        
       } catch (e) {
         console.log ( e );
       }
@@ -53,7 +55,8 @@ const page = (props) => {
           <div className="img_liner p-4 rounded-lg flex flex-col gap-5">
             <div className="flex justify-between items-center mb-1">
               <Image
-                  src={img1}
+              className="rounded-[50%]"
+                  src={studentGender === "Male" ? img2 : img1}
                   width={65}
                   height={65}
                   alt="Picture of the author"
@@ -62,6 +65,13 @@ const page = (props) => {
                 <h1 className="text-xl mb-2 text-side12-color md:text-3xl">
                   {studentName}
                 </h1>
+                <p className="text-end text-side13-color md:text-xl mb-2">
+                  
+                     {studentGrade === "FirstSecondary" && "أولى ثانوي"}
+                     {studentGrade === "SecondSecondary" && "ثاني ثانوي"}
+                     {studentGrade === "ThirdSecondary" && "ثالث ثانوي"}
+        
+                </p>
                 <p className="text-end text-side13-color md:text-xl">
                   {studentClass}
                 </p>
@@ -125,62 +135,57 @@ const page = (props) => {
           </div>
 
           <div className="img_liner_2 mt-4 p-2 rounded-lg">
-
+{/*
             <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
               <InputStudent lable="ID" placeholder={studentId}/>
               <InputStudent lable="الاسم" placeholder={studentName}/>
+            </div> */}
 
-
-            </div>
-
-            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
-              <InputStudent lable="الشعبة" placeholder={studentClass}/>
-              <InputStudent lable="الصف" placeholder={studentGrade}/>
-            </div>
-
-
+              {/* <InputStudent lable="الصف" placeholder={studentGrade}/> */}
             <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
               <InputStudent lable="رقم ولي الامر" placeholder={studentPhone}/>
               <InputStudent lable="الرقم" placeholder={studentPhone}/>
             </div>
 
             <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col">
-              <InputStudent lable="مدة التأخير" placeholder="7"/>
+              <InputStudent lable="الشعبة" placeholder={studentClass}/>
               <InputStudent lable="السعر" placeholder="200$"/>
-
             </div>
 
+            <div className="flex w-full gap-3 text-center mb-8 2sm:flex-col items-center">
 
-            {/* <div className="flex justify-center items-center gap-10">
-<div className="flex flex-col items-center">
-<label htmlFor="default-radio-1" className="mb-2 ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">
-  طالب
-</label>
-<input
-  id="default-radio-1"
-  type="radio"
-  defaultValue
-  name="default-radio"
-  className="w-10 h-8 rounded-lg text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-  defaultChecked={studentGender.toLowerCase() === 'male'}
-  />
+              <InputStudent lable="مدة التأخير" placeholder="7"/>
+           
+
+              <div className="flex flex-1">
+  <div className="flex items-center mb-4">
+    <input
+      id="male-radio"
+      type="radio"
+      name="gender-radio"
+      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+      checked={studentGender === 'Male'}
+    />
+    <label htmlFor="male-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+      ذكر
+    </label>
+  </div>
+  <div className="flex items-center">
+    <input
+      id="female-radio"
+      type="radio"
+      name="gender-radio"
+      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+      checked={studentGender === 'Female'}
+    />
+    <label htmlFor="female-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+      أنثى
+    </label>
+  </div>
 </div>
-<div className="flex flex-col items-center">
-<label htmlFor="default-radio-2" className="mb-2 ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">
-  طالبة
-</label>
-<input
-  id="default-radio-2"
-  type="radio"
-  defaultValue
-  name="default-radio"
-  className="w-10 h-8 text-blue-600 bg-gray-100 border-gray-300 rounded-lg focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-  defaultChecked={studentGender.toLowerCase() === 'female'}
-  />
-</div>
-</div> */}
 
 
+ </div>
           </div>
         </div>
     );
