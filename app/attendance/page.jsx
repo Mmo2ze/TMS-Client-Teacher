@@ -76,8 +76,7 @@ const Page = () => {
                                     id: student.privateId
                                 } );
                             }}>
-                                <StudentBox name={student.student.name} id={student.privateId}
-                                            key={student.student.id} gender={student.student.gender}/>
+
                             </div>
                         );
                     } )

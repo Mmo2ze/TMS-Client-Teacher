@@ -75,8 +75,9 @@ function PaymentTable({axios}) {
 
 
     return (
-        <>
-            <div>
+        <div className="p-4">
+            <div className="flex justify-between">
+                < div> 
         <span onClick={toggleInputVisibility} className="icon_date">
           <CalendarMonthIcon sx={{ fontSize: 50 }} color="primary" />
         </span>
@@ -102,6 +103,8 @@ function PaymentTable({axios}) {
                 </div>
             </div>
             <h2 className="olvs_amount">المبلغ الكلي: {totalAmount}</h2>
+</div>
+
             {  (
                 <div className="table-in_owner mb-10 relative overflow-x-auto table-container rounded-lg">
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
@@ -196,7 +199,7 @@ function PaymentTable({axios}) {
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
     );
 }
 
