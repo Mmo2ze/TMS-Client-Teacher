@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import {useAuth} from "/AppState";
 import HomeIcon from '@mui/icons-material/Home';
+import {Paid} from "@mui/icons-material";
 const page = (props) => {
 
     const router = useRouter ();
@@ -19,10 +20,41 @@ const page = (props) => {
     const [searchWord, setSearchWord] = useState('');
     const limit = 50;
     const [notFound, setNotFound] = useState(false);
+    const PaymentStatus = Object.freeze( {
+        Paid : 0,
+        Unpaid : 1,
+        All : 2,
+    });
+    const    AttendanceStatus  = Object.freeze({
+        Non:0 ,
+        True :1 ,
+        False: 2,
+    });
+    const [attendanceFilter, setAttendanceFilter] = useState(AttendanceStatus.Non)
+    const [PaymentFilter, setPaymentFilter] = useState(PaymentStatus.All);
+
+
     const [page, setPage] = useState(1);
     const handleSelectChange = (e) => {
-      const selectedValue = e.target.value;
-      console.log(" inter:", selectedValue);
+        switch (e.target.value) {
+            case "1":
+                setPaymentFilter(PaymentStatus.Paid);
+            break
+            case "2":
+                setPaymentFilter(PaymentStatus.Unpaid);
+            break;
+            case "3":
+                setAttendanceFilter(AttendanceStatus.True);
+                break
+            case "4":
+                setAttendanceFilter(AttendanceStatus.False);
+                break
+            default:
+                setPaymentFilter(PaymentStatus.All);
+                setAttendanceFilter(AttendanceStatus.Non)
+
+        }
+
     };
     
       useEffect(() => {
@@ -32,7 +64,7 @@ const page = (props) => {
 
               try {
 
-              const url = `/api/v1/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}`;
+              const url = `/api/v1/Teacher/student?searchWord=${searchWord}&limit=${limit}&page=${page}&classId=${props.params.id}&PaymentStatus=${PaymentFilter}&attend=${attendanceFilter}`;
               const response = await axios.get(url);
               setData(response.data);
               console.log(response.data)
@@ -51,7 +83,7 @@ const page = (props) => {
         }, 500);
     
         return () => clearTimeout(delaySearch);
-      }, [searchWord,Roles]);
+      }, [searchWord,Roles,PaymentFilter,page,limit,attendanceFilter]);
 
     if (HaveRole ( [null] )) return <Spinners/>;
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
