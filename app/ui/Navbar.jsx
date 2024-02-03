@@ -3,7 +3,7 @@ import React, { useState , useEffect } from 'react';
 import Link from 'next/link'
 import {useAuth} from "AppState";
 import axios from "../config/clientaxaios";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 const Navbar = () => {
@@ -156,7 +156,7 @@ const Navbar = () => {
         </Link>
           </li>
       )}
-      <li>
+      {/* <li>
         <Link
           href="/"
           className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
@@ -164,11 +164,12 @@ const Navbar = () => {
         >
           الصفحة الرئيسية
         </Link>
+      </li> */}
+      <li>
+      <button onClick={Logout}><LogoutIcon color="primary"  className="2sm:mt-6" sx={{ fontSize: 30 }}/></button>
       </li>
 
-
             </ul>
-              <button onClick={Logout}>logout</button>
           </div>
         </div>
       </nav>

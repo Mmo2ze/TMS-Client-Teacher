@@ -20,7 +20,10 @@ const page = (props) => {
     const limit = 50;
     const [notFound, setNotFound] = useState(false);
     const [page, setPage] = useState(1);
-
+    const handleSelectChange = (e) => {
+      const selectedValue = e.target.value;
+      console.log(" inter:", selectedValue);
+    };
     
       useEffect(() => {
         const delaySearch = setTimeout(() => {
@@ -62,10 +65,12 @@ const page = (props) => {
       </div>
       <div className="mt-6 w-[95%] 2sm:w-[90%] mx-auto direction_rtl">
         {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">فلترة الطلاب</label> */}
-        <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>الجميع</option>
-          <option value="FR">مدفوع</option>
-          <option value="DE">غير مدفوع</option>
+        <select   onChange={(e) => handleSelectChange(e)} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="0">الجميع</option>
+        <option value="1">مدفوع</option>
+        <option value="2">غير مدفوع</option>
+        <option value="3">الحضور</option>
+        <option value="4">الغياب</option>
         </select>
       </div>
 
