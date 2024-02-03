@@ -2,6 +2,7 @@
 import React, { useState , useEffect } from 'react';
 import Link from 'next/link'
 import {useAuth} from "AppState";
+import axios from "../config/clientaxaios";
 
 
 
@@ -22,8 +23,13 @@ const Navbar = () => {
         setShouldCloseMenu(false);
       }
     }, [shouldCloseMenu]);
-  
-  
+  function Logout(){
+      axios.delete('api/jwt').then(
+          res=>window.location.href = '/login'
+      )
+
+  }
+  if(HaveRole(['Teacher','Assistant']))
     return (
       <nav className="bg-white border-gray-200  dark:bg-nav-color text-end text-lg text-bold fixed w-full top-0 z-50">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -162,6 +168,7 @@ const Navbar = () => {
 
 
             </ul>
+              <button onClick={Logout}>logout</button>
           </div>
         </div>
       </nav>
