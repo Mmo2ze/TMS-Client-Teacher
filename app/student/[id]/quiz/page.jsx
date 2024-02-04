@@ -6,7 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PopUpdateQuiz from './../../../ui/student/PopUpdateQuiz';
 import PopDeleteQuiz from './../../../ui/student/PopDeleteQuiz';
-
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Page(prop) {
     const {Roles, HaveRole, axios} = useAuth ();
@@ -14,18 +15,23 @@ function Page(prop) {
     const [showPopUpdate , setShowPopUpdate] = useState(false)
     const [showPopDelete , setShowPoDelete] = useState(false)
     const [theId , setTheId] = useState("")
+    const [theIdUpdate , setTheIdUpdate] = useState("")
 
     useEffect ( () => {
-        if(HaveRole(["Teacher", "Assistant"]))
-        axios.get(`api/v1/Teacher/student/quiz/${prop.params.id}?limit=10&page=1`).then((res) => {
+        if(HaveRole([null])) return;
+        const getdata = async () => {
+       axios.get(`api/v1/Teacher/student/quiz/${prop.params.id}?limit=10&page=1`).then((res) => {
             console.log(res.data);
             setQuizzes(res.data);
         }).catch((err) => {
             console.log(err);
         })
+    }
+    getdata()
     }, [Roles] );
 
- 
+
+
 
     function DeleteQuiz (id) {
         axios.delete(`api/v1/Teacher/quiz/${id}`).then((res) => {
@@ -42,14 +48,19 @@ function Page(prop) {
         setShowPoDelete ( !showPopDelete )
         setTheId(id)
     }
+    const handelUpdate = (id) =>{
+        setShowPopUpdate ( !showPopUpdate)
+        setTheIdUpdate(id)
+    }
 
     if (HaveRole ( [null] ))
         return <Spinners/>
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
         return (
             <div className="pt-20 px-4">
-                {showPopUpdate && ( <div className="overlay"> <PopUpdateQuiz axios={axios} onCansle={() => setShowPopUpdate(!showPopUpdate)}/> </div>)}
-                {showPopDelete && ( <div className="overlay"> <PopDeleteQuiz id={theId} text="هل انت متأكد من حذف هذا الامتحان للطالب" conferm="بعد تأكيد الحذف لم تستطيع ارجاع درجة هذا الامتحان" axios={axios} onCansle={() => setShowPoDelete (!showPopDelete )}/> </div>)}
+                <ToastContainer/>
+                {showPopUpdate && ( <div className="overlay"> <PopUpdateQuiz quizId={theIdUpdate} update={() => getdata()}  axios={axios} onCansle={() => setShowPopUpdate(!showPopUpdate)}/> </div>)}
+                {showPopDelete && ( <div className="overlay"> <PopDeleteQuiz update={() => getdata()} id={theId} text="هل انت متأكد من حذف هذا الامتحان للطالب" conferm="بعد تأكيد الحذف لم تستطيع ارجاع درجة هذا الامتحان" axios={axios} onCansle={() => setShowPoDelete (!showPopDelete )}/> </div>)}
 
                         <div>
                             {/* <h1>Quiz Id :{quiz.id}</h1>
@@ -101,7 +112,7 @@ function Page(prop) {
                                                     <DeleteIcon onClick={() => handeleDelet(quiz.id)}/>
                                                 </td>
                                                 <td className="px-6 py-4 text-color-aqua cursor-pointer">
-                                                    <EditIcon onClick={() => setShowPopUpdate ( !showPopUpdate )}/>
+                                                    <EditIcon onClick={() => handelUpdate(quiz.id)}/>
                                                 </td>
                                             </div>
                                             )

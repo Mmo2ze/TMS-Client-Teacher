@@ -2,21 +2,22 @@
 import {useState} from 'react'
 import {sendToast,loadingToast,endLodingToast} from "../../func/toast";
 
-const PopDeleteQuiz = ({onCansle , axios , id , text , conferm}) => {
+const PopDeleteQuiz = ({onCansle , axios , id , text , conferm , update}) => {
   
   const handleSubmit = () => {
     let toast = loadingToast();
-    axios.delete(`api/v1/Teacher/quiz/${id}`).then((res) => {
-      let newQuizzes = quizzes.filter((quiz) => {
-          return quiz.id !== id;
-      })
-      setQuizzes(newQuizzes);
-      endLodingToast ( toast,"تم الحذف بنجاح", "success" );
-      onCansle()
-  }).catch((err) => {
+    try { 
+      axios.delete(`api/v1/Teacher/quiz/${id}`)
+        endLodingToast ( toast,"تم الحذف بنجاح", "success" );
+        onCansle()
+        update()
+     
+  } catch (error)  {
     endLodingToast(toast,"حدث خطأ ما", "error" );
-  })
   }
+}
+
+
   return (
     <div>
         <div className="fixed z-50 py-4 bg-side7-color md:mt-7 rounded-lg w-[96%]  md:w-1/2 mt-2 top-[55%] md:top-1/2 left-1/2 center text-end">
