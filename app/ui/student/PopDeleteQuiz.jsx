@@ -4,10 +4,10 @@ import {sendToast,loadingToast,endLodingToast} from "../../func/toast";
 
 const PopDeleteQuiz = ({onCansle , axios , id , text , conferm , update}) => {
   
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let toast = loadingToast();
     try { 
-      axios.delete(`api/v1/Teacher/quiz/${id}`)
+      await axios.delete(`api/v1/Teacher/quiz/${id}`)
         endLodingToast ( toast,"تم الحذف بنجاح", "success" );
         onCansle()
         update()

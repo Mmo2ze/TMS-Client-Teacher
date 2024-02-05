@@ -1,10 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
 import InputAddClass from '../addClass/InputAddClass';
 import {useEffect, useState} from 'react'
+import {sendToast,loadingToast,endLodingToast} from "../../func/toast";
 
-const PopUpdateQuiz = ({onCansle , update , axios , quizId}) => {
-    const [score , setScore] = useState(0)
-    const [newDegree , setNewDegree] = useState(0)
+const PopUpdateQuiz = ({ onCansle, update, axios, quizId, degree: initialDegree, rate: initialRate }) => {
+    const [score, setScore] = useState(initialDegree);
+  const [newDegree, setNewDegree] = useState(initialRate);
 
 
     function UpdateQuiz() {

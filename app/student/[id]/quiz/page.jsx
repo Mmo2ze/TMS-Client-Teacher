@@ -16,9 +16,12 @@ function Page(prop) {
     const [showPopDelete , setShowPoDelete] = useState(false)
     const [theId , setTheId] = useState("")
     const [theIdUpdate , setTheIdUpdate] = useState("")
+    const [degree , setDegree] = useState(0)
+    const [rate , setRate] = useState(0)
 
     useEffect ( () => {
-        if(HaveRole([null])) return;
+        if(HaveRole([null]))
+        { return};
         const getdata = async () => {
        axios.get(`api/v1/Teacher/student/quiz/${prop.params.id}?limit=10&page=1`).then((res) => {
             console.log(res.data);
@@ -30,19 +33,26 @@ function Page(prop) {
     getdata()
     }, [Roles] );
 
+    const update = async () => {
+        axios.get(`api/v1/Teacher/student/quiz/${prop.params.id}?limit=10&page=1`).then((res) => {
+             console.log(res.data);
+             setQuizzes(res.data);
+         }).catch((err) => {
+             console.log(err);
+         })
+     }
 
 
-
-    function DeleteQuiz (id) {
-        axios.delete(`api/v1/Teacher/quiz/${id}`).then((res) => {
-            let newQuizzes = quizzes.filter((quiz) => {
-                return quiz.id !== id;
-            })
-            setQuizzes(newQuizzes);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }
+    // function DeleteQuiz (id) {
+    //     axios.delete(`api/v1/Teacher/quiz/${id}`).then((res) => {
+    //         let newQuizzes = quizzes.filter((quiz) => {
+    //             return quiz.id !== id;
+    //         })
+    //         setQuizzes(newQuizzes);
+    //     }).catch((err) => {
+    //         console.log(err);
+    //     })
+    // }
 
     const handeleDelet = (id) => {
         setShowPoDelete ( !showPopDelete )
@@ -50,8 +60,11 @@ function Page(prop) {
     }
     const handelUpdate = (id) =>{
         setShowPopUpdate ( !showPopUpdate)
-        setTheIdUpdate(id)
+        setTheIdUpdate(id.id)
+        setDegree(id.degree)
+        setRate(id.rate)
     }
+
 
     if (HaveRole ( [null] ))
         return <Spinners/>
@@ -59,8 +72,15 @@ function Page(prop) {
         return (
             <div className="pt-20 px-4">
                 <ToastContainer/>
-                {showPopUpdate && ( <div className="overlay"> <PopUpdateQuiz quizId={theIdUpdate} update={() => getdata()}  axios={axios} onCansle={() => setShowPopUpdate(!showPopUpdate)}/> </div>)}
-                {showPopDelete && ( <div className="overlay"> <PopDeleteQuiz update={() => getdata()} id={theId} text="هل انت متأكد من حذف هذا الامتحان للطالب" conferm="بعد تأكيد الحذف لم تستطيع ارجاع درجة هذا الامتحان" axios={axios} onCansle={() => setShowPoDelete (!showPopDelete )}/> </div>)}
+                {showPopUpdate && ( <div className="overlay"><PopUpdateQuiz
+  rate={rate}
+  degree={degree}
+  quizId={theIdUpdate}
+  update={update}
+  axios={axios}
+  onCansle={() => setShowPopUpdate(!showPopUpdate)}
+/> </div>)}
+                {showPopDelete && ( <div className="overlay"> <PopDeleteQuiz   update={update} id={theId} text="هل انت متأكد من حذف هذا الامتحان للطالب" conferm="بعد تأكيد الحذف لم تستطيع ارجاع درجة هذا الامتحان" axios={axios} onCansle={() => setShowPoDelete (!showPopDelete )}/> </div>)}
 
                         <div>
                             {/* <h1>Quiz Id :{quiz.id}</h1>
@@ -112,7 +132,7 @@ function Page(prop) {
                                                     <DeleteIcon onClick={() => handeleDelet(quiz.id)}/>
                                                 </td>
                                                 <td className="px-6 py-4 text-color-aqua cursor-pointer">
-                                                    <EditIcon onClick={() => handelUpdate(quiz.id)}/>
+                                                    <EditIcon onClick={() => handelUpdate(quiz)}/>
                                                 </td>
                                             </div>
                                             )
