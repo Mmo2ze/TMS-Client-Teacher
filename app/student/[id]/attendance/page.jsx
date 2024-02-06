@@ -26,7 +26,8 @@ const page = (props) => {
                 var response = await axios.get ( `/api/v1/Teacher/attendance?StudentId=${props.params.id}&PageSize=1&Page=1`);
                 setDate(response.data)
             } catch (error) {
-                endLodingToast(toast,"حدث خطأ ما","error");
+                if(error.response.status != 404)
+                sendToast("حدث خطأ ما اثناء سحب البيانات","error");
             }
         }
         fetchData ();
@@ -35,10 +36,25 @@ const page = (props) => {
       setTheId(id)
       setShowUpdatePopup(true)
     }
-  return (
-    <div className="pt-20 px-4 relative">
-                        {ShowUpdatePopup && ( <div className="overlay"> <PopUpdateAttendes axios={axios} id={theId} onCansle={() =>  setShowUpdatePopup(!ShowUpdatePopup)}/> </div>)}
 
+    function DeleteAttend (attend) {
+        let id = attend.id;
+        return async () => {
+            try {
+                let response = await axios.delete ( `/api/v1/Teacher/attendance/${id}` );
+                sendToast("تم حذف الحضور بنجاح","success");
+                setDate(data.filter((da) => da.id !== id))
+            } catch (error) {
+                sendToast("حدث خطأ ما اثناء حذف الحضور","error");
+            }
+        }
+    }
+
+    return (
+    <div className="pt-20 px-4 relative">
+                        {ShowUpdatePopup && ( <div className="overlay"> <PopUpdateAttendes axios={axios} id={theId}
+                                                                                           data = {data} setData= {setDate} onCansle={() =>  setShowUpdatePopup(!ShowUpdatePopup)}/> </div>)}
+<ToastContainer />
    <div className="relative overflow-x-auto">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-white">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
@@ -77,7 +93,7 @@ const page = (props) => {
                 <EditIcon onClick={() => handeleUpdate ( da.id )}/>
               </td>
               <td className="px-6 py-4 text-color-red cursor-pointer">
-                <DeleteIcon/>
+                <DeleteIcon onClick={DeleteAttend(da)}/>
               </td>
             </tr>
         
