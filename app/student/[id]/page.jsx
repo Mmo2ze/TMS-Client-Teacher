@@ -205,6 +205,15 @@ const page = (props) => {
                                     الامتحانات
                                 </button>
                             </Link>
+                            <Link href={`/student/${props.params.id}/attendance`}>
+
+                            <button
+                            type="button"
+                          className="text-white  flex bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium w-fit  rounded-lg text-base px-5 py-2.5  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 m-auto"
+                            >
+                                الحضور
+                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

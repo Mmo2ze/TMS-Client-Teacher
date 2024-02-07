@@ -1,26 +1,20 @@
 import CloseIcon from '@mui/icons-material/Close';
 import InputAddClass from '../addClass/InputAddClass';
 import {useEffect, useState} from 'react'
+import {sendToast,loadingToast,endLodingToast} from "../../func/toast";
 
-const PopUpdateQuiz = ({onCansle , axios}) => {
-    const [score , setScore] = useState(0)
-    const [newDegree , setNewDegree] = useState(0)
+const PopUpdateQuiz = ({ onCansle, update, axios, quizId, degree: initialDegree, rate: initialRate }) => {
+    const [score, setScore] = useState(initialDegree);
+  const [newDegree, setNewDegree] = useState(initialRate);
 
 
-   function UpdateQuiz(id){
-        const body = {
-            degree: 10,
-            rate: 10
-        }
-        axios.put(`api/v1/Teacher/quiz/${id}`,body).then((res) => {
-    let updatedQuiz = res.data.data;
-     let newQuizzes = quizzes.map((quiz) => {
-        if (quiz.id === updatedQuiz.id) {
-            return updatedQuiz;
-        }
-        return quiz;
-    })
-    setQuizzes(newQuizzes);
+    function UpdateQuiz() {
+        axios.put(`api/v1/Teacher/quiz/${quizId}`, {
+            degree: score,
+            rate: newDegree
+        }).then((res) => {
+            onCansle();
+            update();
         }).catch((err) => {
             console.log(err);
         })
@@ -34,7 +28,7 @@ const PopUpdateQuiz = ({onCansle , axios}) => {
        <InputAddClass onChange={setNewDegree} value={newDegree} lable="ادخل الدرجة العظمى الجديدة" type="number"/>
        <InputAddClass onChange={setScore} value={score}  lable="ادخل الدرجة الجديدة" type="number"/>
        <div className="flex justify-between px-4 mt-4">
-       <button  type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">
+       <button onClick={UpdateQuiz} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">
                 تأكيد
                 
             </button>
