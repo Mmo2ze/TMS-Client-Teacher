@@ -7,6 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 // import PopDeleteOrder from "../ui/popdeleteorder";
 import { useRouter } from "next/navigation";
 import {useAuth} from "/AppState";
+import PopDeleteCard from "../ui/PopDeleteCard";
+import {ToastContainer} from "react-toastify";
 
 function Page() {
     const router = useRouter ();
@@ -32,8 +34,21 @@ function Page() {
         } )
     }, [Roles] )
 
+    const update = async () => {
+        axios.get ( "api/v1/Teacher/Cards" )
+        .then ( response => {
+            setIsLoading ( false )
+            setOrders ( response.data );
+            if (response.data.length === 0)
+                setOrdersFound ( false )
+        } ).catch ( err => {
+        setIsLoading ( false )
+        console.log ( err );
+    } )
+     }
+
     const handelDelete = (id) => {
-        setShowDelete ( true )
+        setShowDelete ( !showDelete )
         setDeleteId ( id );
     }
     const updateObject = (id, updatedData) => {
@@ -45,6 +60,9 @@ function Page() {
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
         return (
             <div className="pt-20 px-4  ">
+                <ToastContainer/>
+                {showDelete && ( <div className="overlay"> <PopDeleteCard restartData={update} axios={axios} id={deleteId} onGet={() => getdata()} onCansle={() =>  setShowDelete ( !showDelete )}/> </div>)}
+
                 {/*{showDelete && (*/}
                 {/*    <div className="overlay">*/}
                 {/*        <PopDeleteOrder  axios={axios} id={deleteId} restartData={updateObject} onCancel={() => {*/}
@@ -85,34 +103,36 @@ function Page() {
                         {orders.map ( (order) => (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-base">
 
-                                <td onClick={() => handelDelete ( order.id )}
-                                    className="px-6 py-4 text-color-red  cursor-pointer">
+                                <td onClick={() => handelDelete ( order.id )} className="px-6 py-4 text-color-red  cursor-pointer">
                                     <DeleteIcon/>
                                 </td>
-
-                                {/* <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {order.id}
-                          </td> */}
+                                <td className="px-6 py-4" style={{color: order.orderStatus === "Pending" ? "gold" : order.orderStatus === "Accepted" ? "green" : "red"}}>
                                 <Link href={`/cards/${order.id}`}>
-                                    <td className="px-6 py-4"
-                                        style={{color: order.orderStatus === "Pending" ? "gold" : order.orderStatus === "Accepted" ? "green" : "red"}}>
-                                        {order.orderStatus === "Pending" ? "معلق" : order.orderStatus === "Accepted" ? "تم" : "الغاء"}
-                                    </td>
+                                        {order.orderStatus === "Pending" ? "معلق" : order.orderStatus === "Accepted" ? "تم" : "تم الالغاء"}
                                 </Link>
+                                    </td>
                                 <td className="px-6 py-4">
-                                    {order.orderedOn}
+                
+                                    <Link href={`/cards/${order.id}`}>
+                                        {order.orderedOn}
+                                </Link>
                                 </td>
                                 <td className="px-6 py-4">
+                                    <Link href={`/cards/${order.id}`}>
                                     {order.count * 10}
+                                </Link>
                                 </td>
                                 <td className="px-6 py-4">
+                                <Link href={`/cards/${order.id}`}>
                                     {order.count}
+                                </Link>
                                 </td>
                             </tr>
 
                         ) )}
                         </tbody>
                     </table>
+                    
                 </div>
                 { !ordersFound &&
                     <h1 className="text-3xl flex justify-center text-white items-center mt-[20%]">لا يوجد طلبات</h1>

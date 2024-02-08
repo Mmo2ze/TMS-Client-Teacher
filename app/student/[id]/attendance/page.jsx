@@ -37,19 +37,35 @@ const page = (props) => {
       setShowUpdatePopup(true)
     }
 
-    function DeleteAttend (attend) {
-        let id = attend.id;
-        return async () => {
-            try {
-                let response = await axios.delete ( `/api/v1/Teacher/attendance/${id}` );
-                sendToast("تم حذف الحضور بنجاح","success");
-                setDate(data.filter((da) => da.id !== id))
-            } catch (error) {
-                sendToast("حدث خطأ ما اثناء حذف الحضور","error");
-            }
-        }
-    }
-
+    // function DeleteAttend (attend) {
+    //     let id = attend.id;
+    //     return async () => {
+    //         try {
+    //             let response = await axios.delete ( `/api/v1/Teacher/attendance/${id}` );
+    //             sendToast("تم حذف الحضور بنجاح","success");
+    //             setDate(data.filter((da) => da.id !== id))
+    //         } catch (error) {
+    //             sendToast("حدث خطأ ما اثناء حذف الحضور","error");
+    //         }
+    //     }
+    // }
+    const getStatusLabel = (status) => {
+      switch (status) {
+        case 'Attend':
+          return <span className="text-green-400">حضور</span>;
+        case 'Absent':
+          return <span className="text-red-400">غياب</span>;
+        case 'Late':
+          return <span className="text-yellow-400">تأخير</span>;
+        case 'Excuse':
+          return <span className="text-purple-400">عذر</span>;
+        case 'Holiday':
+          return <span className="text-blue-400">عطلة</span>;
+        default:
+          return status;
+      }
+    };
+    
     return (
     <div className="pt-20 px-4 relative">
                         {ShowUpdatePopup && ( <div className="overlay"> <PopUpdateAttendes axios={axios} id={theId}
@@ -71,18 +87,16 @@ const page = (props) => {
               <th scope="col" className="px-6 py-3">
                 تعديل
               </th>
-              <th scope="col" className="px-6 py-3">
-                حذف
-              </th>
+       
             </tr>
           </thead>
           <tbody>
             {data && data.map((da) => (
 
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-white">
-              <th scope="row" className={`px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:${da.status === 'Attend' ? 'text-green-400' : da.status === 'Absent' ? 'text-red-500' : 'text-white'}`}>
-                {da.status}
-              </th>
+         <th scope="row" className={`px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:${da.status === 'Attend' ? 'text-green-400' : da.status === 'Absent' ? 'text-red-500' : 'text-white'}`}>
+  {getStatusLabel(da.status)}
+</th>
               <td className="px-6 py-4">
               {da.date}
               </td>
@@ -92,9 +106,7 @@ const page = (props) => {
               <td className="px-6 py-4 text-color-aqua cursor-pointer">
                 <EditIcon onClick={() => handeleUpdate ( da.id )}/>
               </td>
-              <td className="px-6 py-4 text-color-red cursor-pointer">
-                <DeleteIcon onClick={DeleteAttend(da)}/>
-              </td>
+         
             </tr>
         
            
