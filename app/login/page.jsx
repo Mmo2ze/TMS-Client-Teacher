@@ -7,7 +7,7 @@ import { useAuth } from "../../AppState";
 import { useRouter } from "next/navigation";
 import Spinners from "../ui/Spinners";
 import {sendToast} from "../func/toast";
-import avatar from "../../public/Login2.gif"
+import avatar from "../../public/login1.gif"
 import Image from 'next/image'
 
 const isEgyptianNumber = (number) => {
@@ -93,18 +93,21 @@ const page = () => {
   if (HaveRole(["UnAuthorized", "HaveTeacherCode", ])) {
     return (
       <>
+{/* <div className="absolute 2sm:top-[3%]  z-10"> 
+
         <Image
       src={avatar}
       width={500}
       height={500}
       alt="Picture of the author"
-    />
+      />
+      </div> */}
           <ToastContainer/>
         {sentCode ? (
-          <section className="pt-20  bg-gray-900 text-end">
-            <div className=" flex direction-r flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-              <div className="w-full  rounded-lg shadow  border md:mt-0 sm:max-w-md xl:p-0  bg-gray-800  border-gray-700">
-                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <section className="pt-20  bg-gray-900 text-end ">
+            <div className=" flex direction-r flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
+              <div className="w-full  rounded-lg shadow  border md:mt-0 sm:max-w-md xl:p-0  bg-gray-700  border-gray-700 absolute top-[40%] z-20">
+                <div className="p-6 space-y-4 md:space-y-6 sm:p-8 ">
                   <h1 className="text-xl font-bold leading-tight tracking-tightmd:text-2xl  text-white">
                     ادخل الكود
                   </h1>
@@ -134,7 +137,7 @@ const page = () => {
             </div>
           </section>
         ) : (
-          <section className=" pt-20 bg-gray-900 text-end">
+          <section className=" pt-20 bg-gray-900 text-end absolute top-[50%] z-20">
             <div className="flex direction-r flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
               <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
