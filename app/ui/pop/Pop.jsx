@@ -26,6 +26,8 @@ function Pop({ scanner, setShowpop, studentResponse,axios }) {
         handleCansle();
       })
       .catch((error) => {
+              handleCansle();
+
               if (error.response.status === 404) {
                   endLodingToast(toastID, " id  ", "error");
               } else if (error.response.status === 400) {
