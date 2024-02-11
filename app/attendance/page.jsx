@@ -52,6 +52,7 @@ const Page = () => {
             } catch (error) {
               if (error.response.status == 404) {
                 console.log ( "not found" )
+                  setData([])
               }
               console.error ( error );
             }
