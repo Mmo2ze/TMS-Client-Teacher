@@ -5,17 +5,17 @@ import axios from 'axios'
 
 export async function POST(req:NextRequest) {
     console.log(cookies())
-    let token = cookies().get("sesstion");
+    let token = cookies().get("session");
     console.log("token",token)
     let instance = axios.create({
-        baseURL: "https://dev.tass.ist/",
+        baseURL: "https://api.tass.ist/",
         headers: {
             accept: "*/*",
             "Content-Type": "application/json"
         },
     });
     if(token?.value != undefined && token?.value != ""){
-    cookies().delete("sesstion")
+    cookies().delete("session")
     }
     const {phone} = await req.json()
     if(phone.length !=11){
@@ -28,7 +28,7 @@ export async function POST(req:NextRequest) {
     let res = await instance.post("/api/v1/Auth/teacher/login",phone)
         console.log("res",res.data)
     let jwt = res.data.data.token;
-    cookies().set('sesstion',jwt,{
+    cookies().set('session',jwt,{
         httpOnly:true,
         secure:false,
         path:"/",

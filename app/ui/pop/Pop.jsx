@@ -19,34 +19,40 @@ function Pop({ scanner, setShowpop, studentResponse,axios }) {
     const latenessValue = lateness === undefined  ? 0 : lateness;
 
       axios.post(
-      `api/v1/Teacher/student/attendance?studentId=${studentResponse.student.privateId}&lateMints=${latenessValue}`
+      `api/v1/Teacher/attendance?studentId=${studentResponse.student.privateId}&lateMints=${latenessValue}`
       )
       .then((response) => {
-        endLodingToast(toastID, "5الرقم الذي ادخلته حطأ", "error");
+        endLodingToast(toastID, "تم تسجيل الحضور بنجاح", "success");
         handleCansle();
       })
       .catch((error) => {
-          if (error.response.status === 404) {
-              endLodingToast(toastID, " id  ", "error");
-          } else if (error.response.status === 400) {
-              var message1 = error.response.data.messages[0];
-              if (message1) {
-                  switch (message1.statusCode) {
-                      case 302: {
-                          endLodingToast(toastID, 'الرقم   حطأ', "error");
-                          break;
-                      }
-                      case 301: {
-                          endLodingToast(toastID, "ليس للطالب محاضرة الان", "error");
-                          break;
-                      }
-                      default: {
-                          endLodingToast(toastID, " المحاولة مرة اخرى", "error");
-                          break;
+              handleCansle();
+
+              if (error.response.status === 404) {
+                  endLodingToast(toastID, " id  ", "error");
+              } else if (error.response.status === 400) {
+                  var message1 = error.response.data.messages[0];
+                  if (message1) {
+                      switch (message1.statusCode) {
+                          case 301: {
+                              endLodingToast(toastID, 'التاريخ خطا', "error");
+                              break;
+                          }
+                          case 302: {
+                              endLodingToast(toastID, "تم تسجيل حضور الطالب من قبل", "warning");
+                              break;
+                          }
+                          case 303: {
+                              endLodingToast(toastID, "هذا الطالب ليس لديه حصه اليوم", "warning");
+                              break;
+                          }
+                          default: {
+                              endLodingToast(toastID, " المحاولة مرة اخرى", "error");
+                              break;
+                          }
                       }
                   }
               }
-          }
       }
       );
   };

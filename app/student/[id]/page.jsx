@@ -51,6 +51,7 @@ const page = (props) => {
                 setPaymentAmount ( response.data.student.paymentAmount )
                 setSelectedClassId ( response.data.student.classId )
                 setIsPayed(response.data.student.isPayed);
+
             } catch (e) {
                 console.log ( e );
             }

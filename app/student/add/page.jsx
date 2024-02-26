@@ -63,13 +63,12 @@ const page = () => {
           `/api/v1/Teacher/parent/check/${valuePerentNumber}?hasWhatsapp=${checkPerantWhats}`
       );
       setPerentPhone ( response.data.isvalid );
-      if (response.data.isvalid) {
         endLodingToast ( toastID, "تم اضافة ولي الامر بنجاح", "success" );
         setShowDetailParent ( true );
         setDetailParent ( response.data.data.name );
         setDetailParentId ( response.data.data.id );
         setShowAddParentButton ( false );
-      }
+
     } catch (error) {
       if (error.response.status === 404) {
         setShowNameParent ( !shwoNameParent );
@@ -117,6 +116,11 @@ const page = () => {
   };
 
   const handelRegistParent = async () => {
+    if(nameParent.length>17 || nameParent.length<3)
+    {
+      sendToast("الاسم يجب ان يكون اكبر من 3 احرف واقل من 17 حرف", "error")
+      return;
+    }
     var toastID = loadingToast ();
 
     try {
@@ -145,6 +149,11 @@ const page = () => {
   };
 
   const handelRegist = async () => {
+    if(nameStudent.length > 21 || nameStudent.length < 3)
+    {
+      sendToast("الاسم يجب ان يكون اكبر من 3 احرف واقل من 21 حرف", "error")
+      return;
+    }
     var toastID = loadingToast ();
 
     try {
@@ -175,13 +184,14 @@ const page = () => {
 
       endLodingToast (
           toastID,
-          "تم تسجيل الطالب بالصف بنجاح",
+          "تم تسجيل بيانات الطالب ",
           "success"
       );
       // response.data.id
     } catch (error) {
       console.error ( "Error updating data:", error );
-      endLodingToast ( toastID, "هذا الرقم ليس عليه واتس اب", "error" );
+
+      endLodingToast ( toastID, "حدث خطا ما", "error" );
     }
   };
 
