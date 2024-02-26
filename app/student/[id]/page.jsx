@@ -50,7 +50,8 @@ const page = (props) => {
                 setPaymentDaly ( response.data.student.paymentDelay )
                 setPaymentAmount ( response.data.student.paymentAmount )
                 setSelectedClassId ( response.data.student.classId )
-                setIsPayed( response.data.isPayed)
+                setIsPayed(response.data.student.isPayed);
+
             } catch (e) {
                 console.log ( e );
             }
@@ -172,7 +173,7 @@ const page = (props) => {
                                     : "paym-details_student bg-red-100 text-red-800 text-lg font-medium mr-2 w-[90px]  h-[45px] p-2 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400"
                             }
                         >
-                            {true ? "مدفوع" : "غير مدفوع"}
+                            {isPayed ? "مدفوع" : "غير مدفوع"}
                         </button>
 
                         <Link href={`tel:${parentPhone}`} target="_blank" rel="noopener noreferrer">
