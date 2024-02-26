@@ -23,7 +23,7 @@ const page = (props) => {
         if (HaveRole ( [null] )) return;
         const fetchData = async () => {
             try {
-                var response = await axios.get ( `/api/v1/Teacher/attendance?StudentId=${props.params.id}&PageSize=1&Page=1`);
+                var response = await axios.get ( `/api/v1/Teacher/attendance?StudentId=${props.params.id}&PageSize=100&Page=1`);
                 setDate(response.data)
             } catch (error) {
                 if(error.response.status != 404)

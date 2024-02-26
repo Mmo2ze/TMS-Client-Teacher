@@ -30,7 +30,7 @@ const page = (props) => {
     const [paymentDaly, setPaymentDaly] = useState ( "" )
     const [paymentAmount, setPaymentAmount] = useState ( "" )
     const [selectedClassId, setSelectedClassId] = useState ( 0 );
-
+    const [isPayed, setIsPayed] = useState ( false )
     const [disabeld, setDisabeld] = useState ( true )
     useEffect ( () => {
         const getdata = async () => {
@@ -50,6 +50,7 @@ const page = (props) => {
                 setPaymentDaly ( response.data.student.paymentDelay )
                 setPaymentAmount ( response.data.student.paymentAmount )
                 setSelectedClassId ( response.data.student.classId )
+                setIsPayed(response.data.student.isPayed);
             } catch (e) {
                 console.log ( e );
             }
@@ -166,12 +167,12 @@ const page = (props) => {
 
                         <button
                             className={
-                                true
+                                isPayed
                                     ? "paym-details_student bg-green-100 text-green-800 text-lg font-medium mr-2 w-[80px]  h-[45px] p-2 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"
                                     : "paym-details_student bg-red-100 text-red-800 text-lg font-medium mr-2 w-[90px]  h-[45px] p-2 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400"
                             }
                         >
-                            {true ? "مدفوع" : "غير مدفوع"}
+                            {isPayed ? "مدفوع" : "غير مدفوع"}
                         </button>
 
                         <Link href={`tel:${parentPhone}`} target="_blank" rel="noopener noreferrer">
