@@ -45,6 +45,7 @@ const Page = () => {
         const delaySearch = setTimeout ( () => {
           const fetchData = async () => {
             try {
+
               const url = `/api/v1/Teacher/student?searchWord=${searchWord}`;
               const response = await axios.get ( url );
               setData ( response.data );
@@ -68,6 +69,7 @@ const Page = () => {
 
     if (HaveRole ( [null] )) return <Spinners/>;
     else if (HaveRole ( ["Teacher", "Assistant"] )) {
+
 
         return (
             <div className="pt-20 px-2 text-end">
@@ -96,6 +98,7 @@ const Page = () => {
 
                         return (
                             <div onClick={() => {
+
                                 setShowPop ( !showPop );
                                 setCurrentStudent ( {
                                     name: student.student.name,
